@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, _weaponMask))
         {
             Transform weapon = hit.transform.root;
-            var wep = weapon.GetComponent<WeaponHolder>().weapon;
+            var wep = weapon.GetComponent<Weapon>();
             if (Mathf.Abs(weapon.position.magnitude - transform.position.magnitude) < _maxPickUpDistance
                 && wep.holder == null)
             {

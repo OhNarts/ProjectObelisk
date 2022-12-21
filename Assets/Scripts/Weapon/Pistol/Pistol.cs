@@ -35,8 +35,7 @@ public class Pistol : Weapon
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, range))
         {
-            Debug.Log("hit " + ++hitcount);
-            Debug.Log(hit.transform.name);
+            Debug.Log("hit " + hit.transform.name + " "+ ++hitcount);
         }
         // Subtract ammo cost
         ammo[_ammoType1] -= _ammoCost1; 
