@@ -73,7 +73,6 @@ GameObject:
   m_Component:
   - component: {fileID: 237986280338035907}
   - component: {fileID: 3671296396401366915}
-  - component: {fileID: 7797309685798024824}
   - component: {fileID: 8178106363235856865}
   - component: {fileID: 1596920956}
   m_Layer: 7
@@ -121,19 +120,6 @@ MonoBehaviour:
   _ammoType2: 1
   fireRate: 0
   range: 1e+12
---- !u!114 &7797309685798024824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237986280338035906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 587d21b6bc8d2844a89a532993d89ca3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 3671296396401366915}
 --- !u!54 &8178106363235856865
 Rigidbody:
   m_ObjectHideFlags: 0

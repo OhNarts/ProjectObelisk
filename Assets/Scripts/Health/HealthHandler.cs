@@ -12,7 +12,7 @@ public class HealthHandler : MonoBehaviour
 
     [SerializeField] private float maxHealth;
 
-    private float health;
+    [SerializeField] private float health;
 
 
     // Start is called before the first frame update

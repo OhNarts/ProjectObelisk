@@ -25,8 +25,8 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected int _ammoCost2;
     [SerializeField] protected AmmoType _ammoType2;
 
-    protected PlayerController _holder = null;
-    public PlayerController holder { 
+    protected GameObject _holder = null;
+    public GameObject holder { 
         get { return _holder; } 
         set { _holder = value; }
     }
@@ -34,7 +34,6 @@ public abstract class Weapon : MonoBehaviour
 
     // Abstract methods, override these to get a weapon to fire
     // Pass the ammo dictionary so that the methods can subtract the correct ammo amount when used
-
     public virtual void Fire1(Dictionary<AmmoType, int> ammo) { }
     public virtual void Fire1Stop(Dictionary<AmmoType, int> ammo) { }
 

@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
                 weapon.localRotation = Quaternion.Euler(transform.forward);
                 weapon.GetComponent<BoxCollider>().enabled = false;
                 equippedWeapon = wep;
-                equippedWeapon.holder = this;
+                equippedWeapon.holder = gameObject;
             }
 
         }
