@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-
     #region Movement
     private void Move()
     {
@@ -107,25 +106,29 @@ public class PlayerController : MonoBehaviour
     {
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, _weaponMask))
-        {
-            Transform weapon = hit.transform.root;
-            var wep = weapon.GetComponent<Weapon>();
-            if (Mathf.Abs(weapon.position.magnitude - transform.position.magnitude) < _maxPickUpDistance
-                && wep.holder == null)
-            {
-                weapon.GetComponent<Rigidbody>().isKinematic = true;
-                weapon.parent = _weaponPos;
-                weapon.localPosition = Vector3.zero;
-                weapon.localRotation = Quaternion.Euler(transform.forward);
-                weapon.GetComponent<BoxCollider>().enabled = false;
-                equippedWeapon = wep;
-                equippedWeapon.holder = gameObject;
-            }
 
+        if (!Physics.Raycast(ray, out hit, Mathf.Infinity, _weaponMask)) return;
+
+        Transform weapon = hit.transform.root;
+        var wep = weapon.GetComponent<Weapon>();
+        if (!(Mathf.Abs(weapon.position.magnitude - transform.position.magnitude) < _maxPickUpDistance
+            && wep.holder == null)) return;
+
+        if (equippedWeapon != null)
+        {
+            equippedWeapon.DropWeapon();
         }
+        wep.PickUpWeapon(gameObject, _weaponPos);
+        equippedWeapon = wep;
     }
 
-    
+
+    #endregion
+
+    #region Debug
+    public void OnPlayerHit()
+    {
+        Debug.Log("Ouch");
+    }
     #endregion
 }

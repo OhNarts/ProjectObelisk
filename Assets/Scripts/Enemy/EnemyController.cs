@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public enum EnemyState { Idle, Chase, Attack }
-public class EnemyStateMachine : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     private EnemyState currState;
     private NavMeshAgent agent;
-    private Coroutine shootRoutine;
+    private Dictionary<AmmoType, int> ammo;
+    
 
     [SerializeField] private float distToAttack;
-
+    [SerializeField] private Weapon weapon;
+    [SerializeField] private Transform equipPos;
     [SerializeField] private Transform _target;
     public Transform Target
     {
@@ -21,17 +23,19 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Awake()
     {
         currState = EnemyState.Idle;
         agent = transform.GetComponent<NavMeshAgent>();
+        weapon.PickUpWeapon(gameObject, equipPos);
+        ammo = new Dictionary<AmmoType, int>();
+        ammo.Add(weapon.AmmoType1, 1000000000);
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (currState) 
+        switch (currState)
         {
             case EnemyState.Idle:
                 if (_target != null) currState = EnemyState.Chase;
@@ -39,20 +43,21 @@ public class EnemyStateMachine : MonoBehaviour
 
             case EnemyState.Chase:
                 Chase();
-                if (Vector3.Distance(_target.position, transform.position) < distToAttack) 
+                if (Vector3.Distance(_target.position, transform.position) < distToAttack)
                     currState = EnemyState.Attack;
                 break;
 
             case EnemyState.Attack:
-                Shoot();
+                Attack();
                 //if (Vector3.Distance(_target.position, transform.position) > distToAttack ||
                 //    Physics.Linecast(transform.position, _target.position))
                 if (Vector3.Distance(_target.position, transform.position) > distToAttack)
                     currState = EnemyState.Chase;
                 break;
         }
-        Debug.Log(currState);
     }
+
+    #region Machine States
 
     private void Chase()
     {
@@ -61,10 +66,23 @@ public class EnemyStateMachine : MonoBehaviour
         agent.SetDestination(_target.position);
     }
 
-    private void Shoot()
+    private void Attack()
     {
         agent.isStopped = true;
         transform.LookAt(_target);
+        weapon.Fire1(ammo);
+        weapon.Fire1Stop(ammo);
     }
-    
+    #endregion
+
+    /// <summary>
+    /// Handles this enemy dieing
+    /// </summary>
+    public void Die()
+    {
+        weapon.DropWeapon();
+
+        Destroy(gameObject);
+        // Temp, can make ragdoll here instead of destroy
+    }
 }

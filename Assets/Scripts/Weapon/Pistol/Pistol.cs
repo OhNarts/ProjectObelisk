@@ -5,10 +5,11 @@ using UnityEngine;
 public class Pistol : Weapon
 {
     [Header("Pistol Specific")]
-    [SerializeField]
-    private float fireRate;
-    [SerializeField]
-    private float range;
+    [SerializeField] private float fireRate;
+    [SerializeField] private float range;
+    [SerializeField] private float bulletSpeed;
+    [SerializeField] private GameObject bullet;
+    
 
     private float lastFired;
     // Since pistol is semi-automatic, keep track of whether or not fired yet 
@@ -18,6 +19,14 @@ public class Pistol : Weapon
     {
         fired = false;
         lastFired = 0;
+
+        //PistolBullet b = bullet.GetComponent<PistolBullet>();
+        //b.damageInfo = new DamageInfo()
+        //{
+        //    damage = _damage,
+        //    attacker = _holder
+        //};
+        //b.speed = bulletSpeed;
     }
 
     public override void Fire1(Dictionary<AmmoType, int> ammo)
@@ -32,17 +41,28 @@ public class Pistol : Weapon
         fired = true;
 
         // Fire the weapon
-        RaycastHit hit;
-        if (!Physics.Raycast(transform.position, transform.forward, out hit, range)) return;
-
-        HealthHandler enemyHealth = hit.transform.GetComponent<HealthHandler>();
-        if (enemyHealth != null)
+        GameObject bulletInstance = Instantiate(bullet, _attackPoint.position, _holder.transform.rotation);
+        PistolBullet b = bulletInstance.GetComponent<PistolBullet>();
+        b.damageInfo = new DamageInfo()
         {
-            enemyHealth.Damage(new DamageInfo() { 
-                damage = _damage, 
-                attacker = _holder
-            });
-        }
+            damage = _damage,
+            attacker = _holder
+        };
+        b.speed = bulletSpeed;
+        //b.speed = 0;
+        Destroy(bulletInstance, 100);
+
+        //RaycastHit hit;
+        //if (!Physics.Raycast(transform.position, transform.forward, out hit, range)) return;
+
+        //HealthHandler enemyHealth = hit.transform.GetComponent<HealthHandler>();
+        //if (enemyHealth != null)
+        //{
+        //    enemyHealth.Damage(new DamageInfo() { 
+        //        damage = _damage, 
+        //        attacker = _holder
+        //    });
+        //}
     }
 
 

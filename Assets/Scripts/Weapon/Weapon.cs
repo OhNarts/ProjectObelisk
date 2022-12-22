@@ -21,26 +21,57 @@ public abstract class Weapon : MonoBehaviour
     [Header("Ammo Costs/Types")]
     [SerializeField] protected int _ammoCost1;
     [SerializeField] protected AmmoType _ammoType1;
+    public AmmoType AmmoType1
+    {
+        get
+        {
+            return _ammoType1;
+        }
+    }
 
     [SerializeField] protected int _ammoCost2;
     [SerializeField] protected AmmoType _ammoType2;
+    public AmmoType AmmoType2
+    {
+        get
+        {
+            return _ammoType2;
+        }
+    }
 
     protected GameObject _holder = null;
-    public GameObject holder { 
-        get { return _holder; }
-        set
+    public GameObject holder
+    {
+        get
         {
-            _holder = value;
-            if (_holder != null)
-            {
-                transform.localPosition = Vector3.zero;
-                transform.localRotation = Quaternion.Euler(_holder.transform.forward);
-                transform.GetComponent<BoxCollider>().enabled = false;
-                return;
-            }
-
-            transform.GetComponent<BoxCollider>().enabled = true;
+            return _holder;
         }
+    }
+
+    /// <summary>
+    /// Picks up this weapon and puts it in the proper position
+    /// </summary>
+    /// <param name="holder"></param>
+    /// <param name="equipPos"></param>
+    public virtual void PickUpWeapon(GameObject holder, Transform equipPos)
+    {
+        _holder = holder;
+        transform.parent = equipPos;
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.Euler(_holder.transform.forward);
+        transform.GetComponent<BoxCollider>().enabled = false;
+        transform.GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    /// <summary>
+    /// Drops this weapon
+    /// </summary>
+    public virtual void DropWeapon()
+    {
+        _holder = null;
+        transform.parent = null;
+        transform.GetComponent<BoxCollider>().enabled = true;
+        transform.GetComponent<Rigidbody>().isKinematic = false;
     }
 
 
