@@ -48,7 +48,7 @@ public class Pistol : Weapon
             damage = _damage,
             attacker = _holder
         };
-        b.speed = bulletSpeed;
+        bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.forward * bulletSpeed;
         //b.speed = 0;
         Destroy(bulletInstance, 100);
 
