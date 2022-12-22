@@ -27,8 +27,20 @@ public abstract class Weapon : MonoBehaviour
 
     protected GameObject _holder = null;
     public GameObject holder { 
-        get { return _holder; } 
-        set { _holder = value; }
+        get { return _holder; }
+        set
+        {
+            _holder = value;
+            if (_holder != null)
+            {
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.Euler(_holder.transform.forward);
+                transform.GetComponent<BoxCollider>().enabled = false;
+                return;
+            }
+
+            transform.GetComponent<BoxCollider>().enabled = true;
+        }
     }
 
 
