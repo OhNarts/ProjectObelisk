@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
         Transform weapon = hit.transform.root;
         var wep = weapon.GetComponent<Weapon>();
-        if (!(Mathf.Abs(weapon.position.magnitude - transform.position.magnitude) < _maxPickUpDistance
+        if (!(Vector3.Distance(weapon.position, transform.position) < _maxPickUpDistance
             && wep.holder == null)) return;
 
         if (equippedWeapon != null)

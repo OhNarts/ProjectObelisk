@@ -268,10 +268,9 @@ MonoBehaviour:
   _onPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
-  _shootPoint: {fileID: 1907338853}
   _aimPoint: {fileID: 3950390057520781654}
   _weaponPos: {fileID: 1459913818}
-  _maxPickUpDistance: 100
+  _maxPickUpDistance: 5
   _weaponMask:
     serializedVersion: 2
     m_Bits: 128
@@ -309,6 +308,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   maxHealth: 100
+  health: 0
 --- !u!1 &7512873425069758290
 GameObject:
   m_ObjectHideFlags: 0
