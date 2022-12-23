@@ -365,7 +365,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   maxHealth: 100
-  health: 0
+  health: 100
 --- !u!114 &171522303682918168
 MonoBehaviour:
   m_ObjectHideFlags: 0

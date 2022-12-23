@@ -8,7 +8,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject Player;
 
-    public static readonly playerDataStruct playerData;
+    private PlayerInfo _playerInfo;
+    public PlayerInfo playerInfo
+    {
+        get
+        {
+            return _playerInfo;
+        }
+    }
+    
     private void Awake()
     {
         if(instance == null)
@@ -22,11 +30,4 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Player Died");
     }
-}
-
-public struct playerDataStruct 
-{
-    float currHealth;
-    float maxHealth;
-    Dictionary<AmmoType, int> currAmmo;
 }
