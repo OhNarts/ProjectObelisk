@@ -42,7 +42,7 @@ public class Pistol : Weapon
 
         // Fire the weapon
         GameObject bulletInstance = Instantiate(bullet, _attackPoint.position, _holder.transform.rotation);
-        PistolBullet b = bulletInstance.GetComponent<PistolBullet>();
+        Bullet b = bulletInstance.GetComponent<Bullet>();
         b.damageInfo = new DamageInfo()
         {
             damage = _damage,
