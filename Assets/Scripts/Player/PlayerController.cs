@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private HealthHandler healthHandler;
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Camera _camera;
     [SerializeField] private float _speed;
@@ -13,6 +14,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _aimPoint;
     private Vector3 _movementInput;
     private LayerMask _lookLayers;
+    
+    public void InitializePlayer(PlayerInfo info)
+    {
+        currAmmo = info.PlayerAmmo;
+        healthHandler.MaxHealth = info.MaxPlayerHealth;
+        healthHandler.Health = info.PlayerHealth;
+    }
 
     private void Start()
     {

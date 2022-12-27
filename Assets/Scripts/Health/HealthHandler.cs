@@ -11,20 +11,23 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] public UnityEvent onDeath;
 
     [SerializeField] private float maxHealth;
+    public float MaxHealth
+    {
+        get { return maxHealth; }
+        set { maxHealth = value; }
+    }
 
-    //private bool healthInitialized = false;
+    private bool healthInitialized = false;
     [SerializeField] private float health;
     public float Health
     {
-        get
+        get { return health; }
+        set
         {
-            return health;
+            if (value <= maxHealth) health = value;
+            else { health = maxHealth; }
+            healthInitialized = true;
         }
-        //set
-        //{
-        //    health = value;
-        //    healthInitialized = true;
-        //}
     }
 
     public HealthHandler(float maxHealth, float health)
@@ -37,9 +40,13 @@ public class HealthHandler : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        //if (!healthInitialized) health = maxHealth;
+        if (!healthInitialized) health = maxHealth;
     }
 
+    /// <summary>
+    /// Damages this health handler
+    /// </summary>
+    /// <param name="info"></param>
     public void Damage(DamageInfo info)
     {
         health -= info.damage;
@@ -50,6 +57,10 @@ public class HealthHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Heals this health handler
+    /// </summary>
+    /// <param name="amount"></param>
     public void Heal(float amount)
     {
         float diff = health + amount - maxHealth;

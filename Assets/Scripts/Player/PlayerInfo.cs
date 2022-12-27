@@ -5,5 +5,6 @@ using UnityEngine;
 public class PlayerInfo : ScriptableObject
 {
     public Dictionary<AmmoType, int> PlayerAmmo;
+    public float MaxPlayerHealth;
     public float PlayerHealth;
 }

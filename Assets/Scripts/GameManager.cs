@@ -1,29 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public sealed class GameManager : MonoBehaviour
 {
-    public static GameManager instance = null;
-
-    [SerializeField] private GameObject Player;
-
-    private PlayerInfo _playerInfo;
-    public PlayerInfo playerInfo
+    public static readonly Object key = new Object();
+    public static GameManager instance;
+    public static GameManager Instance
     {
         get
         {
-            return _playerInfo;
+            if (instance == null) { Debug.LogError("Game Manager was null"); }
+            return instance;
+        }
+    }
+
+    [SerializeField] private GameObject Player;
+
+    private PlayerInfo playerInfo;
+    public PlayerInfo PlayerInfo
+    {
+        get
+        {
+            return playerInfo;
         }
     }
     
     private void Awake()
     {
-        if(instance == null)
+        lock (key)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
         }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        
+    }
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+
     }
 
     public void OnPlayerDeath()

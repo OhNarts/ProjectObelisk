@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d470993a3794704aa3c5131663f46d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthHandler: {fileID: 3309712311292657436}
   _rb: {fileID: 7840941772718891743}
   _camera: {fileID: 0}
   _speed: 10
