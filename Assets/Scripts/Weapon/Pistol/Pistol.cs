@@ -50,7 +50,6 @@ public class Pistol : Weapon
         };
         bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.forward * bulletSpeed;
         //b.speed = 0;
-        Destroy(bulletInstance, 100);
 
         //RaycastHit hit;
         //if (!Physics.Raycast(transform.position, transform.forward, out hit, range)) return;

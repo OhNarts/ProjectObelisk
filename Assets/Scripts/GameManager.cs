@@ -17,6 +17,7 @@ public sealed class GameManager : MonoBehaviour
     }
 
     [SerializeField] private GameObject Player;
+    [SerializeField] private GameObject CameraHolder;
 
     private PlayerInfo playerInfo;
     public PlayerInfo PlayerInfo
@@ -40,6 +41,11 @@ public sealed class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void Update()
+    {
+        //CameraHolder.transform.position = Player.transform.position;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

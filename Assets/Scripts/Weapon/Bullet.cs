@@ -6,6 +6,11 @@ public class Bullet : MonoBehaviour
 {
     public DamageInfo damageInfo;
 
+    private void Start()
+    {
+        Destroy(gameObject, 10f);
+    }
+
     public void OnTriggerEnter(Collider collider)
     {
         Destroy(gameObject);
