@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public enum WeaponType { Gun, Melee }
-public enum AmmoType { Rifle, Pistol, Energy, NONE }
+public enum AmmoType { Rifle, Pistol, Energy, Shotgun, NONE }
 
 public abstract class Weapon : MonoBehaviour
 {

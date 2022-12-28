@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pistol : Weapon
 {
     [Header("Pistol Specific")]
-    [SerializeField] private float fireRate;
+    [SerializeField] private float coolDownTime;
     [SerializeField] private float range;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private GameObject bullet;
@@ -32,7 +32,7 @@ public class Pistol : Weapon
     public override void Fire1(Dictionary<AmmoType, int> ammo)
     {
         base.Fire1(ammo);
-        if (Time.unscaledTime - lastFired < fireRate  || fired == true || ammo[_ammoType1] < _ammoCost1) { return; }
+        if (Time.unscaledTime - lastFired < coolDownTime  || fired == true || ammo[_ammoType1] < _ammoCost1) { return; }
 
         lastFired = Time.unscaledTime;
 
