@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5934806220354164685}
   - component: {fileID: 3778255306921583734}
   - component: {fileID: 5221531747461869257}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,8 +95,8 @@ GameObject:
   - component: {fileID: 24857447698799148}
   - component: {fileID: 1462685107561772842}
   - component: {fileID: 5241742654248826770}
-  m_Layer: 0
-  m_Name: PistolBullet
+  m_Layer: 9
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

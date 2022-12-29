@@ -19,14 +19,6 @@ public class Pistol : Weapon
     {
         fired = false;
         lastFired = 0;
-
-        //PistolBullet b = bullet.GetComponent<PistolBullet>();
-        //b.damageInfo = new DamageInfo()
-        //{
-        //    damage = _damage,
-        //    attacker = _holder
-        //};
-        //b.speed = bulletSpeed;
     }
 
     public override void Fire1(Dictionary<AmmoType, int> ammo)
@@ -49,19 +41,6 @@ public class Pistol : Weapon
             attacker = _holder
         };
         bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.forward * bulletSpeed;
-        //b.speed = 0;
-
-        //RaycastHit hit;
-        //if (!Physics.Raycast(transform.position, transform.forward, out hit, range)) return;
-
-        //HealthHandler enemyHealth = hit.transform.GetComponent<HealthHandler>();
-        //if (enemyHealth != null)
-        //{
-        //    enemyHealth.Damage(new DamageInfo() { 
-        //        damage = _damage, 
-        //        attacker = _holder
-        //    });
-        //}
     }
 
 

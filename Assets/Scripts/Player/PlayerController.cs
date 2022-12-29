@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
         currAmmo = new Dictionary<AmmoType, int>();
         currAmmo.Add(AmmoType.Pistol, 100);
+        currAmmo.Add(AmmoType.Shotgun, 100);
     }
 
     // Update is called once per frame

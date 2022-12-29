@@ -8,11 +8,13 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, 10f);
+        Destroy(gameObject, 5f);
     }
 
     public void OnTriggerEnter(Collider collider)
     {
+        if (collider.gameObject.layer == 9) return;
+        
         Destroy(gameObject);
         Transform hitTransform = collider.transform;
         HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();

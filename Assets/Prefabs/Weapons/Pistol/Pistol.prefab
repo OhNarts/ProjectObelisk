@@ -118,7 +118,7 @@ MonoBehaviour:
   _ammoType1: 1
   _ammoCost2: 1
   _ammoType2: 1
-  fireRate: 0.7
+  coolDownTime: 0.3
   range: 1e+12
   bulletSpeed: 20
   bullet: {fileID: 3667196397110752525, guid: ffa3f4db51b56144baf59f9e3b8e5687, type: 3}
