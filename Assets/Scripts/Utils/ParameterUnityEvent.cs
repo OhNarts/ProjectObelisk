@@ -16,3 +16,6 @@ public class UnityEventInt : UnityEvent<int> { }
 [Serializable]
 public class UnityEventDamage : UnityEvent<DamageInfo> { }
 
+[Serializable]
+public class UnityEventRoom : UnityEvent<Room> { }
+

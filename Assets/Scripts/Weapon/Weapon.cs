@@ -82,5 +82,6 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void Fire2(Dictionary<AmmoType, int> ammo) { }
     public virtual void Fire2Stop(Dictionary<AmmoType, int> ammo) { }
+
 }
 

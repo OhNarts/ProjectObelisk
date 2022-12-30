@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,19 +13,25 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private UnityEvent _onPlayerDeath;
     [SerializeField] private Transform _aimPoint;
-    private Vector3 _movementInput;
-    private LayerMask _lookLayers;
+    private LayerMask lookLayers;
+
+    // The point that the player should look at
+    private Vector3 lookPt;
+
+    // The point on the ground that the mouse is over
+    private Vector3 groundMousePt;
     
     public void InitializePlayer(PlayerInfo info)
     {
         currAmmo = info.PlayerAmmo;
         healthHandler.MaxHealth = info.MaxPlayerHealth;
         healthHandler.Health = info.PlayerHealth;
+        _aimPoint.parent = null;
     }
 
     private void Start()
     {
-        _lookLayers = LayerMask.GetMask("Ground") |
+        lookLayers = LayerMask.GetMask("Ground") |
         LayerMask.GetMask("Weapon") |
         LayerMask.GetMask("Shootable");
 
@@ -36,15 +43,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Look();
-        Move();
-        Shoot();
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            PickUp();
-        }
+        transform.LookAt(lookPt);
+        //Look();
+        //Move();
+        //Shoot();
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    PickUp();
+        //}
     }
-    
+
+
+
     #region Health
     public void OnDeath()
     {
@@ -54,81 +64,130 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Movement
-    private void Move()
+    public void Move(CallbackContext context)
     {
         // Rotates the input matrix to the camera's rotation & normalize
-        _movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        Vector2 rawInput = context.ReadValue<Vector2>();
+        Vector3 changedInput = new Vector3(rawInput.x, 0, rawInput.y);
         var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
-        var rotatedInput = matrix.MultiplyPoint3x4(_movementInput);
+        var rotatedInput = matrix.MultiplyPoint3x4(changedInput);
         rotatedInput.Normalize();
 
         // Applies the velocity
         _rb.velocity = (rotatedInput * _speed);
     }
 
-    private void Look()
+    public void Look(CallbackContext context)
     {
-        var ray = _camera.ScreenPointToRay(Input.mousePosition);
+        Vector2 rawInput = context.ReadValue<Vector2>();
+        var ray = _camera.ScreenPointToRay(rawInput);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, _lookLayers))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, lookLayers))
         {
-            var lookPt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            transform.LookAt(lookPt);
-
-            // Moves the aim point
-            lookPt.y = hit.point.y;
-            _aimPoint.position = lookPt;
+            groundMousePt = hit.point;
+            lookPt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
         }
     }
     #endregion
 
-    #region Weapons/Inventory
+    #region Interactable/Weapon
     [SerializeField] private Transform _weaponPos;
     [SerializeField] private float _maxPickUpDistance;
-    [SerializeField] private LayerMask _weaponMask;
+    [SerializeField] private float interactableRadius;
+    [SerializeField] private LayerMask _interactableMask;
     [SerializeField] private Dictionary<AmmoType, int> currAmmo;
     private Weapon equippedWeapon;
-
-    private void Shoot()
+    public Weapon EquippedWeapon
     {
-        if (equippedWeapon == null) return;
-        if (Input.GetButtonDown("Fire1"))
+        get
         {
-            equippedWeapon.Fire1(currAmmo);
-        }
-        else if (Input.GetButtonUp("Fire1"))
-        {
-            equippedWeapon.Fire1Stop(currAmmo);
-        }
-
-        if (Input.GetButtonDown("Fire2"))
-        {
-            equippedWeapon.Fire2(currAmmo);
-        }
-        else if (Input.GetButtonUp("Fire2"))
-        {
-            equippedWeapon.Fire2Stop(currAmmo);
+            return equippedWeapon;
         }
     }
 
-    private void PickUp()
+    public void Fire1(CallbackContext context)
     {
-        var ray = _camera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        if (equippedWeapon == null) return;
+        equippedWeapon.Fire1(currAmmo);
+    }
 
-        if (!Physics.Raycast(ray, out hit, Mathf.Infinity, _weaponMask)) return;
+    public void Fire2(CallbackContext context)
+    {
+        if (equippedWeapon == null) return;
+        equippedWeapon.Fire2(currAmmo);
+    }
 
-        Transform weapon = hit.transform.root;
-        var wep = weapon.GetComponent<Weapon>();
-        if (!(Vector3.Distance(weapon.position, transform.position) < _maxPickUpDistance
-            && wep.holder == null)) return;
+    //private void Shoot()
+    //{
+    //    if (equippedWeapon == null) return;
+    //    if (Input.GetButtonDown("Fire1"))
+    //    {
+    //        equippedWeapon.Fire1(currAmmo);
+    //    }
+    //    else if (Input.GetButtonUp("Fire1"))
+    //    {
+    //        equippedWeapon.Fire1Stop(currAmmo);
+    //    }
 
-        if (equippedWeapon != null)
+    //    if (Input.GetButtonDown("Fire2"))
+    //    {
+    //        equippedWeapon.Fire2(currAmmo);
+    //    }
+    //    else if (Input.GetButtonUp("Fire2"))
+    //    {
+    //        equippedWeapon.Fire2Stop(currAmmo);
+    //    }
+    //}
+
+    //private void PickUp()
+    //{
+    //    var ray = _camera.ScreenPointToRay(Input.mousePosition);
+    //    RaycastHit hit;
+
+    //    if (!Physics.Raycast(ray, out hit, Mathf.Infinity, _interactableMask)) return;
+
+    //    Transform weapon = hit.transform.root;
+    //    var wep = weapon.GetComponent<Weapon>();
+    //    if (!(Vector3.Distance(weapon.position, transform.position) < _maxPickUpDistance
+    //        && wep.holder == null)) return;
+
+    //    if (equippedWeapon != null)
+    //    {
+    //        equippedWeapon.DropWeapon();
+    //    }
+    //    wep.PickUpWeapon(gameObject, _weaponPos);
+    //    equippedWeapon = wep;
+    //}
+
+    public void Interact(CallbackContext context)
+    {
+        // returns if the position the mouse is over is too far to interact
+        if (!(Vector3.Distance(groundMousePt, transform.position) < _maxPickUpDistance)) return;
+
+        Collider[] colliders = Physics.OverlapSphere(groundMousePt, interactableRadius);
+        Debug.Log(colliders.Length);
+
+        // prioritizes weapons over interactables
+        Interactable interactable = null;
+        foreach(Collider collider in colliders)
         {
-            equippedWeapon.DropWeapon();
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon"))
+            {
+                var wep = collider.transform.GetComponent<Weapon>();
+                if (equippedWeapon != null)
+                {
+                    equippedWeapon.DropWeapon();
+                }
+                wep.PickUpWeapon(gameObject, _weaponPos);
+                equippedWeapon = wep;
+                return;
+            }
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Interactable"))
+            {
+                interactable = collider.transform.GetComponent<Interactable>();
+            }
         }
-        wep.PickUpWeapon(gameObject, _weaponPos);
-        equippedWeapon = wep;
+        interactable?.Interact(this);
     }
 
 

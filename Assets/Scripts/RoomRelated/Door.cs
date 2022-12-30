@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Room : MonoBehaviour
+public class Door : MonoBehaviour, Interactable
 {
-    [SerializeField] private List<EnemyController> enemies;
-    [SerializeField] private List<GameObject> doors;
-    [SerializeField] private Transform camHolderPos;
+    public void Interact(PlayerController player)
+    {
+        throw new System.NotImplementedException();
+    }
 
     // Start is called before the first frame update
     void Start()

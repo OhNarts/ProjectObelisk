@@ -9,12 +9,22 @@ public class EnemyController : MonoBehaviour
     private EnemyState currState;
     private NavMeshAgent agent;
     private Dictionary<AmmoType, int> ammo;
-    
 
+    
     [SerializeField] private float distToAttack;
     [SerializeField] private Weapon weapon;
     [SerializeField] private Transform equipPos;
     [SerializeField] private Transform _target;
+
+    [SerializeField] private HealthHandler healthHandler;
+    public HealthHandler HealthHandler
+    {
+        get
+        {
+            return healthHandler;
+        }
+    }
+
     public Transform Target
     {
         set

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6945854897516244224}
   - component: {fileID: 6945854897516244226}
   - component: {fileID: 6945854897516244227}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 6945854897804486167}
   - component: {fileID: 6945854897804486169}
   - component: {fileID: 6945854897804486166}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 6945854898438439343}
   - component: {fileID: 6945854898438439313}
   - component: {fileID: 6945854898438439342}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 6945854898439343774}
   - component: {fileID: 6945854898439343775}
   - component: {fileID: 6945854898439343744}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6945854898702257160}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +377,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6945854899553976445}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
