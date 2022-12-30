@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _aimPoint;
     private LayerMask lookLayers;
 
+    private Vector3 velocity;
+
     // The point that the player should look at
     private Vector3 lookPt;
 
@@ -44,13 +46,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         transform.LookAt(lookPt);
-        //Look();
-        //Move();
-        //Shoot();
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    PickUp();
-        //}
+        _rb.velocity = velocity;
     }
 
 
@@ -72,9 +68,8 @@ public class PlayerController : MonoBehaviour
         var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         var rotatedInput = matrix.MultiplyPoint3x4(changedInput);
         rotatedInput.Normalize();
-
         // Applies the velocity
-        _rb.velocity = (rotatedInput * _speed);
+        velocity = (rotatedInput * _speed);
     }
 
     public void Look(CallbackContext context)
@@ -108,63 +103,27 @@ public class PlayerController : MonoBehaviour
     public void Fire1(CallbackContext context)
     {
         if (equippedWeapon == null) return;
-        equippedWeapon.Fire1(currAmmo);
-    }
-
-    public void Fire1Stop(CallbackContext callbackContext)
-    {
-        if (equippedWeapon == null) return;
-        equippedWeapon.Fire1Stop(currAmmo);
-        Debug.Log("fire1 stop");
+        if (context.started)
+        {
+            equippedWeapon.Fire1(currAmmo);
+        } else if (context.canceled)
+        {
+            equippedWeapon.Fire1Stop(currAmmo);
+        }
     }
 
     public void Fire2(CallbackContext context)
     {
         if (equippedWeapon == null) return;
-        equippedWeapon.Fire2(currAmmo);
+        if (context.started)
+        {
+            equippedWeapon.Fire2(currAmmo);
+        }
+        else if (context.canceled)
+        {
+            equippedWeapon.Fire2Stop(currAmmo);
+        }
     }
-
-    //private void Shoot()
-    //{
-    //    if (equippedWeapon == null) return;
-    //    if (Input.GetButtonDown("Fire1"))
-    //    {
-    //        equippedWeapon.Fire1(currAmmo);
-    //    }
-    //    else if (Input.GetButtonUp("Fire1"))
-    //    {
-    //        equippedWeapon.Fire1Stop(currAmmo);
-    //    }
-
-    //    if (Input.GetButtonDown("Fire2"))
-    //    {
-    //        equippedWeapon.Fire2(currAmmo);
-    //    }
-    //    else if (Input.GetButtonUp("Fire2"))
-    //    {
-    //        equippedWeapon.Fire2Stop(currAmmo);
-    //    }
-    //}
-
-    //private void PickUp()
-    //{
-    //    var ray = _camera.ScreenPointToRay(Input.mousePosition);
-    //    RaycastHit hit;
-
-    //    if (!Physics.Raycast(ray, out hit, Mathf.Infinity, _interactableMask)) return;
-
-    //    Transform weapon = hit.transform.root;
-    //    var wep = weapon.GetComponent<Weapon>();
-    //    if (!(Vector3.Distance(weapon.position, transform.position) < _maxPickUpDistance
-    //        && wep.holder == null)) return;
-
-    //    if (equippedWeapon != null)
-    //    {
-    //        equippedWeapon.DropWeapon();
-    //    }
-    //    wep.PickUpWeapon(gameObject, _weaponPos);
-    //    equippedWeapon = wep;
-    //}
 
     public void Interact(CallbackContext context)
     {
@@ -181,6 +140,9 @@ public class PlayerController : MonoBehaviour
             if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon"))
             {
                 var wep = collider.transform.GetComponent<Weapon>();
+                if (wep.holder != null) {
+                    Debug.Log(wep.holder);
+                    continue; }
                 if (equippedWeapon != null)
                 {
                     equippedWeapon.DropWeapon();
