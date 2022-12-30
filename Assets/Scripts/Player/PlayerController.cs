@@ -111,6 +111,13 @@ public class PlayerController : MonoBehaviour
         equippedWeapon.Fire1(currAmmo);
     }
 
+    public void Fire1Stop(CallbackContext callbackContext)
+    {
+        if (equippedWeapon == null) return;
+        equippedWeapon.Fire1Stop(currAmmo);
+        Debug.Log("fire1 stop");
+    }
+
     public void Fire2(CallbackContext context)
     {
         if (equippedWeapon == null) return;

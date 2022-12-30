@@ -42,6 +42,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Fire1Stop",
+                    "type": "Button",
+                    "id": "532abf67-a0f1-4e69-bd6a-75a51553ffb5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Fire2",
                     "type": "Button",
                     "id": "9c729158-8bdc-45d9-b7a0-467f02a6094e",
@@ -148,6 +157,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Fire2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d60c309-6a97-467d-a92c-7117d916cb2a",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "Invert",
+                    "groups": "",
+                    "action": "Fire1Stop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
