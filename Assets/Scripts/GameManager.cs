@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+
+
+public enum GameState { Plan, Infiltrate, PostInfiltrate, Pause }
 
 public sealed class GameManager : MonoBehaviour
 {
-    public static readonly Object key = new Object();
-    public static GameManager instance;
+    private static readonly Object key = new Object();
+    private static GameManager instance;
     public static GameManager Instance
     {
         get
@@ -27,6 +31,8 @@ public sealed class GameManager : MonoBehaviour
             return playerInfo;
         }
     }
+
+    private GameState currState;
     
     private void Awake()
     {
@@ -41,11 +47,11 @@ public sealed class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
+        
     }
 
     private void Update()
     {
-        //CameraHolder.transform.position = Player.transform.position;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -56,6 +62,11 @@ public sealed class GameManager : MonoBehaviour
     private void OnSceneUnloaded(Scene scene)
     {
 
+    }
+
+    private void OnDoorInteract()
+    {
+        
     }
 
     public void OnPlayerDeath()

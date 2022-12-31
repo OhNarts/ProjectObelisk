@@ -19,3 +19,5 @@ public class UnityEventDamage : UnityEvent<DamageInfo> { }
 [Serializable]
 public class UnityEventRoom : UnityEvent<Room> { }
 
+[Serializable]
+public class UnityEventDoor : UnityEvent<Door> { }

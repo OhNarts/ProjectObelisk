@@ -7,7 +7,7 @@ public class Room : MonoBehaviour
 {
     [SerializeField] private UnityEventRoom OnRoomFinish;
     [SerializeField] private List<EnemyController> enemies;
-    [SerializeField] private List<GameObject> doors;
+    [SerializeField] private List<Door> doors;
     [SerializeField] private Transform camHolderPos;
 
     // Change to increase the distance the camera can be from the room
@@ -23,6 +23,10 @@ public class Room : MonoBehaviour
         foreach (EnemyController enemy in enemies)
         {
             enemy.HealthHandler.onDeath.AddListener(OnEnemyDeath);
+        }
+        foreach (Door door in doors)
+        {
+
         }
     }
 

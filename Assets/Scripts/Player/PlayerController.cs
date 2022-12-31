@@ -140,9 +140,7 @@ public class PlayerController : MonoBehaviour
             if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon"))
             {
                 var wep = collider.transform.GetComponent<Weapon>();
-                if (wep.holder != null) {
-                    Debug.Log(wep.holder);
-                    continue; }
+                if (wep.holder != null) { continue; }
                 if (equippedWeapon != null)
                 {
                     equippedWeapon.DropWeapon();
