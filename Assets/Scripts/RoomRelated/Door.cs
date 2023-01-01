@@ -3,18 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+#region Event args
+public class OnDoorInteractArgs
+{
+    public PlayerController Player { get; }
+    public OnDoorInteractArgs(PlayerController player) { Player = player; }
+}
+
+#endregion
+
 public class Door : MonoBehaviour, Interactable
 {
     [SerializeField] public UnityEvent onEnter;
-    [SerializeField] public UnityEvent onInteract;
-    [SerializeField] public UnityEventDoor onDoorInteract;
+
+    public delegate void OnDoorInteractHandler(object sender, OnDoorInteractArgs args);
+    public event OnDoorInteractHandler OnDoorInteract;
 
     // The point outside a door where the player waits before entering
-    [SerializeField] private Transform waitPoint;
+    [SerializeField] private Transform[] waitPoints;
+
+    private PlayerController player;
+
+    void Awake()
+    {
+        player = null;
+    }
+
     public void Interact(PlayerController player)
     {
-        onInteract?.Invoke();
-        onDoorInteract?.Invoke(this);
+        OnDoorInteract?.Invoke(this, new OnDoorInteractArgs(player));
     }
 
     /// <summary>
@@ -23,24 +40,16 @@ public class Door : MonoBehaviour, Interactable
     /// <param name="player"></param>
     public void PlanStageStart(PlayerController player)
     {
-        player.transform.position = waitPoint.position;
+        this.player = player;
+        //this.player.transform.position = waitPoint.position;
 
     }
 
     public void EnterDoor()
     {
+
+        player = null;
+
         onEnter?.Invoke();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

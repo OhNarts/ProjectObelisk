@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+// This file is here as a place to put all the unity events that need to be serializable
+
+
 [Serializable]
 public class UnityEventObjectObject : UnityEvent<System.Object, System.Object> { }
 
@@ -21,3 +24,6 @@ public class UnityEventRoom : UnityEvent<Room> { }
 
 [Serializable]
 public class UnityEventDoor : UnityEvent<Door> { }
+
+[Serializable]
+public class UnityEventEnemy : UnityEvent<EnemyController> { }

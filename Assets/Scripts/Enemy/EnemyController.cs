@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public enum EnemyState { Idle, Chase, Attack }
 public class EnemyController : MonoBehaviour
 {
+    public UnityEventEnemy onEnemyDeath;
+
     private EnemyState currState;
     private NavMeshAgent agent;
     private Dictionary<AmmoType, int> ammo;
@@ -14,17 +16,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float distToAttack;
     [SerializeField] private Weapon weapon;
     [SerializeField] private Transform equipPos;
+
     [SerializeField] private Transform _target;
-
-    [SerializeField] private HealthHandler healthHandler;
-    public HealthHandler HealthHandler
-    {
-        get
-        {
-            return healthHandler;
-        }
-    }
-
     public Transform Target
     {
         set
@@ -59,8 +52,6 @@ public class EnemyController : MonoBehaviour
 
             case EnemyState.Attack:
                 Attack();
-                //if (Vector3.Distance(_target.position, transform.position) > distToAttack ||
-                //    Physics.Linecast(transform.position, _target.position))
                 if (Vector3.Distance(_target.position, transform.position) > distToAttack)
                     currState = EnemyState.Chase;
                 break;
@@ -91,8 +82,9 @@ public class EnemyController : MonoBehaviour
     public void Die()
     {
         weapon.DropWeapon();
+        onEnemyDeath?.Invoke(this);
 
-        Destroy(gameObject);
         // Temp, can make ragdoll here instead of destroy
+        Destroy(gameObject);
     }
 }
