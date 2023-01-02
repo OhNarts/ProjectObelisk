@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class OnDoorInteractArgs
 
 #endregion
 
+[Serializable]
 public class Door : MonoBehaviour, Interactable
 {
     [SerializeField] public UnityEvent onEnter;
@@ -22,10 +24,12 @@ public class Door : MonoBehaviour, Interactable
     // The point outside a door where the player waits before entering
     [SerializeField] private Transform[] waitPoints;
 
+    private bool opened;
     private PlayerController player;
 
     void Awake()
     {
+        opened = false;
         player = null;
     }
 
