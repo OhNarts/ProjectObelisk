@@ -35,7 +35,8 @@ public class PlayerController : MonoBehaviour
     {
         lookLayers = LayerMask.GetMask("Ground") |
         LayerMask.GetMask("Weapon") |
-        LayerMask.GetMask("Shootable");
+        LayerMask.GetMask("Shootable") |
+        LayerMask.GetMask("Interactable");
 
         currAmmo = new Dictionary<AmmoType, int>();
         currAmmo.Add(AmmoType.Pistol, 100);
@@ -65,7 +66,10 @@ public class PlayerController : MonoBehaviour
         // Rotates the input matrix to the camera's rotation & normalize
         Vector2 rawInput = context.ReadValue<Vector2>();
         Vector3 changedInput = new Vector3(rawInput.x, 0, rawInput.y);
-        var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
+
+        float matrixY = _camera.transform.parent.rotation.eulerAngles.y;
+
+        var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, matrixY, 0));
         var rotatedInput = matrix.MultiplyPoint3x4(changedInput);
         rotatedInput.Normalize();
         // Applies the velocity
@@ -127,11 +131,12 @@ public class PlayerController : MonoBehaviour
 
     public void Interact(CallbackContext context)
     {
+        // make sure that this is only called once
+        if (!context.started) return;
         // returns if the position the mouse is over is too far to interact
         if (!(Vector3.Distance(groundMousePt, transform.position) < _maxPickUpDistance)) return;
 
         Collider[] colliders = Physics.OverlapSphere(groundMousePt, interactableRadius);
-        Debug.Log(colliders.Length);
 
         // prioritizes weapons over interactables
         Interactable interactable = null;
