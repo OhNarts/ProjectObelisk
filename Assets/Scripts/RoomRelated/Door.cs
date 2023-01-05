@@ -5,10 +5,13 @@ using UnityEngine;
 using UnityEngine.Events;
 
 #region Event args
-public class OnDoorInteractArgs
+public class OnDoorInteractArgs : EventArgs
 {
-    public PlayerController Player { get; }
-    public OnDoorInteractArgs(PlayerController player) { Player = player; }
+    private PlayerController _player; public PlayerController Player { get => _player; }
+    public OnDoorInteractArgs(PlayerController player)
+    {
+        _player = player;
+    }
 }
 
 #endregion

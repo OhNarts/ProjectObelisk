@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Room[] rooms;
+
+    void Awake()
     {
-        
+        foreach (Room room in rooms)
+        {
+            room.OnRoomEnterAttempt += OnRoomEnterAttempt;
+        }    
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnRoomEnterAttempt (object sender, OnRoomEnterAttemptArgs e)
     {
-        
+
     }
 }

@@ -4,10 +4,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+#region Event Args
+public class OnRoomEnterAttemptArgs : EventArgs
+{
+    private PlayerController _player; public PlayerController Player { get => _player; }
+    public OnRoomEnterAttemptArgs(PlayerController player)
+    {
+        _player = player;
+    }
+}
+
+#endregion
+
+
 [Serializable]
 public class Room : MonoBehaviour
 {
-    [SerializeField] public UnityEventRoom onRoomEnterAttempt;
+    public delegate void OnRoomEnterAttemptHandler(object sender, OnRoomEnterAttemptArgs e);
+    public event OnRoomEnterAttemptHandler OnRoomEnterAttempt;
 
     [Header("Edit in level creation")]
     [SerializeField] private DoorRoomDictionary adjacentRooms;
@@ -48,7 +62,7 @@ public class Room : MonoBehaviour
         // returns if this is occupied so can call onEnterAttempt on the unoccupied room
         if (occupied) return;
         Door door = (Door)sender;
-        onRoomEnterAttempt?.Invoke(this);
+        OnRoomEnterAttempt?.Invoke(this, new OnRoomEnterAttemptArgs(e.Player));
         doorAttemptedEnter = door;
     }
 
