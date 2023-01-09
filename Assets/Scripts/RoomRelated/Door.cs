@@ -21,7 +21,7 @@ public class Door : MonoBehaviour, Interactable
 {
     [SerializeField] public UnityEvent onEnter;
 
-    public delegate void OnDoorInteractHandler(object sender, OnDoorInteractArgs args);
+    public delegate void OnDoorInteractHandler(object sender, EventArgs args);
     public event OnDoorInteractHandler OnDoorInteract;
 
     [SerializeField] private Transform hinge;

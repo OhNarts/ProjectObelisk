@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private HealthHandler healthHandler;
+    [SerializeField] private HealthHandler healthHandler; public HealthHandler HealthHandler { get => healthHandler; }
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Camera _camera;
     [SerializeField] private float _speed;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private UnityEvent _onPlayerDeath;
     [SerializeField] private Transform _aimPoint;
+    [SerializeField] private PlayerInput input;
     private LayerMask lookLayers;
 
     private Vector3 velocity;
@@ -50,7 +52,20 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = velocity;
     }
 
+    public void PlanStateStart()
+    {
+        input.SwitchCurrentActionMap("Planning");
+    }
 
+    public void CombatStart()
+    {
+        input.SwitchCurrentActionMap("Combat");
+    }
+
+    public void PlanStateEnd()
+    {
+
+    }
 
     #region Health
     public void OnDeath()
@@ -94,7 +109,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maxPickUpDistance;
     [SerializeField] private float interactableRadius;
     [SerializeField] private LayerMask _interactableMask;
-    [SerializeField] private Dictionary<AmmoType, int> currAmmo;
+    [SerializeField] private Dictionary<AmmoType, int> currAmmo; public Dictionary<AmmoType, int> CurrentAmmo { get => currAmmo; }
     private Weapon equippedWeapon;
     public Weapon EquippedWeapon
     {

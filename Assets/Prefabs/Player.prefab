@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 5053912482711007362}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -271,6 +271,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _aimPoint: {fileID: 3950390057520781654}
+  input: {fileID: 5053912482711007362}
   _weaponPos: {fileID: 1459913818}
   _maxPickUpDistance: 5
   interactableRadius: 1
@@ -421,13 +422,9 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9c729158-8bdc-45d9-b7a0-467f02a6094e
     m_ActionName: Infiltrate/Fire2[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 532abf67-a0f1-4e69-bd6a-75a51553ffb5
-    m_ActionName: Infiltrate/Fire1Stop[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Infiltrate
+  m_DefaultActionMap: Combat
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &7512873425069758290

@@ -20,7 +20,7 @@ public class OnRoomEnterAttemptArgs : EventArgs
 [Serializable]
 public class Room : MonoBehaviour
 {
-    public delegate void OnRoomEnterAttemptHandler(object sender, OnRoomEnterAttemptArgs e);
+    public delegate void OnRoomEnterAttemptHandler(object sender, EventArgs e);
     public event OnRoomEnterAttemptHandler OnRoomEnterAttempt;
 
     [Header("Edit in level creation")]
@@ -33,7 +33,7 @@ public class Room : MonoBehaviour
 
     private bool occupied;
 
-    private Door doorAttemptedEnter;
+    protected Door doorAttemptedEnter;
 
     // Start is called before the first frame update
 
@@ -56,13 +56,13 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void OnDoorInteract( object sender, OnDoorInteractArgs e )
+    private void OnDoorInteract( object sender, EventArgs e )
     {
         // Since the player is trying to enter the door from an occupied room, check if this is occupied
         // returns if this is occupied so can call onEnterAttempt on the unoccupied room
         if (occupied) return;
         Door door = (Door)sender;
-        OnRoomEnterAttempt?.Invoke(this, new OnRoomEnterAttemptArgs(e.Player));
+        OnRoomEnterAttempt?.Invoke(this, new OnRoomEnterAttemptArgs(((OnDoorInteractArgs)e).Player));
         doorAttemptedEnter = door;
     }
 

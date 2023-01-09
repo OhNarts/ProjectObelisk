@@ -1,20 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatRoom : Room
 {
-    [SerializeField] private UnityEventRoom onRoomFinish;
+    public delegate void OnRoomFinishHandler(object source, EventArgs e);
+    public event OnRoomFinishHandler OnRoomFinish;
+
+    public delegate void OnRoomPlanStartHandler(object source, EventArgs e);
+    public event OnRoomPlanStartHandler OnRoomPlanStart;
+
     [SerializeField] private List<EnemyController> enemies;
+
     private int aliveEnemyCount;
 
-    private void Awake()
+    void Awake()
     {
         aliveEnemyCount = enemies.Count;
         foreach (EnemyController enemy in enemies)
         {
             enemy.onEnemyDeath.AddListener(OnEnemyDeath);
         }
+    }
+
+    public void PlanRoom(PlayerController player)
+    {
+        doorAttemptedEnter.PlanStageStart(player);
+        OnRoomPlanStart?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnEnemyDeath(EnemyController enemy)
@@ -36,18 +49,7 @@ public class CombatRoom : Room
 
     private void RoomFinish()
     {
-        onRoomFinish?.Invoke(this);
+        OnRoomFinish?.Invoke(this, EventArgs.Empty);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -2,7 +2,7 @@
     "name": "GameplayActions",
     "maps": [
         {
-            "name": "Infiltrate",
+            "name": "Combat",
             "id": "3220b025-5800-4c20-9a15-e5068d10cc13",
             "actions": [
                 {
@@ -158,9 +158,9 @@
             "id": "a87ddcaf-4197-4491-b071-3ebe55a95cf1",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "StartCombat",
                     "type": "Button",
-                    "id": "a0052bc0-4dae-47ea-816c-779a13208363",
+                    "id": "31e15ba1-f894-42b3-b267-ed9dc2a2f5e2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -170,12 +170,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "d47816d4-f895-4997-a034-fab71b56da1a",
-                    "path": "",
+                    "id": "6adb460c-6669-4f89-81c2-bf6e9f0d1f05",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "StartCombat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
