@@ -122,14 +122,14 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 7beba15ff8a13bf4cb82f4a377c825b6, type: 2}
 --- !u!43 &368743230
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-8414
+  m_Name: pb_Mesh-12332
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -387,7 +387,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-10822
+  m_Name: pb_Mesh-12344
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -672,7 +672,7 @@ PrefabInstance:
       objectReference: {fileID: 1333195815}
     - target: {fileID: 4765236425176561511, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: m_VersionIndex
-      value: 46
+      value: 61
       objectReference: {fileID: 0}
     - target: {fileID: 4765236427025951076, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: m_Mesh
@@ -680,7 +680,7 @@ PrefabInstance:
       objectReference: {fileID: 368743230}
     - target: {fileID: 4765236427025951076, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: m_VersionIndex
-      value: 43
+      value: 58
       objectReference: {fileID: 0}
     - target: {fileID: 5771352970796731160, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: m_Name

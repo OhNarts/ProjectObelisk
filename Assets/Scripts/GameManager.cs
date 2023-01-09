@@ -24,10 +24,11 @@ public sealed class GameManager : MonoBehaviour
 
     // private PlayerInfo playerInfo;
     [SerializeField] private PlayerController player;
-    // [SerializeField] private GameObject CameraHolder;
+    [SerializeField] private GameObject _cameraHolder;
 
     [SerializeField] private GameState _currentState; public GameState CurrentState { get => _currentState; }
     private Level currLevel;
+    private CombatRoom room;
 
     private void Awake()
     {
@@ -66,6 +67,12 @@ public sealed class GameManager : MonoBehaviour
         }
 
         player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
+        player.OnCombatStart += (object sender, EventArgs e) =>
+        {
+            _currentState = GameState.Combat;
+            room.Enter(player, _cameraHolder);
+
+        };
         // player.InitializePlayer(playerInfo);
     }
 
@@ -99,6 +106,7 @@ public sealed class GameManager : MonoBehaviour
     private void OnRoomEnterAttempt(object sender, EventArgs e)
     {
         _currentState = GameState.Plan;
+        room = (CombatRoom)sender;
         player.PlanStateStart();
     }
 

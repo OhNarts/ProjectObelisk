@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CombatRoom : Room
 {
@@ -12,12 +13,16 @@ public class CombatRoom : Room
     public event OnRoomPlanStartHandler OnRoomPlanStart;
 
     [SerializeField] private List<EnemyController> enemies;
+    [SerializeField] private NavMeshData navMesh;
 
     private int aliveEnemyCount;
 
     void Awake()
     {
         base.InitializeRoom();
+
+        NavMesh.AddNavMeshData(navMesh);
+
         aliveEnemyCount = enemies.Count;
         foreach (EnemyController enemy in enemies)
         {
