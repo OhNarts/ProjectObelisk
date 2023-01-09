@@ -56,14 +56,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cecc3f7c1c2f404f848de67298190ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onRoomEnterAttempt:
-    m_PersistentCalls:
-      m_Calls: []
   adjacentRooms:
     m_keys: []
     m_values: []
-  camSize: 10.34
-  camHolderPosRot: {fileID: 5281309982220515236}
+  _cameraSize: 10.34
+  _camHolderPosRot: {fileID: 5281309982220515236}
 --- !u!1 &5281309982220515237
 GameObject:
   m_ObjectHideFlags: 0

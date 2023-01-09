@@ -17,6 +17,7 @@ public class CombatRoom : Room
 
     void Awake()
     {
+        base.InitializeRoom();
         aliveEnemyCount = enemies.Count;
         foreach (EnemyController enemy in enemies)
         {
@@ -24,8 +25,9 @@ public class CombatRoom : Room
         }
     }
 
-    public void PlanRoom(PlayerController player)
+    public void PlanRoom(PlayerController player, GameObject cameraHolder)
     {
+        SetCameraPos(cameraHolder);
         doorAttemptedEnter.PlanStageStart(player);
         OnRoomPlanStart?.Invoke(this, EventArgs.Empty);
     }
@@ -38,9 +40,9 @@ public class CombatRoom : Room
         }
     }
 
-    public override void Enter(PlayerController player)
+    public override void Enter(PlayerController player, GameObject cameraHolder)
     {
-        base.Enter(player);
+        base.Enter(player, cameraHolder);
         foreach (EnemyController enemy in enemies)
         {
             enemy.Target = player.transform;

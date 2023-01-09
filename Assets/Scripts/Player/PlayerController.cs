@@ -62,11 +62,6 @@ public class PlayerController : MonoBehaviour
         input.SwitchCurrentActionMap("Combat");
     }
 
-    public void PlanStateEnd()
-    {
-
-    }
-
     #region Health
     public void OnDeath()
     {

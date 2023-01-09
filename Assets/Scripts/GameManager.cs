@@ -22,11 +22,11 @@ public sealed class GameManager : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private PlayerInfo playerInfo;
+    // private PlayerInfo playerInfo;
     [SerializeField] private PlayerController player;
-    [SerializeField] private GameObject CameraHolder;
+    // [SerializeField] private GameObject CameraHolder;
 
-    private GameState currentState; public GameState CurrentState { get => currentState; }
+    [SerializeField] private GameState _currentState; public GameState CurrentState { get => _currentState; }
     private Level currLevel;
 
     private void Awake()
@@ -42,7 +42,7 @@ public sealed class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
-
+        _currentState = GameState.PostCombat;
     }
 
     private void OnDisable()
@@ -66,17 +66,17 @@ public sealed class GameManager : MonoBehaviour
         }
 
         player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
-        player.InitializePlayer(playerInfo);
+        // player.InitializePlayer(playerInfo);
     }
 
     private void OnSceneUnloaded(Scene scene)
     {
-        playerInfo = new PlayerInfo()
-        {
-            PlayerAmmo = player.CurrentAmmo,
-            PlayerHealth = player.HealthHandler.Health,
-            MaxPlayerHealth = player.HealthHandler.MaxHealth
-        };
+        // playerInfo = new PlayerInfo()
+        // {
+        //     PlayerAmmo = player.CurrentAmmo,
+        //     PlayerHealth = player.HealthHandler.Health,
+        //     MaxPlayerHealth = player.HealthHandler.MaxHealth
+        // };
 
         foreach (Room room in currLevel.Rooms)
         {
@@ -93,12 +93,12 @@ public sealed class GameManager : MonoBehaviour
 
     private void OnRoomFinish(object sender, EventArgs e)
     {
-        currentState = GameState.PostCombat;
+        _currentState = GameState.PostCombat;
     }
 
     private void OnRoomEnterAttempt(object sender, EventArgs e)
     {
-        currentState = GameState.Plan;
+        _currentState = GameState.Plan;
         player.PlanStateStart();
     }
 

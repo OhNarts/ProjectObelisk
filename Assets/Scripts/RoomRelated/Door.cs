@@ -32,28 +32,18 @@ public class Door : MonoBehaviour, Interactable
     private Vector3 otherWaitPoint;
     private PlayerController player;
     private float rotateDegrees;
+    private bool openedPreviously; public bool OpenedPreviously { get => openedPreviously; }
 
     void Awake()
     {
         player = null;
         rotateDegrees = 90;
+        openedPreviously = true;
     }
 
     public void Interact(PlayerController player)
     {
         OnDoorInteract?.Invoke(this, new OnDoorInteractArgs(player));
-
-        // DEBUG
-        StartCoroutine(DEBUG(player));
-    }
-
-    public IEnumerator DEBUG(PlayerController player)
-    {
-        PlanStageStart(player);
-        yield return new WaitForSeconds(3);
-        EnterDoor();
-        yield return new WaitForSeconds(3);
-        CloseDoor();
     }
 
     /// <summary>
@@ -79,10 +69,11 @@ public class Door : MonoBehaviour, Interactable
 
     public void EnterDoor()
     {
-        transform.RotateAround(hinge.position, Vector3.up, rotateDegrees);
+        OpenDoor();
         player.transform.position = otherWaitPoint;
         player = null;
         onEnter?.Invoke();
+        openedPreviously = true;
     }
 
     public void CloseDoor()
@@ -90,8 +81,8 @@ public class Door : MonoBehaviour, Interactable
         transform.RotateAround(hinge.position, Vector3.up, -rotateDegrees);
     }
 
-    private IEnumerable AnimateDoor()
+    public void OpenDoor()
     {
-        return null;
+        transform.RotateAround(hinge.position, Vector3.up, rotateDegrees);
     }
 }

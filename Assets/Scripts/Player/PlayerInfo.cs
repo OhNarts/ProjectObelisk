@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInfo : ScriptableObject
 {
-    public Dictionary<AmmoType, int> PlayerAmmo;
-    public float MaxPlayerHealth;
-    public float PlayerHealth;
+    [SerializeField] public Dictionary<AmmoType, int> PlayerAmmo;
+    [SerializeField] public float MaxPlayerHealth;
+    [SerializeField] public float PlayerHealth;
 }
