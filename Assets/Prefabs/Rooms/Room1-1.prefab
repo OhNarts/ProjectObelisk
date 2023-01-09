@@ -87,7 +87,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 6955099335153272760}
   - {fileID: 6365589946009981509}
-  navMesh: {fileID: 23800000, guid: 7beba15ff8a13bf4cb82f4a377c825b6, type: 2}
+  _navMesh: {fileID: 23800000, guid: 7beba15ff8a13bf4cb82f4a377c825b6, type: 2}
 --- !u!1 &6847367399965433880
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1312363586461668096, guid: d738b3ea7c9dbb54b91d849e400c34a4, type: 3}
       propertyPath: m_VersionIndex
-      value: 58
+      value: 61
       objectReference: {fileID: 0}
     - target: {fileID: 3026041023970652034, guid: d738b3ea7c9dbb54b91d849e400c34a4, type: 3}
       propertyPath: m_RootOrder
@@ -1677,7 +1677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1312363586461668096, guid: d738b3ea7c9dbb54b91d849e400c34a4, type: 3}
       propertyPath: m_VersionIndex
-      value: 55
+      value: 58
       objectReference: {fileID: 0}
     - target: {fileID: 3026041023970652034, guid: d738b3ea7c9dbb54b91d849e400c34a4, type: 3}
       propertyPath: m_RootOrder

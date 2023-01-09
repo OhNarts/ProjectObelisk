@@ -13,7 +13,9 @@ public class CombatRoom : Room
     public event OnRoomPlanStartHandler OnRoomPlanStart;
 
     [SerializeField] private List<EnemyController> enemies;
-    [SerializeField] private NavMeshData navMesh;
+    [SerializeField] private NavMeshData _navMesh;
+    private NavMeshDataInstance _navMeshInstance;
+
 
     private int aliveEnemyCount;
 
@@ -21,13 +23,18 @@ public class CombatRoom : Room
     {
         base.InitializeRoom();
 
-        NavMesh.AddNavMeshData(navMesh);
+        _navMeshInstance = NavMesh.AddNavMeshData(_navMesh);
 
         aliveEnemyCount = enemies.Count;
         foreach (EnemyController enemy in enemies)
         {
             enemy.onEnemyDeath.AddListener(OnEnemyDeath);
         }
+    }
+
+    void Ondisable() {
+        // Clean up nav mesh data
+        NavMesh.RemoveNavMeshData(_navMeshInstance);
     }
 
     public void PlanRoom(PlayerController player, GameObject cameraHolder)
@@ -52,6 +59,7 @@ public class CombatRoom : Room
         {
             enemy.Target = player.transform;
         }
+        doorAttemptedEnter.CloseDoor();
     }
 
     private void RoomFinish()
