@@ -81,11 +81,11 @@ public abstract class Weapon : MonoBehaviour
 
     // Abstract methods, override these to get a weapon to fire
     // Pass the ammo dictionary so that the methods can subtract the correct ammo amount when used
-    public virtual void Fire1(Dictionary<AmmoType, int> ammo) { }
-    public virtual void Fire1Stop(Dictionary<AmmoType, int> ammo) { }
+    public virtual void Fire1(AmmoDictionary ammo) { }
+    public virtual void Fire1Stop(AmmoDictionary ammo) { }
 
-    public virtual void Fire2(Dictionary<AmmoType, int> ammo) { }
-    public virtual void Fire2Stop(Dictionary<AmmoType, int> ammo) { }
+    public virtual void Fire2(AmmoDictionary ammo) { }
+    public virtual void Fire2Stop(AmmoDictionary ammo) { }
 
 }
 

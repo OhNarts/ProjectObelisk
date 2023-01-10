@@ -8,6 +8,7 @@ public class HealthHandler : MonoBehaviour
 {
     [SerializeField] public UnityEventDamage onDamage;
     [SerializeField] public UnityEventFloat onHeal;
+    [SerializeField] public UnityEvent onHealthChange;
     [SerializeField] public UnityEvent onDeath;
 
     [SerializeField] private float maxHealth;
@@ -50,6 +51,7 @@ public class HealthHandler : MonoBehaviour
     public void Damage(DamageInfo info)
     {
         health -= info.damage;
+        onHealthChange?.Invoke();
         onDamage?.Invoke(info);
         if (health <= 0)
         {
@@ -73,6 +75,7 @@ public class HealthHandler : MonoBehaviour
             amountHealed = maxHealth - health;
         }
         health += amountHealed;
+        onHealthChange?.Invoke();
         onHeal?.Invoke(amountHealed);
     }
 }

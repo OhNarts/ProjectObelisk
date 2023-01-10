@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour
 
     private EnemyState currState;
     private NavMeshAgent agent;
-    private Dictionary<AmmoType, int> ammo;
+    private AmmoDictionary ammo;
 
     
     [SerializeField] private float distToAttack;
@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour
         currState = EnemyState.Idle;
         agent = transform.GetComponent<NavMeshAgent>();
         weapon.PickUpWeapon(gameObject, equipPos);
-        ammo = new Dictionary<AmmoType, int>();
+        ammo = new AmmoDictionary();
         ammo.Add(weapon.AmmoType1, 1000000000);
     }
 

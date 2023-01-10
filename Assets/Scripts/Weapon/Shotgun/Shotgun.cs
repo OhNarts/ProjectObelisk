@@ -21,7 +21,7 @@ public class Shotgun : Weapon
         lastFired = 0;
     }
 
-    public override void Fire1(Dictionary<AmmoType, int> ammo)
+    public override void Fire1(AmmoDictionary ammo)
     {
         base.Fire1(ammo);
         if (Time.unscaledTime - lastFired < coolDownTime || fired == true || ammo[_ammoType1] < _ammoCost1) { return; }
@@ -50,9 +50,10 @@ public class Shotgun : Weapon
 
         fired = true;
         lastFired = Time.unscaledTime;
+        ammo[_ammoType1] -= _ammoCost1;
     }
 
-    public override void Fire1Stop(Dictionary<AmmoType, int> ammo)
+    public override void Fire1Stop(AmmoDictionary ammo)
     {
         base.Fire1Stop(ammo);
         fired = false;

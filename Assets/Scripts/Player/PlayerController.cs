@@ -26,13 +26,6 @@ public class PlayerController : MonoBehaviour
 
     // The point on the ground that the mouse is over
     private Vector3 groundMousePt;
-    
-    public void InitializePlayer(PlayerInfo info)
-    {
-        currAmmo = info.Ammo;
-        healthHandler.MaxHealth = info.MaxHealth;
-        healthHandler.Health = info.Health;
-    }
 
     private void Start()
     {
@@ -40,6 +33,10 @@ public class PlayerController : MonoBehaviour
         LayerMask.GetMask("Weapon") |
         LayerMask.GetMask("Shootable") |
         LayerMask.GetMask("Interactable");
+
+        // currAmmo = PlayerInfo.instance.Ammo;
+        healthHandler.MaxHealth = PlayerInfo.instance.MaxHealth;
+        healthHandler.Health = PlayerInfo.instance.Health;
     }
 
     // Update is called once per frame
@@ -65,6 +62,12 @@ public class PlayerController : MonoBehaviour
     public void OnDeath()
     {
         _onPlayerDeath.Invoke();
+    }
+
+    public void OnPlayerHealthChange()
+    {
+        PlayerInfo.instance.Health = healthHandler.Health;
+        Debug.Log(PlayerInfo.instance.Health);
     }
 
     #endregion
@@ -103,7 +106,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maxPickUpDistance;
     [SerializeField] private float interactableRadius;
     [SerializeField] private LayerMask _interactableMask;
-    [SerializeField] private AmmoDictionary currAmmo; public AmmoDictionary CurrentAmmo { get => currAmmo; }
+    // [SerializeField] private AmmoDictionary currAmmo; public AmmoDictionary CurrentAmmo { get => currAmmo; }
     private Weapon equippedWeapon;
     public Weapon EquippedWeapon
     {
@@ -118,10 +121,10 @@ public class PlayerController : MonoBehaviour
         if (equippedWeapon == null) return;
         if (context.started)
         {
-            equippedWeapon.Fire1(currAmmo);
+            equippedWeapon.Fire1(PlayerInfo.instance.Ammo);
         } else if (context.canceled)
         {
-            equippedWeapon.Fire1Stop(currAmmo);
+            equippedWeapon.Fire1Stop(PlayerInfo.instance.Ammo);
         }
     }
 
@@ -130,11 +133,11 @@ public class PlayerController : MonoBehaviour
         if (equippedWeapon == null) return;
         if (context.started)
         {
-            equippedWeapon.Fire2(currAmmo);
+            equippedWeapon.Fire2(PlayerInfo.instance.Ammo);
         }
         else if (context.canceled)
         {
-            equippedWeapon.Fire2Stop(currAmmo);
+            equippedWeapon.Fire2Stop(PlayerInfo.instance.Ammo);
         }
     }
 
@@ -169,15 +172,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         interactable?.Interact(this);
-    }
-
-
-    #endregion
-
-    #region Debug
-    public void OnPlayerHit()
-    {
-        Debug.Log("Ouch");
     }
     #endregion
 }

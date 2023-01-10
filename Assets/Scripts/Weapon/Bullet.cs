@@ -21,6 +21,6 @@ public class Bullet : MonoBehaviour
         if (hitHealth != null)
         {
             hitHealth.Damage(damageInfo);
-        }    
+        }
     }
 }
