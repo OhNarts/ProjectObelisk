@@ -18,9 +18,13 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float _damage;
     [SerializeField] protected WeaponType _weaponType;
 
+    [SerializeField] private Item _weaponItem; public Item WeaponItem { get => _weaponItem; }
+
     [Header("Ammo Costs/Types")]
     [SerializeField] protected int _ammoCost1;
     [SerializeField] protected AmmoType _ammoType1;
+
+
     public AmmoType AmmoType1
     {
         get

@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private UnityEvent _onPlayerDeath;
-    [SerializeField] private Transform _aimPoint;
     [SerializeField] private PlayerInput input;
     private LayerMask lookLayers;
 
@@ -30,10 +29,9 @@ public class PlayerController : MonoBehaviour
     
     public void InitializePlayer(PlayerInfo info)
     {
-        currAmmo = info.PlayerAmmo;
-        healthHandler.MaxHealth = info.MaxPlayerHealth;
-        healthHandler.Health = info.PlayerHealth;
-        _aimPoint.parent = null;
+        currAmmo = info.Ammo;
+        healthHandler.MaxHealth = info.MaxHealth;
+        healthHandler.Health = info.Health;
     }
 
     private void Start()
@@ -42,10 +40,6 @@ public class PlayerController : MonoBehaviour
         LayerMask.GetMask("Weapon") |
         LayerMask.GetMask("Shootable") |
         LayerMask.GetMask("Interactable");
-
-        currAmmo = new Dictionary<AmmoType, int>();
-        currAmmo.Add(AmmoType.Pistol, 100);
-        currAmmo.Add(AmmoType.Shotgun, 100);
     }
 
     // Update is called once per frame
@@ -63,7 +57,6 @@ public class PlayerController : MonoBehaviour
     public void CombatStart(CallbackContext callback)
     {
         if (callback.canceled) return;
-        Debug.Log("Queried combat start");
         input.SwitchCurrentActionMap("Combat");
         OnCombatStart?.Invoke(this, EventArgs.Empty);
     }
@@ -110,7 +103,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maxPickUpDistance;
     [SerializeField] private float interactableRadius;
     [SerializeField] private LayerMask _interactableMask;
-    [SerializeField] private Dictionary<AmmoType, int> currAmmo; public Dictionary<AmmoType, int> CurrentAmmo { get => currAmmo; }
+    [SerializeField] private AmmoDictionary currAmmo; public AmmoDictionary CurrentAmmo { get => currAmmo; }
     private Weapon equippedWeapon;
     public Weapon EquippedWeapon
     {

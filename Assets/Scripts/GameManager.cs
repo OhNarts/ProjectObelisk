@@ -22,7 +22,7 @@ public sealed class GameManager : MonoBehaviour
     }
     #endregion
 
-    // private PlayerInfo playerInfo;
+    [SerializeField] private PlayerInfo playerInfo;
     [SerializeField] private PlayerController player;
     [SerializeField] private GameObject _cameraHolder;
 
@@ -73,17 +73,14 @@ public sealed class GameManager : MonoBehaviour
             room.Enter(player, _cameraHolder);
 
         };
-        // player.InitializePlayer(playerInfo);
+        player.InitializePlayer(playerInfo);
     }
 
     private void OnSceneUnloaded(Scene scene)
     {
-        // playerInfo = new PlayerInfo()
-        // {
-        //     PlayerAmmo = player.CurrentAmmo,
-        //     PlayerHealth = player.HealthHandler.Health,
-        //     MaxPlayerHealth = player.HealthHandler.MaxHealth
-        // };
+        playerInfo.MaxHealth = player.HealthHandler.MaxHealth;
+        playerInfo.Health = player.HealthHandler.Health;
+        playerInfo.Ammo = player.CurrentAmmo;
 
         foreach (Room room in currLevel.Rooms)
         {

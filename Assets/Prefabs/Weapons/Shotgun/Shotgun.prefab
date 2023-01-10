@@ -329,6 +329,7 @@ MonoBehaviour:
   _attackPoint: {fileID: 6945854898702257160}
   _damage: 20
   _weaponType: 0
+  _weaponItem: {fileID: 11400000, guid: 54e95dfa0d02bef4c9d9d8c255a17d87, type: 2}
   _ammoCost1: 10
   _ammoType1: 3
   _ammoCost2: 0

@@ -8,3 +8,6 @@ using UnityEngine;
 
 [Serializable]
 public class DoorRoomDictionary : SerializableDictionary<Door, Room> { }
+
+[Serializable]
+public class AmmoDictionary : SerializableDictionary<AmmoType, int> { }
