@@ -46,6 +46,7 @@ public sealed class GameManager : MonoBehaviour
 
         PlayerInfo.instance.MaxHealth = 100;
         PlayerInfo.instance.Health = 100;
+        PlayerInfo.instance.Initialize();
     }
 
     private void OnDisable()

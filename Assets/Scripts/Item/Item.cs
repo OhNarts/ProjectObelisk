@@ -5,6 +5,6 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public string itemName = "New Item";
-    public Sprite sprite;
+    public GameObject gameObject;
     
 }

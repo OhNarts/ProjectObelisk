@@ -156,8 +156,17 @@ public class PlayerController : MonoBehaviour
         {
             if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon"))
             {
-                var wep = collider.transform.GetComponent<Weapon>();
+                Weapon wep = collider.transform.GetComponent<Weapon>();
+        
+                // Skip over weapons that already have an owner
                 if (wep.holder != null) { continue; }
+
+                // If in the postCombat stage, then just add it to the inventory
+                if (GameManager.Instance.CurrentState == GameState.PostCombat) {
+                    PlayerInfo.instance.AddToInventory(wep.WeaponItem);
+                    return;
+                }
+
                 if (equippedWeapon != null)
                 {
                     equippedWeapon.DropWeapon();

@@ -7,8 +7,20 @@ using UnityEngine;
 
 public class PlayerInfo : ScriptableSingleton<PlayerInfo>
 {
-    [SerializeField] public AmmoDictionary Ammo;
-    [SerializeField] public float MaxHealth;
-    [SerializeField] public float Health;
-    [SerializeField] public Weapon[] Inventory;
+    public AmmoDictionary Ammo;
+    public float MaxHealth;
+    public float Health;
+    public HashSet<Item> Inventory;
+    private int currIndex = 0;
+
+    public void Initialize() {
+        currIndex = 0;
+    }
+
+    public void AddToInventory(Item item) {
+        // // Return if the inventory is too full
+        // if (currIndex >= Inventory.Length) return;
+        // Inventory[currIndex++] = item;
+        Inventory.Add(item);
+    }
 }

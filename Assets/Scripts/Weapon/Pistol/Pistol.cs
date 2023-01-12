@@ -30,7 +30,6 @@ public class Pistol : Weapon
 
         // Subtract ammo cost
         ammo[_ammoType1] -= _ammoCost1;
-        Debug.Log(ammo[_ammoType1]);
         fired = true;
 
         // Fire the weapon
