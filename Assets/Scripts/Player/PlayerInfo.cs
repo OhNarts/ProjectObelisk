@@ -11,10 +11,9 @@ public class PlayerInfo : ScriptableSingleton<PlayerInfo>
     public float MaxHealth;
     public float Health;
     public HashSet<Item> Inventory;
-    private int currIndex = 0;
 
     public void Initialize() {
-        currIndex = 0;
+        Inventory = new HashSet<Item>();
     }
 
     public void AddToInventory(Item item) {

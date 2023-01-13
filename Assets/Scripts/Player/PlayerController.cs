@@ -164,6 +164,8 @@ public class PlayerController : MonoBehaviour
                 // If in the postCombat stage, then just add it to the inventory
                 if (GameManager.Instance.CurrentState == GameState.PostCombat) {
                     PlayerInfo.instance.AddToInventory(wep.WeaponItem);
+                    Debug.Log(PlayerInfo.instance.Inventory.Count);
+                    Destroy(wep.gameObject);
                     return;
                 }
 
