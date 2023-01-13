@@ -112,9 +112,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackPoint: {fileID: 237986279614897560}
+  _weaponItem: {fileID: 11400000, guid: 230c1ede6c9dd9c478b4ca0c98eb716a, type: 2}
   _damage: 10
   _weaponType: 0
-  _weaponItem: {fileID: 11400000, guid: 230c1ede6c9dd9c478b4ca0c98eb716a, type: 2}
   _ammoCost1: 1
   _ammoType1: 1
   _ammoCost2: 1

@@ -159,12 +159,13 @@ public class PlayerController : MonoBehaviour
                 Weapon wep = collider.transform.GetComponent<Weapon>();
         
                 // Skip over weapons that already have an owner
-                if (wep.holder != null) { continue; }
+                if (wep.Holder != null) { continue; }
 
                 // If in the postCombat stage, then just add it to the inventory
                 if (GameManager.Instance.CurrentState == GameState.PostCombat) {
-                    PlayerInfo.instance.AddToInventory(wep.WeaponItem);
-                    Debug.Log(PlayerInfo.instance.Inventory.Count);
+                    PlayerInfo.instance.Ammo[wep.AmmoType1] += wep.AmmoAmount1;
+                    PlayerInfo.instance.Weapons.Add(wep.WeaponItem);
+                    Debug.Log(PlayerInfo.instance.Weapons.Count);
                     Destroy(wep.gameObject);
                     return;
                 }

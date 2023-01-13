@@ -32,7 +32,7 @@ public class CombatRoom : Room
         }
     }
 
-    void Ondisable() {
+    void OnDisable() {
         // Clean up nav mesh data
         NavMesh.RemoveNavMeshData(_navMeshInstance);
     }

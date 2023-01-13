@@ -9,9 +9,6 @@ public class Shotgun : Weapon
     [SerializeField] private GameObject bullet;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float bulletRotationDifference;
-    //[SerializeField] private Transform leftAttackPoint;
-    //[SerializeField] private Transform rightAttackPoint;
-
     private float lastFired;
     private bool fired;
 

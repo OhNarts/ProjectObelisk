@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ammo:
     m_keys: 00000000010000000300000002000000
-    m_values: 64000000640000006400000064000000
+    m_values: 00000000000000000000000000000000
   MaxHealth: 100
   Health: 100

@@ -14,42 +14,28 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected Transform _attackPoint;
 
     [Header("Weapon Info")]
+    [SerializeField] private WeaponItem _weaponItem; public WeaponItem WeaponItem { get => _weaponItem; }
     // The damage an attack does
     [SerializeField] protected float _damage;
     [SerializeField] protected WeaponType _weaponType;
 
-    [SerializeField] private Item _weaponItem; public Item WeaponItem { get => _weaponItem; }
-
     [Header("Ammo Costs/Types")]
-    [SerializeField] protected int _ammoCost1;
-    [SerializeField] protected AmmoType _ammoType1;
-
-
-    public AmmoType AmmoType1
-    {
-        get
-        {
-            return _ammoType1;
-        }
-    }
-
+    [SerializeField] protected int _ammoCost1; public int AmmoCost1 { get => _ammoCost1; }
+    [SerializeField] protected AmmoType _ammoType1; public AmmoType AmmoType1 { get => _ammoType1; }
+    [SerializeField] protected int _ammoAmount1; public int AmmoAmount1 { get => _ammoAmount1; }
     [SerializeField] protected int _ammoCost2;
-    [SerializeField] protected AmmoType _ammoType2;
-    public AmmoType AmmoType2
-    {
-        get
-        {
-            return _ammoType2;
-        }
-    }
+    [SerializeField] protected AmmoType _ammoType2; public AmmoType AmmoType2 { get => _ammoType2; }
+    [SerializeField] protected int _ammoAmount2; public int AmmoAmount2 { get => _ammoAmount2; }
 
-    protected GameObject _holder = null;
-    public GameObject holder
-    {
-        get
-        {
-            return _holder;
-        }
+    protected GameObject _holder = null; public GameObject Holder { get => _holder; }
+
+    public void InitializeWeapon(int ammoAmount1, int ammoAmount2) {
+        _holder = null;
+        transform.parent = null;
+        transform.GetComponent<BoxCollider>().enabled = true;
+        transform.GetComponent<Rigidbody>().isKinematic = false;
+        _ammoAmount1 = ammoAmount1;
+        _ammoAmount2 = ammoAmount2;
     }
 
     /// <summary>
@@ -57,7 +43,7 @@ public abstract class Weapon : MonoBehaviour
     /// </summary>
     /// <param name="holder"></param>
     /// <param name="equipPos"></param>
-    public virtual void PickUpWeapon(GameObject holder, Transform equipPos)
+    public void PickUpWeapon(GameObject holder, Transform equipPos)
     {
         _holder = holder;
         transform.parent = equipPos;
