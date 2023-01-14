@@ -21,15 +21,12 @@ public class Pistol : Weapon
         lastFired = 0;
     }
 
-    public override void Fire1(AmmoDictionary ammo)
+    public override void Fire1(bool useAmmo = false)
     {
-        base.Fire1(ammo);
-        if (Time.unscaledTime - lastFired < coolDownTime  || fired == true || ammo[_ammoType1] < _ammoCost1) { return; }
+        if (Time.unscaledTime - lastFired < coolDownTime  || fired == true) { return; }
+        if (useAmmo && _ammoAmount1-- <= 0) { return; }
 
         lastFired = Time.unscaledTime;
-
-        // Subtract ammo cost
-        ammo[_ammoType1] -= _ammoCost1;
         fired = true;
 
         // Fire the weapon
@@ -44,9 +41,8 @@ public class Pistol : Weapon
     }
 
 
-    public override void Fire1Stop(AmmoDictionary ammo)
+    public override void Fire1Stop(bool useAmmo = false)
     {
-        base.Fire1Stop(ammo);
         fired = false;
     }
 }

@@ -165,6 +165,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PlaceItem",
+                    "type": "Button",
+                    "id": "c74ce2d3-df3b-4b30-90a0-4f000734a5d9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RemoveItem",
+                    "type": "Button",
+                    "id": "0dca25e8-59f3-4b44-b7bf-7174a31d7361",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -176,6 +194,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "StartCombat",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b6535f18-4d2e-4bce-b19f-4863ba41f005",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlaceItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd3a98f5-2dad-4e1b-b520-74830af166fc",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RemoveItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

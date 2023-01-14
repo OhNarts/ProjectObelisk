@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   WeaponName: Pistol
-  weapon: {fileID: 237986280338035906, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
+  AmmoCost1: 10
+  AmmoType1: 1
+  AmmoCost2: 10
+  AmmoType2: 4
+  gameObject: {fileID: 237986280338035906, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}

@@ -262,9 +262,6 @@ MonoBehaviour:
   _interactableMask:
     serializedVersion: 2
     m_Bits: 128
-  currAmmo:
-    m_keys: 
-    m_values: 
 --- !u!114 &3309712311292657436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,6 +433,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 31e15ba1-f894-42b3-b267-ed9dc2a2f5e2
     m_ActionName: Planning/StartCombat[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3648394291031476892}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: AddToWorld
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c74ce2d3-df3b-4b30-90a0-4f000734a5d9
+    m_ActionName: Planning/PlaceItem[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0dca25e8-59f3-4b44-b7bf-7174a31d7361
+    m_ActionName: Planning/RemoveItem[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Combat

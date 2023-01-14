@@ -67,7 +67,6 @@ public class PlayerController : MonoBehaviour
     public void OnPlayerHealthChange()
     {
         PlayerInfo.instance.Health = healthHandler.Health;
-        Debug.Log(PlayerInfo.instance.Health);
     }
 
     #endregion
@@ -121,10 +120,10 @@ public class PlayerController : MonoBehaviour
         if (equippedWeapon == null) return;
         if (context.started)
         {
-            equippedWeapon.Fire1(PlayerInfo.instance.Ammo);
+            equippedWeapon.Fire1(true);
         } else if (context.canceled)
         {
-            equippedWeapon.Fire1Stop(PlayerInfo.instance.Ammo);
+            equippedWeapon.Fire1Stop(true);
         }
     }
 
@@ -133,11 +132,11 @@ public class PlayerController : MonoBehaviour
         if (equippedWeapon == null) return;
         if (context.started)
         {
-            equippedWeapon.Fire2(PlayerInfo.instance.Ammo);
+            equippedWeapon.Fire2(true);
         }
         else if (context.canceled)
         {
-            equippedWeapon.Fire2Stop(PlayerInfo.instance.Ammo);
+            equippedWeapon.Fire2Stop(true);
         }
     }
 
@@ -161,9 +160,10 @@ public class PlayerController : MonoBehaviour
                 // Skip over weapons that already have an owner
                 if (wep.Holder != null) { continue; }
 
-                // If in the postCombat stage, then just add it to the inventory
+                // If in the postCombat stage, then just add it to the weapons
                 if (GameManager.Instance.CurrentState == GameState.PostCombat) {
-                    PlayerInfo.instance.Ammo[wep.AmmoType1] += wep.AmmoAmount1;
+                    // Add the amount of ammo the weapon had into the ammo dictionary
+                    PlayerInfo.instance.Ammo[wep.WeaponItem.AmmoType1] += wep.AmmoAmount1;
                     PlayerInfo.instance.Weapons.Add(wep.WeaponItem);
                     Debug.Log(PlayerInfo.instance.Weapons.Count);
                     Destroy(wep.gameObject);
@@ -184,6 +184,23 @@ public class PlayerController : MonoBehaviour
             }
         }
         interactable?.Interact(this);
+    }
+
+    public void AddToWorld(CallbackContext context) {
+        if (!context.started) return;
+        WeaponItem item = null;
+        // For now just get the first item in the list
+        // Will change once UI works
+        foreach (var wep in PlayerInfo.instance.Weapons) {
+            item = wep;
+            break;
+        }
+        if (item == null) return;
+        GameObject instance = Instantiate(item.gameObject);
+        Weapon weapon = instance.GetComponent<Weapon>(); 
+        PlayerInfo.instance.Ammo[item.AmmoType1] -= item.AmmoCost1;
+        weapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
+
     }
     #endregion
 }

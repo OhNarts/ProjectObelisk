@@ -31,8 +31,6 @@ public class EnemyController : MonoBehaviour
         currState = EnemyState.Idle;
         agent = transform.GetComponent<NavMeshAgent>();
         weapon.PickUpWeapon(gameObject, equipPos);
-        ammo = new AmmoDictionary();
-        ammo.Add(weapon.AmmoType1, 1000000000);
     }
 
     // Update is called once per frame
@@ -71,8 +69,8 @@ public class EnemyController : MonoBehaviour
     {
         agent.isStopped = true;
         transform.LookAt(_target);
-        weapon.Fire1(ammo);
-        weapon.Fire1Stop(ammo);
+        weapon.Fire1();
+        weapon.Fire1Stop();
     }
     #endregion
 

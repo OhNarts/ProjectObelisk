@@ -20,11 +20,11 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected WeaponType _weaponType;
 
     [Header("Ammo Costs/Types")]
-    [SerializeField] protected int _ammoCost1; public int AmmoCost1 { get => _ammoCost1; }
-    [SerializeField] protected AmmoType _ammoType1; public AmmoType AmmoType1 { get => _ammoType1; }
+    // [SerializeField] protected int _ammoCost1; public int AmmoCost1 { get => _ammoCost1; }
+    // [SerializeField] protected AmmoType _ammoType1; public AmmoType AmmoType1 { get => _ammoType1; }
     [SerializeField] protected int _ammoAmount1; public int AmmoAmount1 { get => _ammoAmount1; }
-    [SerializeField] protected int _ammoCost2;
-    [SerializeField] protected AmmoType _ammoType2; public AmmoType AmmoType2 { get => _ammoType2; }
+    // [SerializeField] protected int _ammoCost2; public int AmmoCost2 { get => _ammoCost2; }
+    // [SerializeField] protected AmmoType _ammoType2; public AmmoType AmmoType2 { get => _ammoType2; }
     [SerializeField] protected int _ammoAmount2; public int AmmoAmount2 { get => _ammoAmount2; }
 
     protected GameObject _holder = null; public GameObject Holder { get => _holder; }
@@ -65,13 +65,13 @@ public abstract class Weapon : MonoBehaviour
     }
 
 
-    // Abstract methods, override these to get a weapon to fire
-    // Pass the ammo dictionary so that the methods can subtract the correct ammo amount when used
-    public virtual void Fire1(AmmoDictionary ammo) { }
-    public virtual void Fire1Stop(AmmoDictionary ammo) { }
+    // Use ammo defaults to false because player is the only
+    // case where ammo is going to be used
+    public virtual void Fire1(bool useAmmo = false) { }
+    public virtual void Fire1Stop(bool useAmmo = false) { }
 
-    public virtual void Fire2(AmmoDictionary ammo) { }
-    public virtual void Fire2Stop(AmmoDictionary ammo) { }
+    public virtual void Fire2(bool useAmmo = false) { }
+    public virtual void Fire2Stop(bool useAmmo = false) { }
 
 }
 

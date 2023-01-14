@@ -18,10 +18,10 @@ public class Shotgun : Weapon
         lastFired = 0;
     }
 
-    public override void Fire1(AmmoDictionary ammo)
+    public override void Fire1(bool useAmmo = false)
     {
-        base.Fire1(ammo);
-        if (Time.unscaledTime - lastFired < coolDownTime || fired == true || ammo[_ammoType1] < _ammoCost1) { return; }
+        if ( Time.unscaledTime - lastFired < coolDownTime || fired == true ) { return; }
+        if ( useAmmo && _ammoAmount1-- <= 0 ) { return; }
         GameObject[] bullets = new GameObject[3];
         Vector3 currRotOffset = new Vector3(0, -bulletRotationDifference, 0);
         for (int i = 0; i < 3; i++)
@@ -47,12 +47,10 @@ public class Shotgun : Weapon
 
         fired = true;
         lastFired = Time.unscaledTime;
-        ammo[_ammoType1] -= _ammoCost1;
     }
 
-    public override void Fire1Stop(AmmoDictionary ammo)
+    public override void Fire1Stop(bool useAmmo = false)
     {
-        base.Fire1Stop(ammo);
         fired = false;
     }
 

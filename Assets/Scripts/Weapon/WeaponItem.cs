@@ -6,10 +6,10 @@ using UnityEngine;
 public class WeaponItem : ScriptableObject
 {
     public string WeaponName;
-    // public int AmmoCost1;
-    // public AmmoType AmmoType1;
-    // public int AmmoCost2;
-    // public AmmoType AmmoType2;
-    public GameObject weapon;
+    public int AmmoCost1;
+    public AmmoType AmmoType1;
+    public int AmmoCost2;
+    public AmmoType AmmoType2;
+    public GameObject gameObject;
     // Probably bad to have a circular reference
 }
