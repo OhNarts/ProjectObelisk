@@ -16,4 +16,4 @@ MonoBehaviour:
     m_keys: 00000000010000000300000002000000
     m_values: 00000000000000000000000000000000
   MaxHealth: 100
-  Health: 20
+  Health: 100

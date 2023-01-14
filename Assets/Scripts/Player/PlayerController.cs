@@ -35,8 +35,8 @@ public class PlayerController : MonoBehaviour
         LayerMask.GetMask("Interactable");
 
         // currAmmo = PlayerInfo.instance.Ammo;
-        healthHandler.MaxHealth = PlayerInfo.instance.MaxHealth;
-        healthHandler.Health = PlayerInfo.instance.Health;
+        healthHandler.MaxHealth = PlayerInfo.Instance.MaxHealth;
+        healthHandler.Health = PlayerInfo.Instance.Health;
     }
 
     // Update is called once per frame
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnPlayerHealthChange()
     {
-        PlayerInfo.instance.Health = healthHandler.Health;
+        PlayerInfo.Instance.Health = healthHandler.Health;
     }
 
     #endregion
@@ -163,9 +163,8 @@ public class PlayerController : MonoBehaviour
                 // If in the postCombat stage, then just add it to the weapons
                 if (GameManager.Instance.CurrentState == GameState.PostCombat) {
                     // Add the amount of ammo the weapon had into the ammo dictionary
-                    PlayerInfo.instance.Ammo[wep.WeaponItem.AmmoType1] += wep.AmmoAmount1;
-                    PlayerInfo.instance.Weapons.Add(wep.WeaponItem);
-                    Debug.Log(PlayerInfo.instance.Weapons.Count);
+                    PlayerInfo.Instance.Ammo[wep.WeaponItem.AmmoType1] += wep.AmmoAmount1;
+                    PlayerInfo.Instance.Weapons.Add(wep.WeaponItem);
                     Destroy(wep.gameObject);
                     return;
                 }
@@ -191,14 +190,14 @@ public class PlayerController : MonoBehaviour
         WeaponItem item = null;
         // For now just get the first item in the list
         // Will change once UI works
-        foreach (var wep in PlayerInfo.instance.Weapons) {
+        foreach (var wep in PlayerInfo.Instance.Weapons) {
             item = wep;
             break;
         }
         if (item == null) return;
-        GameObject instance = Instantiate(item.gameObject);
-        Weapon weapon = instance.GetComponent<Weapon>(); 
-        PlayerInfo.instance.Ammo[item.AmmoType1] -= item.AmmoCost1;
+        GameObject Instance = Instantiate(item.gameObject);
+        Weapon weapon = Instance.GetComponent<Weapon>(); 
+        PlayerInfo.Instance.Ammo[item.AmmoType1] -= item.AmmoCost1;
         weapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
 
     }

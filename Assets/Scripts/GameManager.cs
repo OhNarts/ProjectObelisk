@@ -43,11 +43,12 @@ public sealed class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
         _currentState = GameState.PostCombat;
+    }
 
-        PlayerInfo.instance.MaxHealth = 100;
-        PlayerInfo.instance.Health = 100;
-        PlayerInfo.instance.Weapons = new HashSet<WeaponItem>();
-        // PlayerInfo.instance.Initialize();
+    private void Start() {
+        PlayerInfo.Instance.MaxHealth = 100;
+        PlayerInfo.Instance.Health = 100;
+        PlayerInfo.Instance.Weapons = new HashSet<WeaponItem>();
     }
 
     private void OnDisable()
