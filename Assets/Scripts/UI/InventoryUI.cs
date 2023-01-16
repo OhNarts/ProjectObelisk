@@ -8,12 +8,15 @@ public class InventoryUI : MonoBehaviour
     // Very hacky way of doing this
     [SerializeField] private GameObject[] _inventorySlots;
     private int _currSlot;
-    void Awake() {
-        PlayerInfo.Instance.OnPlayerWeaponsChanged += OnPlayerWeaponsChanged;
+    void Start() {
         foreach(GameObject slot in _inventorySlots) {
             slot.SetActive(false);
         }
         _currSlot = 0;
+    }
+
+    void OnEnable() {
+        PlayerInfo.Instance.OnPlayerWeaponsChanged += OnPlayerWeaponsChanged;
     }
 
     void OnDisable() {

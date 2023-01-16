@@ -19,10 +19,11 @@ public class CombatRoom : Room
 
     private int aliveEnemyCount;
 
-    void Awake()
+    void OnEnable()
     {
         base.InitializeRoom();
 
+        _navMesh.position = transform.position;
         _navMeshInstance = NavMesh.AddNavMeshData(_navMesh);
 
         aliveEnemyCount = enemies.Count;
@@ -48,6 +49,7 @@ public class CombatRoom : Room
     {
         if (--aliveEnemyCount == 0)
         {
+            Debug.Log("Room Finished");
             RoomFinish();
         }
     }

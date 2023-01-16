@@ -5,7 +5,7 @@ public class AmmoUI : MonoBehaviour
 {
     [SerializeField] private AmmoUIDictionary _ammoSlots;
 
-    void Start() {
+    void OnEnable() {
         foreach (AmmoType ammoType in _ammoSlots.Keys) {
             _ammoSlots[ammoType].Text = PlayerInfo.Instance.Ammo[ammoType].ToString();
         }

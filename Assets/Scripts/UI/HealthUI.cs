@@ -8,7 +8,7 @@ public class HealthUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _textMesh;
 
-    void Start() {
+    void OnEnable() {
         _textMesh.text = PlayerInfo.Instance.Health.ToString();
         PlayerInfo.Instance.OnPlayerHealthChanged += OnPlayerHealthChanged;
     }
