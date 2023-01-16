@@ -20,6 +20,15 @@ public class OnPlayerAmmoChangedArgs : EventArgs {
         _currentAmount = newAmount;
     }
 }
+
+public class OnPlayerHealthChangedArgs : EventArgs {
+    private float _oldHealth; public float OldHealth {get => _oldHealth;}
+    private float _newHealth; public float NewHealth {get => _newHealth;}
+    public OnPlayerHealthChangedArgs(float oldHealth, float newHealth) {
+        _oldHealth = oldHealth;
+        _newHealth = newHealth;
+    }
+}
 #endregion
 
 [CreateAssetMenu(fileName = "New Player Info")]
@@ -50,6 +59,10 @@ public class PlayerInfo : ScriptableObject
 
     public delegate void OnPlayerAmmoChangedHandler(object sender, EventArgs e);
     public event OnPlayerAmmoChangedHandler OnPlayerAmmoChanged;
+
+    public delegate void OnPlayerHealthChangedHandler(object sender, EventArgs e);
+    public event OnPlayerHealthChangedHandler OnPlayerHealthChanged;
+
     #endregion 
 
     [SerializeField] private AmmoDictionary _ammo; public AmmoDictionary Ammo {get => _ammo;}
@@ -65,7 +78,16 @@ public class PlayerInfo : ScriptableObject
     }
 
     public float MaxHealth;
-    public float Health;
+    [SerializeField] private float _health; public float Health {
+        get {
+            return _health;
+        } set {
+            var oldHealth = _health;
+            _health = value;
+            OnPlayerHealthChanged?.Invoke(this,
+            new OnPlayerHealthChangedArgs(oldHealth, _health));
+        }
+    } 
     public HashSet<WeaponItem> Weapons;
     
     /// <summary>
