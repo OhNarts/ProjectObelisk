@@ -47,10 +47,20 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // TODO: Replace these by subscribing to game manager stuff
         if (GameManager.Instance.CurrentState != GameState.Plan)
         {
             transform.LookAt(lookPt);
             _rb.velocity = velocity;
+        } 
+        if (GameManager.Instance.CurrentState != GameState.Combat) {
+            if (equippedWeapon != null) {
+                equippedWeapon.DropWeapon();
+                PlayerInfo.Instance.AddToAmmo(equippedWeapon.WeaponItem.AmmoType1, equippedWeapon.AmmoAmount1);
+                PlayerInfo.Instance.AddWeapon(equippedWeapon.WeaponItem);
+                Destroy(equippedWeapon.gameObject);
+                equippedWeapon = null;
+            }
         }
         if (followObject != null) {
             var gotoPt = new Vector3(lookPt.x, lookPt.y + 5, lookPt.z);
@@ -163,6 +173,7 @@ public class PlayerController : MonoBehaviour
 
         // prioritizes weapons over interactables
         Interactable interactable = null;
+        Debug.Log(colliders.Length);
         foreach(Collider collider in colliders)
         {
             if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon"))
@@ -191,6 +202,7 @@ public class PlayerController : MonoBehaviour
             }
             if (collider.gameObject.layer == LayerMask.NameToLayer("Interactable"))
             {
+                Debug.Log(collider.transform.name);
                 interactable = collider.transform.GetComponent<Interactable>();
             }
         }
@@ -219,6 +231,9 @@ public class PlayerController : MonoBehaviour
             }
             if (chosenSlot == null) return;
             var item = chosenSlot.Weapon;
+
+            if (PlayerInfo.Instance.Ammo[item.AmmoType1] < item.AmmoCost1) return;
+
             GameObject Instance = Instantiate(item.gameObject);
             Weapon weapon = Instance.GetComponent<Weapon>(); 
             PlayerInfo.Instance.AddToAmmo(item.AmmoType1, -item.AmmoCost1);

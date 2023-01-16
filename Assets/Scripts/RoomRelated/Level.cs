@@ -35,17 +35,21 @@ public class Level : MonoBehaviour
 
     private void OnRoomEnterAttempt (object sender, EventArgs e)
     {
+        Debug.Log("Room Enter Attempt");
         if (GameManager.Instance.CurrentState == GameState.Combat || 
         GameManager.Instance.CurrentState == GameState.Plan)
             return;
 
         Room room = (Room)sender;
         OnRoomEnterAttemptArgs args = (OnRoomEnterAttemptArgs)e;
-        if (sender.GetType() == typeof(CombatRoom))
+        Debug.Log(sender.GetType());
+        if (sender.GetType() == typeof(CombatRoom) && !((CombatRoom)sender).RoomCompleted)
         {
+            Debug.Log("Plan Enter");
             ((CombatRoom)sender).PlanRoom(args.Player, _cameraHolder);
         } else
         {
+            Debug.Log("Normal Enter");
             room.Enter(args.Player, _cameraHolder);
         }
     }

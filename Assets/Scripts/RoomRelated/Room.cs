@@ -54,10 +54,7 @@ public class Room : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (Door door in adjacentRooms.Keys)
-        {
-            door.OnDoorInteract -= OnDoorInteract;
-        }
+        DeInitializeRoom();
     }
 
     protected void InitializeRoom() {
@@ -70,6 +67,13 @@ public class Room : MonoBehaviour
         }
     }
 
+    protected void DeInitializeRoom() {
+        foreach (Door door in adjacentRooms.Keys)
+        {
+            door.OnDoorInteract -= OnDoorInteract;
+        }
+    }
+
     private void OnDoorInteract( object sender, EventArgs e )
     {
         // Since the player is trying to enter the door from an occupied room, check if this is occupied
@@ -77,6 +81,7 @@ public class Room : MonoBehaviour
         if (_occupied) return;
         Door door = (Door)sender;
         doorAttemptedEnter = door;
+        Debug.Log(gameObject.name);
         OnRoomEnterAttempt?.Invoke(this, new OnRoomEnterAttemptArgs(((OnDoorInteractArgs)e).Player, door));
     }
 

@@ -30,19 +30,20 @@ public class Door : MonoBehaviour, Interactable
     [SerializeField] private Transform waitPoint2;
 
     private Vector3 otherWaitPoint;
-    private PlayerController player;
+    private PlayerController _player;
     private float rotateDegrees;
     private bool openedPreviously; public bool OpenedPreviously { get => openedPreviously; }
 
     void Awake()
     {
-        player = null;
+        _player = null;
         rotateDegrees = 90;
         openedPreviously = true;
     }
 
     public void Interact(PlayerController player)
     {
+        _player = player;
         OnDoorInteract?.Invoke(this, new OnDoorInteractArgs(player));
     }
 
@@ -52,15 +53,17 @@ public class Door : MonoBehaviour, Interactable
     /// <param name="player"></param>
     public void PlanStageStart(PlayerController player)
     {
-        this.player = player;
+        _player = player;
 
         // We know that the door only has two waitpoints
         // Check which is closer and set the player's position to that one
         bool lowerDistCheck = Vector3.Distance(waitPoint1.position, player.transform.position) <
             Vector3.Distance(waitPoint2.position, player.transform.position);
+        
         (Vector3, Vector3) waitPts = lowerDistCheck ? 
             (waitPoint1.position, waitPoint2.position) : 
             (waitPoint2.position, waitPoint1.position);
+
         player.transform.position = waitPts.Item1;
         otherWaitPoint = waitPts.Item2;
         // Make sure that the door opens in the right direction
@@ -70,8 +73,8 @@ public class Door : MonoBehaviour, Interactable
     public void EnterDoor()
     {
         OpenDoor();
-        player.transform.position = otherWaitPoint;
-        player = null;
+        _player.transform.position = otherWaitPoint;
+        _player = null;
         onEnter?.Invoke();
         openedPreviously = true;
     }
