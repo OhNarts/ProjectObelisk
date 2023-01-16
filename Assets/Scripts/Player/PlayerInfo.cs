@@ -47,8 +47,23 @@ public class PlayerInfo : ScriptableObject
     #region Events
     public delegate void OnPlayerWeaponsChangedHandler(object sender, EventArgs e);
     public event OnPlayerWeaponsChangedHandler OnPlayerWeaponsChanged;
+
+    public delegate void OnPlayerAmmoChangedHandler(object sender, EventArgs e);
+    public event OnPlayerAmmoChangedHandler OnPlayerAmmoChanged;
     #endregion 
+
     public AmmoDictionary Ammo;
+
+    public void AddToAmmo(AmmoType ammoType, int addingAmount) {
+        ChangeAmmo(ammoType, Ammo[ammoType] + addingAmount);
+    }
+    public void ChangeAmmo(AmmoType ammoType, int newAmount) {
+        int oldAmount =  Ammo[ammoType];
+        Ammo[ammoType] = newAmount;
+        OnPlayerAmmoChanged?.Invoke(this,
+        new OnPlayerAmmoChangedArgs(ammoType, oldAmount, newAmount));
+    }
+
     public float MaxHealth;
     public float Health;
     public HashSet<WeaponItem> Weapons;

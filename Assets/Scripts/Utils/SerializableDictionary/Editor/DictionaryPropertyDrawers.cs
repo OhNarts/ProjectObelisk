@@ -9,5 +9,6 @@ using UnityEngine;
 
 [CustomPropertyDrawer(typeof(DoorRoomDictionary))]
 [CustomPropertyDrawer(typeof(AmmoDictionary))]
+[CustomPropertyDrawer(typeof(AmmoUIDictionary))]
 public class AnySerializableDictionaryPropertyDrawer : SerializableDictionaryPropertyDrawer { }
 

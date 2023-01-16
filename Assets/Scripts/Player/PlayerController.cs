@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
                 // If in the postCombat stage, then just add it to the weapons
                 if (GameManager.Instance.CurrentState == GameState.PostCombat) {
                     // Add the amount of ammo the weapon had into the ammo dictionary
-                    PlayerInfo.Instance.Ammo[wep.WeaponItem.AmmoType1] += wep.AmmoAmount1;
+                    PlayerInfo.Instance.AddToAmmo(wep.WeaponItem.AmmoType1, wep.AmmoAmount1);
                     PlayerInfo.Instance.AddWeapon(wep.WeaponItem);
                     Destroy(wep.gameObject);
                     return;
@@ -221,7 +221,7 @@ public class PlayerController : MonoBehaviour
             var item = chosenSlot.Weapon;
             GameObject Instance = Instantiate(item.gameObject);
             Weapon weapon = Instance.GetComponent<Weapon>(); 
-            PlayerInfo.Instance.Ammo[item.AmmoType1] -= item.AmmoCost1;
+            PlayerInfo.Instance.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
             weapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
             followObject = Instance;
         } else if (context.canceled) {
