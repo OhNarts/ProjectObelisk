@@ -310,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605578, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605581, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_Pivot.x
@@ -833,7 +833,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605578, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605581, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_Pivot.x
@@ -934,7 +934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605578, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605581, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_Pivot.x
@@ -1035,7 +1035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605578, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605581, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_Pivot.x
@@ -1218,7 +1218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605578, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605581, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_Pivot.x
@@ -1328,6 +1328,7 @@ GameObject:
   - component: {fileID: 718747144}
   - component: {fileID: 718747143}
   - component: {fileID: 718747142}
+  - component: {fileID: 718747146}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -1418,6 +1419,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &718747146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718747141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324c2e32ea3af1445a4afa9604adedae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _combatUI: []
+  _planningUI:
+  - {fileID: 1315056944}
+  - {fileID: 446901891}
 --- !u!1 &719844440 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 556668591473605578, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
@@ -1615,7 +1632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605578, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605581, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_Pivot.x
@@ -1964,7 +1981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605578, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605581, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_Pivot.x
@@ -3540,7 +3557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605578, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 556668591473605581, guid: d58fb1de790cec54c87e166e77ea0c7d, type: 3}
       propertyPath: m_Pivot.x

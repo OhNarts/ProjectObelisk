@@ -7,6 +7,17 @@ using System;
 
 public enum GameState { Plan, Combat, PostCombat, Pause }
 
+#region EventArgs
+public class OnGameStateChangedArgs : EventArgs {
+    private GameState _oldState; public GameState OldState{get => _oldState;}
+    private GameState _newState; public GameState NewState{get => _newState;}
+    public OnGameStateChangedArgs(GameState oldState, GameState newState) {
+        _oldState = oldState;
+        _newState = newState;
+    }
+}
+#endregion
+
 public sealed class GameManager : MonoBehaviour
 {
     #region Singleton Stuff
@@ -22,6 +33,11 @@ public sealed class GameManager : MonoBehaviour
     }
     #endregion
     
+    #region Events
+    public delegate void OnGameStateChangedHandler(object sender, EventArgs e);
+    public event OnGameStateChangedHandler OnGameStateChanged;
+    #endregion
+
     [SerializeField] private PlayerController player;
     [SerializeField] private GameObject _cameraHolder;
 
@@ -43,12 +59,14 @@ public sealed class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
         _currentState = GameState.PostCombat;
+        PlayerInfo.Instance.Reset();
     }
 
     private void Start() {
-        PlayerInfo.Instance.MaxHealth = 100;
-        PlayerInfo.Instance.Health = 100;
-        PlayerInfo.Instance.Weapons = new HashSet<WeaponItem>();
+        
+        // PlayerInfo.Instance.MaxHealth = 100;
+        // PlayerInfo.Instance.Health = 100;
+        // PlayerInfo.Instance.Weapons = new HashSet<WeaponItem>();
     }
 
     private void OnDisable()
@@ -74,7 +92,8 @@ public sealed class GameManager : MonoBehaviour
         player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
         player.OnCombatStart += (object sender, EventArgs e) =>
         {
-            _currentState = GameState.Combat;
+            // _currentState = GameState.Combat;
+            ChangeState(GameState.Combat);
             room.Enter(player, _cameraHolder);
 
         };
@@ -101,14 +120,23 @@ public sealed class GameManager : MonoBehaviour
 
     private void OnRoomFinish(object sender, EventArgs e)
     {
-        _currentState = GameState.PostCombat;
+        // _currentState = GameState.PostCombat;
+        ChangeState(GameState.PostCombat);
     }
 
     private void OnRoomEnterAttempt(object sender, EventArgs e)
     {
-        _currentState = GameState.Plan;
+        // _currentState = GameState.Plan;
+        ChangeState(GameState.Plan);
         room = (CombatRoom)sender;
         player.PlanStateStart();
+    }
+
+    public void ChangeState(GameState state) {
+        GameState oldState = _currentState;
+        _currentState = state;
+        OnGameStateChanged?.Invoke(this,
+        new OnGameStateChangedArgs(oldState, _currentState));
     }
 
     public void OnPlayerDeath()

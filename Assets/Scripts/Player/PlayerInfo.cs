@@ -52,14 +52,14 @@ public class PlayerInfo : ScriptableObject
     public event OnPlayerAmmoChangedHandler OnPlayerAmmoChanged;
     #endregion 
 
-    public AmmoDictionary Ammo;
+    [SerializeField] private AmmoDictionary _ammo; public AmmoDictionary Ammo {get => _ammo;}
 
     public void AddToAmmo(AmmoType ammoType, int addingAmount) {
-        ChangeAmmo(ammoType, Ammo[ammoType] + addingAmount);
+        ChangeAmmo(ammoType, _ammo[ammoType] + addingAmount);
     }
     public void ChangeAmmo(AmmoType ammoType, int newAmount) {
-        int oldAmount =  Ammo[ammoType];
-        Ammo[ammoType] = newAmount;
+        int oldAmount =  _ammo[ammoType];
+        _ammo[ammoType] = newAmount;
         OnPlayerAmmoChanged?.Invoke(this,
         new OnPlayerAmmoChangedArgs(ammoType, oldAmount, newAmount));
     }
@@ -80,6 +80,17 @@ public class PlayerInfo : ScriptableObject
             new OnPlayerWeaponsChangedArgs(weapon));
         }
         return wepAdded;
+    }
+
+    public void Reset() {
+        MaxHealth = 100;
+        Health = 100;
+        Weapons = new HashSet<WeaponItem>();
+
+        // AHH GOD WHY DOES THIS NOT WORK!!!!!!
+        // foreach (var key in _ammo.Keys) {
+        //     ChangeAmmo(key, 0);
+        // }
     }
 
 }
