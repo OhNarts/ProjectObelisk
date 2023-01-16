@@ -3,20 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerController : MonoBehaviour
 {
     public delegate void OnCombatStartHandler(object sender, EventArgs e);
     public event OnCombatStartHandler OnCombatStart;
-    [SerializeField] private HealthHandler healthHandler; public HealthHandler HealthHandler { get => healthHandler; }
+    [SerializeField] private HealthHandler _healthHandler; public HealthHandler HealthHandler { get => _healthHandler; }
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Camera _camera;
     [SerializeField] private float _speed;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private UnityEvent _onPlayerDeath;
-    [SerializeField] private PlayerInput input;
+    [SerializeField] private PlayerInput _input;
     private LayerMask lookLayers;
 
     private Vector3 velocity;
@@ -27,6 +29,9 @@ public class PlayerController : MonoBehaviour
     // The point on the ground that the mouse is over
     private Vector3 groundMousePt;
 
+    // The object that should follow the mouse pointer
+    private GameObject followObject;
+
     private void Start()
     {
         lookLayers = LayerMask.GetMask("Ground") |
@@ -34,27 +39,34 @@ public class PlayerController : MonoBehaviour
         LayerMask.GetMask("Shootable") |
         LayerMask.GetMask("Interactable");
 
-        // currAmmo = PlayerInfo.instance.Ammo;
-        healthHandler.MaxHealth = PlayerInfo.Instance.MaxHealth;
-        healthHandler.Health = PlayerInfo.Instance.Health;
+        _healthHandler.MaxHealth = PlayerInfo.Instance.MaxHealth;
+        _healthHandler.Health = PlayerInfo.Instance.Health;
+        followObject = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(lookPt);
-        _rb.velocity = velocity;
+        if (GameManager.Instance.CurrentState != GameState.Plan)
+        {
+            transform.LookAt(lookPt);
+            _rb.velocity = velocity;
+        }
+        if (followObject != null) {
+            var gotoPt = new Vector3(lookPt.x, lookPt.y + 5, lookPt.z);
+            followObject.transform.position = lookPt;
+        }
     }
 
     public void PlanStateStart()
     {
-        input.SwitchCurrentActionMap("Planning");
+        _input.SwitchCurrentActionMap("Planning");
     }
 
     public void CombatStart(CallbackContext callback)
     {
         if (callback.canceled) return;
-        input.SwitchCurrentActionMap("Combat");
+        _input.SwitchCurrentActionMap("Combat");
         OnCombatStart?.Invoke(this, EventArgs.Empty);
     }
 
@@ -66,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnPlayerHealthChange()
     {
-        PlayerInfo.Instance.Health = healthHandler.Health;
+        PlayerInfo.Instance.Health = _healthHandler.Health;
     }
 
     #endregion
@@ -101,11 +113,11 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Interactable/Weapon
+    [SerializeField] private GameObject _uiCanvas;
     [SerializeField] private Transform _weaponPos;
     [SerializeField] private float _maxPickUpDistance;
     [SerializeField] private float interactableRadius;
     [SerializeField] private LayerMask _interactableMask;
-    // [SerializeField] private AmmoDictionary currAmmo; public AmmoDictionary CurrentAmmo { get => currAmmo; }
     private Weapon equippedWeapon;
     public Weapon EquippedWeapon
     {
@@ -164,7 +176,7 @@ public class PlayerController : MonoBehaviour
                 if (GameManager.Instance.CurrentState == GameState.PostCombat) {
                     // Add the amount of ammo the weapon had into the ammo dictionary
                     PlayerInfo.Instance.Ammo[wep.WeaponItem.AmmoType1] += wep.AmmoAmount1;
-                    PlayerInfo.Instance.Weapons.Add(wep.WeaponItem);
+                    PlayerInfo.Instance.AddWeapon(wep.WeaponItem);
                     Destroy(wep.gameObject);
                     return;
                 }
@@ -184,22 +196,37 @@ public class PlayerController : MonoBehaviour
         }
         interactable?.Interact(this);
     }
+    #endregion
 
+    # region Inventory
+
+    /// <summary>
+    /// Spawns a weapon into the world
+    /// </summary>
+    /// <param name="context"></param>
     public void AddToWorld(CallbackContext context) {
-        if (!context.started) return;
-        WeaponItem item = null;
-        // For now just get the first item in the list
-        // Will change once UI works
-        foreach (var wep in PlayerInfo.Instance.Weapons) {
-            item = wep;
-            break;
+        if (context.started){   
+            var graphicCaster = _uiCanvas.GetComponent<GraphicRaycaster>();
+            List<RaycastResult> clickResults = new List<RaycastResult>();
+            graphicCaster.Raycast(new PointerEventData(EventSystem.current) {
+                position = Mouse.current.position.ReadValue()
+            }, clickResults);
+            if (clickResults.Count == 0) return;
+            InventorySlot chosenSlot = null;
+            foreach(var result in clickResults) {
+                chosenSlot = result.gameObject.GetComponent<InventorySlot>();
+                if (chosenSlot != null) break;
+            }
+            if (chosenSlot == null) return;
+            var item = chosenSlot.Weapon;
+            GameObject Instance = Instantiate(item.gameObject);
+            Weapon weapon = Instance.GetComponent<Weapon>(); 
+            PlayerInfo.Instance.Ammo[item.AmmoType1] -= item.AmmoCost1;
+            weapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
+            followObject = Instance;
+        } else if (context.canceled) {
+            followObject = null;
         }
-        if (item == null) return;
-        GameObject Instance = Instantiate(item.gameObject);
-        Weapon weapon = Instance.GetComponent<Weapon>(); 
-        PlayerInfo.Instance.Ammo[item.AmmoType1] -= item.AmmoCost1;
-        weapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
-
     }
     #endregion
 }

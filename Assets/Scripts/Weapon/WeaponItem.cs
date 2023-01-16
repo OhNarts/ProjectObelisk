@@ -11,5 +11,5 @@ public class WeaponItem : ScriptableObject
     public int AmmoCost2;
     public AmmoType AmmoType2;
     public GameObject gameObject;
-    // Probably bad to have a circular reference
+    public Sprite Sprite;
 }

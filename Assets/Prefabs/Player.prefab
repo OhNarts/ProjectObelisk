@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d470993a3794704aa3c5131663f46d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthHandler: {fileID: 3309712311292657436}
+  _healthHandler: {fileID: 3309712311292657436}
   _rb: {fileID: 7840941772718891743}
   _camera: {fileID: 0}
   _speed: 10
@@ -255,7 +255,8 @@ MonoBehaviour:
   _onPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
-  input: {fileID: 5053912482711007362}
+  _input: {fileID: 5053912482711007362}
+  _uiCanvas: {fileID: 0}
   _weaponPos: {fileID: 1459913818}
   _maxPickUpDistance: 5
   interactableRadius: 1
@@ -453,6 +454,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0dca25e8-59f3-4b44-b7bf-7174a31d7361
     m_ActionName: Planning/RemoveItem[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 62bc1617-a163-4a2f-8507-1cd39353f6ac
+    m_ActionName: Combat/Quit[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3648394291031476892}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Look
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 83bb1846-6dae-43f9-8634-a40e34e03873
+    m_ActionName: Planning/MoveItem[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Combat

@@ -21,7 +21,7 @@ public sealed class GameManager : MonoBehaviour
         }
     }
     #endregion
-
+    
     [SerializeField] private PlayerController player;
     [SerializeField] private GameObject _cameraHolder;
 
