@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,17 @@ using UnityEngine.Events;
 
 public enum WeaponType { Gun, Melee }
 public enum AmmoType { Rifle, Pistol, Energy, Shotgun, NONE }
+
+#region Event Args
+public class OnWeaponAmmoChangedArgs : EventArgs {
+    private int _oldAmount; public int OldAmount {get => _oldAmount;}
+    private int _newAmount; public int NewAmount {get => _newAmount;}
+    public OnWeaponAmmoChangedArgs(int oldAmount, int newAmount) {
+        _oldAmount = oldAmount;
+        _newAmount = newAmount;
+    }
+}
+#endregion
 
 public abstract class Weapon : MonoBehaviour
 {
@@ -22,12 +34,25 @@ public abstract class Weapon : MonoBehaviour
     [Header("Ammo Costs/Types")]
     // [SerializeField] protected int _ammoCost1; public int AmmoCost1 { get => _ammoCost1; }
     // [SerializeField] protected AmmoType _ammoType1; public AmmoType AmmoType1 { get => _ammoType1; }
-    [SerializeField] protected int _ammoAmount1; public int AmmoAmount1 { get => _ammoAmount1; }
+    [SerializeField] protected int _ammoAmount1; public int AmmoAmount1 { 
+        get => _ammoAmount1;
+        protected set {
+            int oldAmount = _ammoAmount1;
+            _ammoAmount1 = value;
+            OnWeaponAmmoChanged?.Invoke(this,
+            new OnWeaponAmmoChangedArgs(oldAmount, _ammoAmount1));
+        } 
+    }
     // [SerializeField] protected int _ammoCost2; public int AmmoCost2 { get => _ammoCost2; }
     // [SerializeField] protected AmmoType _ammoType2; public AmmoType AmmoType2 { get => _ammoType2; }
     [SerializeField] protected int _ammoAmount2; public int AmmoAmount2 { get => _ammoAmount2; }
 
     protected GameObject _holder = null; public GameObject Holder { get => _holder; }
+
+    #region Events
+    public delegate void OnWeaponAmmoChangedHandler(object sender, EventArgs e);
+    public event OnWeaponAmmoChangedHandler OnWeaponAmmoChanged;
+    #endregion
 
     public void InitializeWeapon(int ammoAmount1, int ammoAmount2) {
         _holder = null;

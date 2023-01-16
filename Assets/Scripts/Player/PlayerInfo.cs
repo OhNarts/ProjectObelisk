@@ -63,6 +63,9 @@ public class PlayerInfo : ScriptableObject
     public delegate void OnPlayerHealthChangedHandler(object sender, EventArgs e);
     public event OnPlayerHealthChangedHandler OnPlayerHealthChanged;
 
+    public delegate void OnPlayerCurrentWeaponChangedHandler(object sender, EventArgs e);
+    public event OnPlayerCurrentWeaponChangedHandler OnPlayerCurrentWeaponChanged;
+
     #endregion 
 
     [SerializeField] private AmmoDictionary _ammo; public AmmoDictionary Ammo {get => _ammo;}
@@ -102,6 +105,16 @@ public class PlayerInfo : ScriptableObject
             new OnPlayerWeaponsChangedArgs(weapon));
         }
         return wepAdded;
+    }
+
+    private Weapon _currWeapon; 
+    public Weapon CurrWeapon {
+        get => _currWeapon;
+        set {
+            _currWeapon = value;
+            Debug.Log("Weapon changed");
+            OnPlayerCurrentWeaponChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public void Reset() {

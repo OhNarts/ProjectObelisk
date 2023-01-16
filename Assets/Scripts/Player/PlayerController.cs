@@ -54,12 +54,13 @@ public class PlayerController : MonoBehaviour
             _rb.velocity = velocity;
         } 
         if (GameManager.Instance.CurrentState != GameState.Combat) {
-            if (equippedWeapon != null) {
-                equippedWeapon.DropWeapon();
-                PlayerInfo.Instance.AddToAmmo(equippedWeapon.WeaponItem.AmmoType1, equippedWeapon.AmmoAmount1);
-                PlayerInfo.Instance.AddWeapon(equippedWeapon.WeaponItem);
-                Destroy(equippedWeapon.gameObject);
-                equippedWeapon = null;
+            if (_equippedWeapon != null) {
+                _equippedWeapon.DropWeapon();
+                PlayerInfo.Instance.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
+                PlayerInfo.Instance.AddWeapon(_equippedWeapon.WeaponItem);
+                Destroy(_equippedWeapon.gameObject);
+                _equippedWeapon = null;
+                PlayerInfo.Instance.CurrWeapon = _equippedWeapon;
             }
         }
         if (followObject != null) {
@@ -128,37 +129,31 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maxPickUpDistance;
     [SerializeField] private float interactableRadius;
     [SerializeField] private LayerMask _interactableMask;
-    private Weapon equippedWeapon;
-    public Weapon EquippedWeapon
-    {
-        get
-        {
-            return equippedWeapon;
-        }
-    }
+    private Weapon _equippedWeapon; public Weapon EquippedWeapon {get => _equippedWeapon;}
+    
 
     public void Fire1(CallbackContext context)
     {
-        if (equippedWeapon == null) return;
+        if (_equippedWeapon == null) return;
         if (context.started)
         {
-            equippedWeapon.Fire1(true);
+            _equippedWeapon.Fire1(true);
         } else if (context.canceled)
         {
-            equippedWeapon.Fire1Stop(true);
+            _equippedWeapon.Fire1Stop(true);
         }
     }
 
     public void Fire2(CallbackContext context)
     {
-        if (equippedWeapon == null) return;
+        if (_equippedWeapon == null) return;
         if (context.started)
         {
-            equippedWeapon.Fire2(true);
+            _equippedWeapon.Fire2(true);
         }
         else if (context.canceled)
         {
-            equippedWeapon.Fire2Stop(true);
+            _equippedWeapon.Fire2Stop(true);
         }
     }
 
@@ -192,12 +187,13 @@ public class PlayerController : MonoBehaviour
                     return;
                 }
 
-                if (equippedWeapon != null)
+                if (_equippedWeapon != null)
                 {
-                    equippedWeapon.DropWeapon();
+                    _equippedWeapon.DropWeapon();
                 }
                 wep.PickUpWeapon(gameObject, _weaponPos);
-                equippedWeapon = wep;
+                _equippedWeapon = wep;
+                PlayerInfo.Instance.CurrWeapon = wep;
                 return;
             }
             if (collider.gameObject.layer == LayerMask.NameToLayer("Interactable"))

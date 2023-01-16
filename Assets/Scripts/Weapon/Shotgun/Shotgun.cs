@@ -21,7 +21,8 @@ public class Shotgun : Weapon
     public override void Fire1(bool useAmmo = false)
     {
         if ( Time.unscaledTime - lastFired < coolDownTime || fired == true ) { return; }
-        if ( useAmmo && _ammoAmount1-- <= 0 ) { return; }
+        if ( useAmmo && AmmoAmount1 == 0 ) { return; }
+        AmmoAmount1--;
         GameObject[] bullets = new GameObject[3];
         Vector3 currRotOffset = new Vector3(0, -bulletRotationDifference, 0);
         for (int i = 0; i < 3; i++)
