@@ -115,10 +115,8 @@ MonoBehaviour:
   _weaponItem: {fileID: 11400000, guid: 230c1ede6c9dd9c478b4ca0c98eb716a, type: 2}
   _damage: 10
   _weaponType: 0
-  _ammoCost1: 1
-  _ammoType1: 1
-  _ammoCost2: 1
-  _ammoType2: 1
+  _ammoAmount1: 10
+  _ammoAmount2: 0
   coolDownTime: 0.3
   range: 1e+12
   bulletSpeed: 20

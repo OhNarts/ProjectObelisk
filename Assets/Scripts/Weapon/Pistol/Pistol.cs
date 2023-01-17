@@ -24,8 +24,10 @@ public class Pistol : Weapon
     public override void Fire1(bool useAmmo = false)
     {
         if (Time.unscaledTime - lastFired < coolDownTime  || fired == true) { return; }
-        if (useAmmo && AmmoAmount1 == 0) { return; }
-        AmmoAmount1--;
+        if (useAmmo) {
+            if (AmmoAmount1 == 0) return;
+            AmmoAmount1--;
+        }
         lastFired = Time.unscaledTime;
         fired = true;
 

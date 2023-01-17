@@ -240,4 +240,8 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
+
+    public void Quit(CallbackContext context) {
+        if (context.started) Application.Quit();
+    }
 }
