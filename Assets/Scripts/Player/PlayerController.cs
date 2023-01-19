@@ -39,8 +39,8 @@ public class PlayerController : MonoBehaviour
         LayerMask.GetMask("Shootable") |
         LayerMask.GetMask("Interactable");
 
-        _healthHandler.MaxHealth = PlayerInfo.Instance.MaxHealth;
-        _healthHandler.Health = PlayerInfo.Instance.Health;
+        _healthHandler.MaxHealth = PlayerState.MaxHealth;
+        _healthHandler.Health = PlayerState.Health;
         followObject = null;
     }
 
@@ -48,19 +48,19 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // TODO: Replace these by subscribing to game manager stuff
-        if (GameManager.Instance.CurrentState != GameState.Plan)
+        if (GameManager.CurrentState != GameState.Plan)
         {
             transform.LookAt(lookPt);
             _rb.velocity = velocity;
         } 
-        if (GameManager.Instance.CurrentState != GameState.Combat) {
+        if (GameManager.CurrentState != GameState.Combat) {
             if (_equippedWeapon != null) {
                 _equippedWeapon.DropWeapon();
-                PlayerInfo.Instance.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
-                PlayerInfo.Instance.AddWeapon(_equippedWeapon.WeaponItem);
+                PlayerState.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
+                PlayerState.AddWeapon(_equippedWeapon.WeaponItem);
                 Destroy(_equippedWeapon.gameObject);
                 _equippedWeapon = null;
-                PlayerInfo.Instance.CurrWeapon = _equippedWeapon;
+                PlayerState.CurrentWeapon = _equippedWeapon;
             }
         }
         if (followObject != null) {
@@ -84,12 +84,13 @@ public class PlayerController : MonoBehaviour
     #region Health
     public void OnDeath()
     {
-        _onPlayerDeath.Invoke();
+        PlayerState.RevertToLevelStart();
+        _onPlayerDeath?.Invoke();
     }
 
     public void OnPlayerHealthChange()
     {
-        PlayerInfo.Instance.Health = _healthHandler.Health;
+        PlayerState.Health = _healthHandler.Health;
     }
 
     #endregion
@@ -120,6 +121,10 @@ public class PlayerController : MonoBehaviour
             groundMousePt = hit.point;
             lookPt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
         }
+    }
+
+    public void Roll(CallbackContext context) {
+        
     }
     #endregion
 
@@ -179,10 +184,10 @@ public class PlayerController : MonoBehaviour
                 if (wep.Holder != null) { continue; }
 
                 // If in the postCombat stage, then just add it to the weapons
-                if (GameManager.Instance.CurrentState == GameState.PostCombat) {
+                if (GameManager.CurrentState == GameState.PostCombat) {
                     // Add the amount of ammo the weapon had into the ammo dictionary
-                    PlayerInfo.Instance.AddToAmmo(wep.WeaponItem.AmmoType1, wep.AmmoAmount1);
-                    PlayerInfo.Instance.AddWeapon(wep.WeaponItem);
+                    PlayerState.AddToAmmo(wep.WeaponItem.AmmoType1, wep.AmmoAmount1);
+                    PlayerState.AddWeapon(wep.WeaponItem);
                     Destroy(wep.gameObject);
                     return;
                 }
@@ -193,12 +198,11 @@ public class PlayerController : MonoBehaviour
                 }
                 wep.PickUpWeapon(gameObject, _weaponPos);
                 _equippedWeapon = wep;
-                PlayerInfo.Instance.CurrWeapon = wep;
+                PlayerState.CurrentWeapon = wep;
                 return;
             }
             if (collider.gameObject.layer == LayerMask.NameToLayer("Interactable"))
             {
-                Debug.Log(collider.transform.name);
                 interactable = collider.transform.GetComponent<Interactable>();
             }
         }
@@ -228,11 +232,11 @@ public class PlayerController : MonoBehaviour
             if (chosenSlot == null) return;
             var item = chosenSlot.Weapon;
 
-            if (PlayerInfo.Instance.Ammo[item.AmmoType1] < item.AmmoCost1) return;
+            if (PlayerState.Ammo[item.AmmoType1] < item.AmmoCost1) return;
 
             GameObject Instance = Instantiate(item.gameObject);
             Weapon weapon = Instance.GetComponent<Weapon>(); 
-            PlayerInfo.Instance.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
+            PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
             weapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
             followObject = Instance;
         } else if (context.canceled) {

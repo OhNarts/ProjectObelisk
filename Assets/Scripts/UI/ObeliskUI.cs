@@ -9,7 +9,7 @@ public class ObeliskUI : MonoBehaviour
     [SerializeField] private GameObject[] _planningUI;
 
     void Start() {
-        if (GameManager.Instance.CurrentState == GameState.Combat) {
+        if (GameManager.CurrentState == GameState.Combat) {
             ShowCombatUI();
         } else {
             ShowPlanningUI();

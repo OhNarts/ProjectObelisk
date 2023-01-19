@@ -43,22 +43,15 @@ public class Room : MonoBehaviour
         } 
     }
 
-    protected Door doorAttemptedEnter;
+    // _skipOpen is here to mitigate the firing of events from the door
+    private bool _skipOpen;
 
-    // Start is called before the first frame update
+    protected Door doorAttemptedEnter;
 
     void Awake()
     {
-        InitializeRoom();
-    }
-
-    private void OnDisable()
-    {
-        DeInitializeRoom();
-    }
-
-    protected void InitializeRoom() {
         _occupied = false;
+        _skipOpen = false;
         doorAttemptedEnter = null;
 
         foreach (Door door in adjacentRooms.Keys)
@@ -67,7 +60,8 @@ public class Room : MonoBehaviour
         }
     }
 
-    protected void DeInitializeRoom() {
+    private void OnDisable()
+    {
         foreach (Door door in adjacentRooms.Keys)
         {
             door.OnDoorInteract -= OnDoorInteract;
@@ -76,12 +70,14 @@ public class Room : MonoBehaviour
 
     private void OnDoorInteract( object sender, EventArgs e )
     {
+        Door door = (Door)sender;
         // Since the player is trying to enter the door from an occupied room, check if this is occupied
         // returns if this is occupied so can call onEnterAttempt on the unoccupied room
-        if (_occupied) return;
-        Door door = (Door)sender;
+        if (_occupied || _skipOpen) {
+            _skipOpen = false;
+            return;
+        }
         doorAttemptedEnter = door;
-        Debug.Log(gameObject.name);
         OnRoomEnterAttempt?.Invoke(this, new OnRoomEnterAttemptArgs(((OnDoorInteractArgs)e).Player, door));
     }
 
@@ -89,7 +85,14 @@ public class Room : MonoBehaviour
     {
         SetCameraPos(cameraHolder);
         _occupied = true;
+        adjacentRooms[doorAttemptedEnter].Exit();
         doorAttemptedEnter.EnterDoor();
+        doorAttemptedEnter.CloseDoor();
+    }
+
+    public virtual void Exit() {
+        _occupied = false;
+        _skipOpen = true;
     }
 
     public void SetCameraPos(GameObject cameraHolder) {

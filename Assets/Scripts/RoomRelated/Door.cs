@@ -32,6 +32,9 @@ public class Door : MonoBehaviour, Interactable
     private Vector3 otherWaitPoint;
     private PlayerController _player;
     private float rotateDegrees;
+    
+    private (Vector3, Vector3) waitPts;
+
     private bool openedPreviously; public bool OpenedPreviously { get => openedPreviously; }
 
     void Awake()
@@ -44,6 +47,17 @@ public class Door : MonoBehaviour, Interactable
     public void Interact(PlayerController player)
     {
         _player = player;
+
+        bool lowerDistCheck = Vector3.Distance(waitPoint1.position, player.transform.position) <
+            Vector3.Distance(waitPoint2.position, player.transform.position);
+
+        waitPts = lowerDistCheck ? 
+            (waitPoint1.position, waitPoint2.position) : 
+            (waitPoint2.position, waitPoint1.position);
+
+        //player.transform.position = waitPts.Item1;
+        //otherWaitPoint = waitPts.Item2;
+
         OnDoorInteract?.Invoke(this, new OnDoorInteractArgs(player));
     }
 
@@ -57,17 +71,18 @@ public class Door : MonoBehaviour, Interactable
 
         // We know that the door only has two waitpoints
         // Check which is closer and set the player's position to that one
-        bool lowerDistCheck = Vector3.Distance(waitPoint1.position, player.transform.position) <
-            Vector3.Distance(waitPoint2.position, player.transform.position);
+        // bool lowerDistCheck = Vector3.Distance(waitPoint1.position, player.transform.position) <
+        //     Vector3.Distance(waitPoint2.position, player.transform.position);
         
-        (Vector3, Vector3) waitPts = lowerDistCheck ? 
-            (waitPoint1.position, waitPoint2.position) : 
-            (waitPoint2.position, waitPoint1.position);
+        // (Vector3, Vector3) waitPts = lowerDistCheck ? 
+        //     (waitPoint1.position, waitPoint2.position) : 
+        //     (waitPoint2.position, waitPoint1.position);
 
-        player.transform.position = waitPts.Item1;
-        otherWaitPoint = waitPts.Item2;
+         player.transform.position = waitPts.Item1;
+         otherWaitPoint = waitPts.Item2;
+
         // Make sure that the door opens in the right direction
-        rotateDegrees *= lowerDistCheck ? -1 : 1;
+        //rotateDegrees *= lowerDistCheck ? -1 : 1;
     }
 
     public void EnterDoor()

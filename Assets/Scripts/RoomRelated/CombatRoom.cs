@@ -14,6 +14,7 @@ public class CombatRoom : Room
 
     [SerializeField] private List<EnemyController> _enemies;
     [SerializeField] private NavMeshData _navMesh;
+    [SerializeField] private GameObject _boundaryColliders;
     private NavMeshDataInstance _navMeshInstance;
     private bool _roomCompleted; public bool RoomCompleted {get => _roomCompleted;}
     private HashSet<EnemyController> _deadEnemySet;
@@ -22,7 +23,7 @@ public class CombatRoom : Room
 
     void OnEnable()
     {
-        base.InitializeRoom();
+        //base.InitializeRoom();
 
         _navMesh.position = transform.position;
         _navMeshInstance = NavMesh.AddNavMeshData(_navMesh);
@@ -32,14 +33,14 @@ public class CombatRoom : Room
         {
             enemy.onEnemyDeath.AddListener(OnEnemyDeath);
         }
-
+        _boundaryColliders.SetActive(false);
         _roomCompleted = false;
         _deadEnemySet = new HashSet<EnemyController>();
     }
 
     void OnDisable() {
         // Clean up nav mesh data
-        base.DeInitializeRoom();
+        //base.DeInitializeRoom();
         NavMesh.RemoveNavMeshData(_navMeshInstance);
     }
 
@@ -47,6 +48,8 @@ public class CombatRoom : Room
     {
         SetCameraPos(cameraHolder);
         doorAttemptedEnter.PlanStageStart(player);
+        _boundaryColliders.SetActive(true);
+        //GameManager.CurrentState = GameState.Plan;
         OnRoomPlanStart?.Invoke(this, EventArgs.Empty);
     }
 
@@ -64,20 +67,21 @@ public class CombatRoom : Room
     public override void Enter(PlayerController player, GameObject cameraHolder)
     {
         base.Enter(player, cameraHolder);
-        Debug.Log(_roomCompleted);
+        _boundaryColliders.SetActive(false);
         if (!_roomCompleted)
         {
             foreach (EnemyController enemy in _enemies)
             {
                 enemy.Target = player.transform;
             }
-            doorAttemptedEnter.CloseDoor();
+            //doorAttemptedEnter.CloseDoor();
         }
     }
 
     private void RoomFinish()
     {
         _roomCompleted = true;
+        //GameManager.CurrentState = GameState.PostCombat;
         OnRoomFinish?.Invoke(this, EventArgs.Empty);
     }
 

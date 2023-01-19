@@ -36,8 +36,8 @@ public class Level : MonoBehaviour
     private void OnRoomEnterAttempt (object sender, EventArgs e)
     {
         Debug.Log("Room Enter Attempt");
-        if (GameManager.Instance.CurrentState == GameState.Combat || 
-        GameManager.Instance.CurrentState == GameState.Plan)
+        if (GameManager.CurrentState == GameState.Combat || 
+        GameManager.CurrentState == GameState.Plan)
             return;
 
         Room room = (Room)sender;
@@ -50,6 +50,7 @@ public class Level : MonoBehaviour
         } else
         {
             Debug.Log("Normal Enter");
+            Debug.Log(room.gameObject.name);
             room.Enter(args.Player, _cameraHolder);
         }
     }

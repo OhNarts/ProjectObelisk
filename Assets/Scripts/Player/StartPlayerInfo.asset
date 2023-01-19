@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf78c585fa5fc1a4a847f306a47dc094, type: 3}
-  m_Name: PlayerInfo
+  m_Script: {fileID: 11500000, guid: caccbcc90871b9949b48187247b2639c, type: 3}
+  m_Name: StartPlayerInfo
   m_EditorClassIdentifier: 
-  _ammo:
-    m_keys: 00000000010000000200000003000000
+  Ammo:
+    m_keys: 03000000020000000100000000000000
     m_values: 00000000000000000000000000000000
+  Health: 100
   MaxHealth: 100
-  _health: 90
+  Weapons:
+    m_keys: []
+  CurrentWeapon: {fileID: 0}

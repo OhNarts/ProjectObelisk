@@ -38,10 +38,18 @@ public sealed class GameManager : MonoBehaviour
     public event OnGameStateChangedHandler OnGameStateChanged;
     #endregion
 
-    [SerializeField] private PlayerController player;
-    [SerializeField] private GameObject _cameraHolder;
-
-    [SerializeField] private GameState _currentState; public GameState CurrentState { get => _currentState; }
+    [SerializeField] private PlayerController _player; public static PlayerController Player {get => instance._player; }
+    [SerializeField] private GameObject _cameraHolder; public static GameObject CameraHolder {get => instance._cameraHolder;}
+    [SerializeField] private GameState _currentState; 
+    public static GameState CurrentState { 
+        get => instance._currentState;
+        set {
+            var oldState = instance._currentState;
+            instance._currentState = value;
+            instance.OnGameStateChanged?.Invoke(instance,
+            new OnGameStateChangedArgs (oldState, instance._currentState));
+        } 
+    }
     private Level currLevel;
     private CombatRoom room;
 
@@ -59,7 +67,7 @@ public sealed class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
         _currentState = GameState.PostCombat;
-        PlayerInfo.Instance.Reset();
+        //PlayerState.Instance.Reset();
     }
 
     private void OnDisable()
@@ -82,22 +90,18 @@ public sealed class GameManager : MonoBehaviour
             }
         }
 
-        player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
-        player.OnCombatStart += (object sender, EventArgs e) =>
+        _player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
+        _player.OnCombatStart += (object sender, EventArgs e) =>
         {
             // _currentState = GameState.Combat;
-            ChangeState(GameState.Combat);
-            room.Enter(player, _cameraHolder);
+            CurrentState = GameState.Combat;
+            room.Enter(_player, _cameraHolder);
 
         };
     }
 
     private void OnSceneUnloaded(Scene scene)
     {
-        // playerInfo.MaxHealth = player.HealthHandler.MaxHealth;
-        // playerInfo.Health = player.HealthHandler.Health;
-        // playerInfo.Ammo = player.CurrentAmmo;
-
         foreach (Room room in currLevel.Rooms)
         {
             if (room.GetType().Equals(typeof(CombatRoom)))
@@ -114,26 +118,23 @@ public sealed class GameManager : MonoBehaviour
     private void OnRoomFinish(object sender, EventArgs e)
     {
         // _currentState = GameState.PostCombat;
-        ChangeState(GameState.PostCombat);
+        //ChangeState(GameState.PostCombat);
+        CurrentState = GameState.PostCombat;
     }
 
     private void OnRoomEnterAttempt(object sender, EventArgs e)
     {
         // _currentState = GameState.Plan;
-        ChangeState(GameState.Plan);
+        //ChangeState(GameState.Plan);
+        CurrentState = GameState.Plan;
         room = (CombatRoom)sender;
-        player.PlanStateStart();
+        _player.PlanStateStart();
     }
 
-    public void ChangeState(GameState state) {
-        GameState oldState = _currentState;
-        _currentState = state;
-        OnGameStateChanged?.Invoke(this,
-        new OnGameStateChangedArgs(oldState, _currentState));
-    }
-
-    public void OnPlayerDeath()
-    {
-        Debug.Log("Player Died");
-    }
+    // public void ChangeState(GameState state) {
+    //     GameState oldState = _currentState;
+    //     _currentState = state;
+    //     OnGameStateChanged?.Invoke(this,
+    //     new OnGameStateChangedArgs(oldState, _currentState));
+    // }
 }

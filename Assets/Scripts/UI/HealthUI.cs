@@ -9,12 +9,12 @@ public class HealthUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textMesh;
 
     void OnEnable() {
-        _textMesh.text = PlayerInfo.Instance.Health.ToString();
-        PlayerInfo.Instance.OnPlayerHealthChanged += OnPlayerHealthChanged;
+        _textMesh.text = PlayerState.Health.ToString();
+        PlayerState.OnPlayerHealthChanged += OnPlayerHealthChanged;
     }
 
     void Disable() {
-        PlayerInfo.Instance.OnPlayerHealthChanged -= OnPlayerHealthChanged;
+        PlayerState.OnPlayerHealthChanged -= OnPlayerHealthChanged;
     }
 
     private void OnPlayerHealthChanged(object sender, EventArgs e) {

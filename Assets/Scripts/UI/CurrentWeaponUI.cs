@@ -10,8 +10,8 @@ public class CurrentWeaponUI : MonoBehaviour
     [SerializeField] private Weapon _weapon;
 
     void OnEnable() {
-        _weapon = PlayerInfo.Instance.CurrWeapon;
-        PlayerInfo.Instance.OnPlayerCurrentWeaponChanged += WeaponChanged;
+        _weapon = PlayerState.CurrentWeapon;
+        PlayerState.OnPlayerCurrentWeaponChanged += WeaponChanged;
         if (_weapon != null)  
         {
             SetUIActive(true);
@@ -24,13 +24,13 @@ public class CurrentWeaponUI : MonoBehaviour
     }
 
     void OnDisable() {
-        PlayerInfo.Instance.OnPlayerCurrentWeaponChanged -= WeaponChanged;
+        PlayerState.OnPlayerCurrentWeaponChanged -= WeaponChanged;
         if (_weapon != null) _weapon.OnWeaponAmmoChanged -= WeaponAmmoChanged;
     }
 
     private void WeaponChanged(object sender, EventArgs e) {
         if (_weapon != null) _weapon.OnWeaponAmmoChanged -= WeaponAmmoChanged;
-        _weapon = PlayerInfo.Instance.CurrWeapon;
+        _weapon = PlayerState.CurrentWeapon;
         SetUIActive(_weapon != null);
         if (_weapon != null)   {
             _weapon.OnWeaponAmmoChanged += WeaponAmmoChanged;

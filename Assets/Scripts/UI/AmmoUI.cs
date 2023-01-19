@@ -7,13 +7,13 @@ public class AmmoUI : MonoBehaviour
 
     void OnEnable() {
         foreach (AmmoType ammoType in _ammoSlots.Keys) {
-            _ammoSlots[ammoType].Text = PlayerInfo.Instance.Ammo[ammoType].ToString();
+            _ammoSlots[ammoType].Text = PlayerState.Ammo[ammoType].ToString();
         }
-        PlayerInfo.Instance.OnPlayerAmmoChanged += AmmoChanged;
+        PlayerState.OnPlayerAmmoChanged += AmmoChanged;
     }
 
     void OnDisable() {
-        PlayerInfo.Instance.OnPlayerAmmoChanged -= AmmoChanged;
+        PlayerState.OnPlayerAmmoChanged -= AmmoChanged;
     }
 
     private void AmmoChanged(object sender, EventArgs e) {

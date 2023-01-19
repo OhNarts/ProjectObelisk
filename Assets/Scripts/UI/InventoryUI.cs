@@ -16,11 +16,11 @@ public class InventoryUI : MonoBehaviour
     }
 
     void OnEnable() {
-        PlayerInfo.Instance.OnPlayerWeaponsChanged += OnPlayerWeaponsChanged;
+        PlayerState.OnPlayerWeaponsChanged += OnPlayerWeaponsChanged;
     }
 
     void OnDisable() {
-        PlayerInfo.Instance.OnPlayerWeaponsChanged -= OnPlayerWeaponsChanged;
+        PlayerState.OnPlayerWeaponsChanged -= OnPlayerWeaponsChanged;
     }
 
     private void OnPlayerWeaponsChanged(object sender, EventArgs e) {
