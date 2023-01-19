@@ -19,4 +19,3 @@ MonoBehaviour:
   MaxHealth: 100
   Weapons:
     m_keys: []
-  CurrentWeapon: {fileID: 0}

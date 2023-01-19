@@ -80,6 +80,9 @@ public class PlayerState : ScriptableObject
     public delegate void OnPlayerMaxHealthChangedHandler(object sender, EventArgs e);
     public static event OnPlayerMaxHealthChangedHandler OnPlayerMaxHealthChanged;
 
+    public delegate void OnPlayerStateRevertHandler(object sender, EventArgs e);
+    public static event OnPlayerStateRevertHandler OnPlayerStateRevert;
+
     #endregion 
     
     [SerializeField] private PlayerInfo _currentInfo; public static PlayerInfo CurrentInfo {get => _instance._currentInfo;}
@@ -149,11 +152,13 @@ public class PlayerState : ScriptableObject
 
     public static void RevertToLastRoom() {
         _instance._currentInfo = _instance._lastRoomInfo.CreateCopy();
+        OnPlayerStateRevert?.Invoke(Instance, EventArgs.Empty);
     }
 
     public static void RevertToLevelStart() {
         Debug.LogFormat("Before: Health:{0}, WeaponCount:{1}", Health, Weapons.Count);
         _instance._currentInfo = _instance._levelStartInfo.CreateCopy();
         Debug.LogFormat("After: Health:{0}, WeaponCount:{1}", Health, Weapons.Count);
+        OnPlayerStateRevert?.Invoke(Instance, EventArgs.Empty);
     }
 }

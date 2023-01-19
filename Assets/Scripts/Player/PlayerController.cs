@@ -41,7 +41,14 @@ public class PlayerController : MonoBehaviour
 
         _healthHandler.MaxHealth = PlayerState.MaxHealth;
         _healthHandler.Health = PlayerState.Health;
+
+        PlayerState.OnPlayerStateRevert += RevertPlayer;
+
         followObject = null;
+    }
+
+    private void OnDisable() {
+        PlayerState.OnPlayerStateRevert -= RevertPlayer;
     }
 
     // Update is called once per frame
@@ -91,6 +98,11 @@ public class PlayerController : MonoBehaviour
     public void OnPlayerHealthChange()
     {
         PlayerState.Health = _healthHandler.Health;
+    }
+
+    public void RevertPlayer(object sender, EventArgs e) {
+        _healthHandler.MaxHealth = PlayerState.MaxHealth;
+        _healthHandler.Health = PlayerState.Health;
     }
 
     #endregion
