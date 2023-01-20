@@ -11,37 +11,45 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] public UnityEvent onHealthChange;
     [SerializeField] public UnityEvent onDeath;
 
-    [SerializeField] private float maxHealth;
+    [SerializeField] private float _maxHealth;
     public float MaxHealth
     {
-        get { return maxHealth; }
-        set { maxHealth = value; }
+        get { return _maxHealth; }
+        set { _maxHealth = value; }
     }
 
     private bool healthInitialized = false;
-    [SerializeField] private float health;
+    [SerializeField] private float _health;
     public float Health
     {
-        get { return health; }
+        get { return _health; }
         set
         {
-            if (value <= maxHealth) health = value;
-            else { health = maxHealth; }
+            if (value <= _maxHealth) _health = value;
+            else { _health = _maxHealth; }
             healthInitialized = true;
         }
     }
 
-    public HealthHandler(float maxHealth, float health)
-    {
-        this.maxHealth = maxHealth;
-        this.health = health;
+    [SerializeField] private bool _isInvincible = false;
+    public bool IsInvincible {
+        get => _isInvincible;
+        set {
+            _isInvincible = value;
+        }
     }
+
+    // public HealthHandler(float maxHealth, float health)
+    // {
+    //     this._maxHealth = maxHealth;
+    //     this._health = health;
+    // }
 
 
     // Start is called before the first frame update
     void Awake()
     {
-        if (!healthInitialized) health = maxHealth;
+        if (!healthInitialized) _health = _maxHealth;
     }
 
     /// <summary>
@@ -50,10 +58,11 @@ public class HealthHandler : MonoBehaviour
     /// <param name="info"></param>
     public void Damage(DamageInfo info)
     {
-        health -= info.damage;
+        if (_isInvincible) return;
+        _health -= info.damage;
         onHealthChange?.Invoke();
         onDamage?.Invoke(info);
-        if (health <= 0)
+        if (_health <= 0)
         {
             onDeath?.Invoke();
         }
@@ -65,16 +74,16 @@ public class HealthHandler : MonoBehaviour
     /// <param name="amount"></param>
     public void Heal(float amount)
     {
-        float diff = health + amount - maxHealth;
+        float diff = _health + amount - _maxHealth;
         float amountHealed;
         if (diff < 0)
         {
             amountHealed = amount;
         } else
         {
-            amountHealed = maxHealth - health;
+            amountHealed = _maxHealth - _health;
         }
-        health += amountHealed;
+        _health += amountHealed;
         onHealthChange?.Invoke();
         onHeal?.Invoke(amountHealed);
     }

@@ -256,6 +256,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _input: {fileID: 5053912482711007362}
+  _rollDuration: 0.1
+  _rollSpeed: 25
+  _rollCooldown: 0.1
+  _rollScale: 0.5
   _uiCanvas: {fileID: 0}
   _weaponPos: {fileID: 1459913818}
   _maxPickUpDistance: 5
@@ -311,8 +315,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  maxHealth: 100
-  health: 0
+  _maxHealth: 0
+  _health: 0
+  _isInvincible: 0
 --- !u!114 &5053912482711007362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,6 +507,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1a72ba7a-d3c8-49e9-bbe9-48ff49a5027f
     m_ActionName: Planning/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3648394291031476892}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Roll
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: aab3e40f-4136-4d5b-8384-4726c4aac6e4
+    m_ActionName: Combat/Roll[/Keyboard/ctrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Combat

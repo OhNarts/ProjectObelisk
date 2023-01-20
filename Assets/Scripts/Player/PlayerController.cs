@@ -21,10 +21,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInput _input;
     private LayerMask lookLayers;
 
-    private Vector3 velocity;
+    private Vector3 _velocity;
 
     // The point that the player should look at
-    private Vector3 lookPt;
+    private Vector3 _lookPt;
 
     // The point on the ground that the mouse is over
     private Vector3 groundMousePt;
@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
         PlayerState.OnPlayerStateRevert += RevertPlayer;
 
         followObject = null;
+        _rolling = false;
+        _lastRolled = -1;
     }
 
     private void OnDisable() {
@@ -57,8 +59,8 @@ public class PlayerController : MonoBehaviour
         // TODO: Replace these by subscribing to game manager stuff
         if (GameManager.CurrentState != GameState.Plan)
         {
-            transform.LookAt(lookPt);
-            _rb.velocity = velocity;
+            transform.LookAt(_lookPt);
+            if (!_rolling) _rb.velocity = _velocity;
         } 
         if (GameManager.CurrentState != GameState.Combat) {
             if (_equippedWeapon != null) {
@@ -71,8 +73,8 @@ public class PlayerController : MonoBehaviour
             }
         }
         if (followObject != null) {
-            var gotoPt = new Vector3(lookPt.x, lookPt.y + 5, lookPt.z);
-            followObject.transform.position = lookPt;
+            var gotoPt = new Vector3(_lookPt.x, _lookPt.y + 5, _lookPt.z);
+            followObject.transform.position = _lookPt;
         }
     }
 
@@ -108,8 +110,16 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Movement
+    private bool _rolling = false;
+    private float _lastRolled;
+    [SerializeField] private float _rollDuration;
+    [SerializeField] private float _rollSpeed;
+    [SerializeField] private float _rollCooldown;
+    [SerializeField] private float _rollScale;
+
     public void Move(CallbackContext context)
     {
+        if (_rolling) return;
         // Rotates the input matrix to the camera's rotation & normalize
         Vector2 rawInput = context.ReadValue<Vector2>();
         Vector3 changedInput = new Vector3(rawInput.x, 0, rawInput.y);
@@ -120,7 +130,7 @@ public class PlayerController : MonoBehaviour
         var rotatedInput = matrix.MultiplyPoint3x4(changedInput);
         rotatedInput.Normalize();
         // Applies the velocity
-        velocity = (rotatedInput * _speed);
+        _velocity = (rotatedInput * _speed);
     }
 
     public void Look(CallbackContext context)
@@ -131,12 +141,35 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, lookLayers))
         {
             groundMousePt = hit.point;
-            lookPt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            _lookPt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
         }
     }
 
     public void Roll(CallbackContext context) {
-        
+        if (!context.started || _rolling || 
+        Time.fixedTime - _lastRolled < _rollCooldown) return;
+        StartCoroutine(RollSequence());
+    }
+
+    private IEnumerator RollSequence() {
+        _lastRolled = Time.fixedTime;
+        _rolling = true;
+        _healthHandler.IsInvincible = true;
+        Vector3 moveDir = _velocity.normalized;
+        // if (moveDir.Equals(Vector3.zero)) {
+        //     moveDir = transform.forward;
+        // }
+        _rb.velocity = moveDir * _rollSpeed;
+        transform.localScale = new Vector3( transform.localScale.x,
+                                            transform.localScale.y * _rollScale,
+                                            transform.localScale.z);
+        yield return new WaitForSeconds(_rollDuration);
+        transform.localScale = new Vector3( transform.localScale.x,
+                                            transform.localScale.y / _rollScale,
+                                            transform.localScale.z);
+        _rb.velocity = _velocity;
+        _rolling = false;
+        _healthHandler.IsInvincible = false;
     }
     #endregion
 

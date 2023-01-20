@@ -367,8 +367,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  maxHealth: 100
-  health: 100
+  _maxHealth: 100
+  _health: 100
+  _isInvincible: 0
 --- !u!114 &171522303682918168
 MonoBehaviour:
   m_ObjectHideFlags: 0
