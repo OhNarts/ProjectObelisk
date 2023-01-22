@@ -129,6 +129,7 @@ public sealed class GameManager : MonoBehaviour
         CurrentState = GameState.Plan;
         room = (CombatRoom)sender;
         _player.PlanStateStart();
+        room.OnRoomEnterAttempt -= OnRoomEnterAttempt;
     }
 
     // public void ChangeState(GameState state) {

@@ -218,7 +218,6 @@ public class PlayerController : MonoBehaviour
 
         // prioritizes weapons over interactables
         Interactable interactable = null;
-        Debug.Log(colliders.Length);
         foreach(Collider collider in colliders)
         {
             if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon"))

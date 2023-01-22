@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Events;
 
 #region Event Args
 public class OnRoomEnterAttemptArgs : EventArgs
@@ -46,13 +43,13 @@ public class Room : MonoBehaviour
     // _skipOpen is here to mitigate the firing of events from the door
     private bool _skipOpen;
 
-    protected Door doorAttemptedEnter;
+    protected Door _doorAttemptedEnter;
 
     void Awake()
     {
         _occupied = false;
         _skipOpen = false;
-        doorAttemptedEnter = null;
+        _doorAttemptedEnter = null;
 
         foreach (Door door in adjacentRooms.Keys)
         {
@@ -70,14 +67,11 @@ public class Room : MonoBehaviour
 
     private void OnDoorInteract( object sender, EventArgs e )
     {
+        if (_occupied || ((HandledEventArgs)e).Handled) return;
         Door door = (Door)sender;
-        // Since the player is trying to enter the door from an occupied room, check if this is occupied
-        // returns if this is occupied so can call onEnterAttempt on the unoccupied room
-        if (_occupied || _skipOpen) {
-            _skipOpen = false;
-            return;
-        }
-        doorAttemptedEnter = door;
+        _doorAttemptedEnter = door;
+        Debug.Log(((HandledEventArgs)e).Handled);
+        ((HandledEventArgs)e).Handled = true;
         OnRoomEnterAttempt?.Invoke(this, new OnRoomEnterAttemptArgs(((OnDoorInteractArgs)e).Player, door));
     }
 
@@ -85,14 +79,13 @@ public class Room : MonoBehaviour
     {
         SetCameraPos(cameraHolder);
         _occupied = true;
-        adjacentRooms[doorAttemptedEnter].Exit();
-        doorAttemptedEnter.EnterDoor();
-        doorAttemptedEnter.CloseDoor();
+        adjacentRooms[_doorAttemptedEnter].Exit();
+        _doorAttemptedEnter.EnterDoor();
+        //doorAttemptedEnter.CloseDoor();
     }
 
     public virtual void Exit() {
         _occupied = false;
-        _skipOpen = true;
     }
 
     public void SetCameraPos(GameObject cameraHolder) {

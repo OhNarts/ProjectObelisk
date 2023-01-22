@@ -47,7 +47,7 @@ public class CombatRoom : Room
     public void PlanRoom(PlayerController player, GameObject cameraHolder)
     {
         SetCameraPos(cameraHolder);
-        doorAttemptedEnter.PlanStageStart(player);
+        _doorAttemptedEnter.PlanStageStart(player);
         _boundaryColliders.SetActive(true);
         //GameManager.CurrentState = GameState.Plan;
         OnRoomPlanStart?.Invoke(this, EventArgs.Empty);
@@ -58,8 +58,6 @@ public class CombatRoom : Room
         _deadEnemySet.Add(enemy);
         if (_deadEnemySet.Count == _enemies.Count)
         {
-            Debug.Log("Room Finished");
-            Debug.Log(aliveEnemyCount);
             RoomFinish();
         }
     }

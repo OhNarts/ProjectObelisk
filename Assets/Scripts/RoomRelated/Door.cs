@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
 
 #region Event args
-public class OnDoorInteractArgs : EventArgs
+public class OnDoorInteractArgs : HandledEventArgs
 {
     private PlayerController _player; public PlayerController Player { get => _player; }
     public OnDoorInteractArgs(PlayerController player)
@@ -28,8 +29,6 @@ public class Door : MonoBehaviour, Interactable
     // The point outside a door where the player waits before entering
     [SerializeField] private Transform waitPoint1;
     [SerializeField] private Transform waitPoint2;
-
-    private Vector3 otherWaitPoint;
     private PlayerController _player;
     private float rotateDegrees;
     
@@ -50,13 +49,11 @@ public class Door : MonoBehaviour, Interactable
 
         bool lowerDistCheck = Vector3.Distance(waitPoint1.position, player.transform.position) <
             Vector3.Distance(waitPoint2.position, player.transform.position);
+        Debug.LogFormat("Lower Distance Check {0}", lowerDistCheck);
 
         waitPts = lowerDistCheck ? 
             (waitPoint1.position, waitPoint2.position) : 
             (waitPoint2.position, waitPoint1.position);
-
-        //player.transform.position = waitPts.Item1;
-        //otherWaitPoint = waitPts.Item2;
 
         OnDoorInteract?.Invoke(this, new OnDoorInteractArgs(player));
     }
@@ -68,27 +65,15 @@ public class Door : MonoBehaviour, Interactable
     public void PlanStageStart(PlayerController player)
     {
         _player = player;
-
-        // We know that the door only has two waitpoints
-        // Check which is closer and set the player's position to that one
-        // bool lowerDistCheck = Vector3.Distance(waitPoint1.position, player.transform.position) <
-        //     Vector3.Distance(waitPoint2.position, player.transform.position);
-        
-        // (Vector3, Vector3) waitPts = lowerDistCheck ? 
-        //     (waitPoint1.position, waitPoint2.position) : 
-        //     (waitPoint2.position, waitPoint1.position);
-
          player.transform.position = waitPts.Item1;
-         otherWaitPoint = waitPts.Item2;
-
         // Make sure that the door opens in the right direction
         //rotateDegrees *= lowerDistCheck ? -1 : 1;
     }
 
     public void EnterDoor()
     {
-        OpenDoor();
-        _player.transform.position = otherWaitPoint;
+        //OpenDoor();
+        _player.transform.position = waitPts.Item2;
         _player = null;
         onEnter?.Invoke();
         openedPreviously = true;
