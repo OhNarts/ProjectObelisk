@@ -34,21 +34,17 @@ public class Room : MonoBehaviour
     private bool _occupied; public bool Occupied 
     { 
         get => _occupied; 
-    set 
-        {
-            _occupied = value;
-        } 
+        set 
+            {
+                _occupied = value;
+            } 
     }
-
-    // _skipOpen is here to mitigate the firing of events from the door
-    private bool _skipOpen;
 
     protected Door _doorAttemptedEnter;
 
     void Awake()
     {
         _occupied = false;
-        _skipOpen = false;
         _doorAttemptedEnter = null;
 
         foreach (Door door in adjacentRooms.Keys)
@@ -70,7 +66,6 @@ public class Room : MonoBehaviour
         if (_occupied || ((HandledEventArgs)e).Handled) return;
         Door door = (Door)sender;
         _doorAttemptedEnter = door;
-        Debug.Log(((HandledEventArgs)e).Handled);
         ((HandledEventArgs)e).Handled = true;
         OnRoomEnterAttempt?.Invoke(this, new OnRoomEnterAttemptArgs(((OnDoorInteractArgs)e).Player, door));
     }

@@ -18,6 +18,9 @@ public class CombatRoom : Room
     private NavMeshDataInstance _navMeshInstance;
     private bool _roomCompleted; public bool RoomCompleted {get => _roomCompleted;}
     private HashSet<EnemyController> _deadEnemySet;
+    private PlayerController _player;
+    private GameObject _cameraHolder;
+    private bool _planning;
 
     private int aliveEnemyCount;
 
@@ -36,21 +39,56 @@ public class CombatRoom : Room
         _boundaryColliders.SetActive(false);
         _roomCompleted = false;
         _deadEnemySet = new HashSet<EnemyController>();
+        _player = null;
+        _planning = false;
+
+        GameManager.OnGameStateChanged += OnGameStateChanged;
     }
 
     void OnDisable() {
         // Clean up nav mesh data
-        //base.DeInitializeRoom();
         NavMesh.RemoveNavMeshData(_navMeshInstance);
+        GameManager.OnGameStateChanged -= OnGameStateChanged;
     }
 
     public void PlanRoom(PlayerController player, GameObject cameraHolder)
     {
+        _player = player;
+        _cameraHolder = cameraHolder;
         SetCameraPos(cameraHolder);
-        _doorAttemptedEnter.PlanStageStart(player);
+        _player.PlanStateStart();
+        _doorAttemptedEnter.PlanStageStart(_player);
         _boundaryColliders.SetActive(true);
-        //GameManager.CurrentState = GameState.Plan;
+        _planning = true;
+        GameManager.CurrentState = GameState.Plan;
         OnRoomPlanStart?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void CombatEnter() { 
+        base.Enter(_player, _cameraHolder);
+        _boundaryColliders.SetActive(false);
+        if (!_roomCompleted)
+        {
+            foreach (EnemyController enemy in _enemies)
+            {
+                enemy.Target = _player.transform;
+            }
+            //doorAttemptedEnter.CloseDoor();
+        }
+
+        _player = null;
+        _cameraHolder = null;
+    }
+
+    private void OnGameStateChanged(object sender, EventArgs e) {
+        OnGameStateChangedArgs args = (OnGameStateChangedArgs)e;
+        Debug.LogFormat("Game State {0} from {1}", args.NewState.ToString(), gameObject.name);
+        if (_planning &&
+            args.OldState == GameState.Plan && 
+            args.NewState == GameState.Combat) {
+                CombatEnter();
+                _planning = false;
+            } 
     }
 
     private void OnEnemyDeath(EnemyController enemy)
@@ -62,24 +100,11 @@ public class CombatRoom : Room
         }
     }
 
-    public override void Enter(PlayerController player, GameObject cameraHolder)
-    {
-        base.Enter(player, cameraHolder);
-        _boundaryColliders.SetActive(false);
-        if (!_roomCompleted)
-        {
-            foreach (EnemyController enemy in _enemies)
-            {
-                enemy.Target = player.transform;
-            }
-            //doorAttemptedEnter.CloseDoor();
-        }
-    }
-
     private void RoomFinish()
     {
         _roomCompleted = true;
-        //GameManager.CurrentState = GameState.PostCombat;
+        _player = null;
+        GameManager.CurrentState = GameState.PostCombat;
         OnRoomFinish?.Invoke(this, EventArgs.Empty);
     }
 

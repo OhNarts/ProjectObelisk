@@ -49,7 +49,6 @@ public class Door : MonoBehaviour, Interactable
 
         bool lowerDistCheck = Vector3.Distance(waitPoint1.position, player.transform.position) <
             Vector3.Distance(waitPoint2.position, player.transform.position);
-        Debug.LogFormat("Lower Distance Check {0}", lowerDistCheck);
 
         waitPts = lowerDistCheck ? 
             (waitPoint1.position, waitPoint2.position) : 

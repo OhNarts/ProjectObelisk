@@ -153,16 +153,18 @@ public class PlayerState : ScriptableObject
     public static void SaveAsLastRoom() {
         _instance._lastRoomInfo = _instance._currentInfo.CreateCopy();
     }
-
+    
     public static void RevertToLastRoom() {
+        Debug.LogFormat("Before: Health:{0}, WeaponCount:{1}", Health, Weapons.Count);
         _instance._currentInfo = _instance._lastRoomInfo.CreateCopy();
+        Debug.LogFormat("After: Health:{0}, WeaponCount:{1}", Health, Weapons.Count);
         OnPlayerStateRevert?.Invoke(Instance, EventArgs.Empty);
     }
 
     public static void RevertToLevelStart() {
-        Debug.LogFormat("Before: Health:{0}, WeaponCount:{1}", Health, Weapons.Count);
+        
         _instance._currentInfo = _instance._levelStartInfo.CreateCopy();
-        Debug.LogFormat("After: Health:{0}, WeaponCount:{1}", Health, Weapons.Count);
+
         OnPlayerStateRevert?.Invoke(Instance, EventArgs.Empty);
     }
 }

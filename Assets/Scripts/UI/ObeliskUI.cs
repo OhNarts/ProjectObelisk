@@ -14,11 +14,11 @@ public class ObeliskUI : MonoBehaviour
         } else {
             ShowPlanningUI();
         }
-        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+        GameManager.OnGameStateChanged += OnGameStateChanged;
     }
 
     void OnDisable() {
-        GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+        GameManager.OnGameStateChanged -= OnGameStateChanged;
     }
 
     private void OnGameStateChanged(object sender, EventArgs e) {

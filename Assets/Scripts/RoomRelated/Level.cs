@@ -33,10 +33,9 @@ public class Level : MonoBehaviour
 
     private void OnRoomEnterAttempt (object sender, EventArgs e)
     {
-        if (GameManager.CurrentState == GameState.Combat || 
-        GameManager.CurrentState == GameState.Plan)
-            return;
+        if (GameManager.CurrentState == GameState.Combat || GameManager.CurrentState == GameState.Plan) return;
 
+        PlayerState.SaveAsLastRoom();
         Room room = (Room)sender;
         OnRoomEnterAttemptArgs args = (OnRoomEnterAttemptArgs)e;
         if (sender.GetType() == typeof(CombatRoom) && !((CombatRoom)sender).RoomCompleted)

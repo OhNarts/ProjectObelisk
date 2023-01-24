@@ -85,15 +85,16 @@ public class PlayerController : MonoBehaviour
 
     public void CombatStart(CallbackContext callback)
     {
-        if (callback.canceled) return;
+        if (!callback.started) return;
         _input.SwitchCurrentActionMap("Combat");
-        OnCombatStart?.Invoke(this, EventArgs.Empty);
+        GameManager.CurrentState = GameState.Combat;
+        //OnCombatStart?.Invoke(this, EventArgs.Empty);
     }
 
     #region Health
     public void OnDeath()
     {
-        PlayerState.RevertToLevelStart();
+        PlayerState.RevertToLastRoom();
         _onPlayerDeath?.Invoke();
     }
 
@@ -156,9 +157,6 @@ public class PlayerController : MonoBehaviour
         _rolling = true;
         _healthHandler.IsInvincible = true;
         Vector3 moveDir = _velocity.normalized;
-        // if (moveDir.Equals(Vector3.zero)) {
-        //     moveDir = transform.forward;
-        // }
         _rb.velocity = moveDir * _rollSpeed;
         transform.localScale = new Vector3( transform.localScale.x,
                                             transform.localScale.y * _rollScale,
