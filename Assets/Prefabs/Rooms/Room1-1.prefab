@@ -311,6 +311,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BoundaryColliders
       objectReference: {fileID: 0}
+    - target: {fileID: 3846496132946793768, guid: 5aba8143c2353f141b48aca6755a4039, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4627264126408334236, guid: 5aba8143c2353f141b48aca6755a4039, type: 3}
       propertyPath: m_Enabled
       value: 0

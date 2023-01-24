@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject _uiCanvas;
     [SerializeField] private Transform _weaponPos;
     [SerializeField] private float _maxPickUpDistance;
-    [SerializeField] private float interactableRadius;
+    [SerializeField] private float _interactableRadius;
     [SerializeField] private LayerMask _interactableMask;
     private Weapon _equippedWeapon; public Weapon EquippedWeapon {get => _equippedWeapon;}
     
@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour
         // returns if the position the mouse is over is too far to interact
         if (!(Vector3.Distance(groundMousePt, transform.position) < _maxPickUpDistance)) return;
 
-        Collider[] colliders = Physics.OverlapSphere(groundMousePt, interactableRadius);
+        Collider[] colliders = Physics.OverlapSphere(groundMousePt, _interactableRadius);
 
         // prioritizes weapons over interactables
         Interactable interactable = null;
