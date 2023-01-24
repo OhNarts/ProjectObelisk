@@ -10,8 +10,6 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerController : MonoBehaviour
 {
-    public delegate void OnCombatStartHandler(object sender, EventArgs e);
-    public event OnCombatStartHandler OnCombatStart;
     [SerializeField] private HealthHandler _healthHandler; public HealthHandler HealthHandler { get => _healthHandler; }
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Camera _camera;

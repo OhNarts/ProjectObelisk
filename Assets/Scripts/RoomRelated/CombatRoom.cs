@@ -82,7 +82,6 @@ public class CombatRoom : Room
 
     private void OnGameStateChanged(object sender, EventArgs e) {
         OnGameStateChangedArgs args = (OnGameStateChangedArgs)e;
-        Debug.LogFormat("Game State {0} from {1}", args.NewState.ToString(), gameObject.name);
         if (_planning &&
             args.OldState == GameState.Plan && 
             args.NewState == GameState.Combat) {
