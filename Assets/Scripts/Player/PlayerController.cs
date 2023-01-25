@@ -89,6 +89,15 @@ public class PlayerController : MonoBehaviour
         //OnCombatStart?.Invoke(this, EventArgs.Empty);
     }
 
+    public void CancelPlanState(CallbackContext callback) {
+        if (!callback.started) return;
+        if (GameManager.CurrentState == GameState.Plan) 
+        {
+            _input.SwitchCurrentActionMap("Combat");
+            GameManager.CurrentState = GameState.PostCombat;
+        }
+    }
+
     #region Health
     public void OnDeath()
     {
