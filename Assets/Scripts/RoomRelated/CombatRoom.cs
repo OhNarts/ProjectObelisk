@@ -12,33 +12,28 @@ public class CombatRoom : Room
     public delegate void OnRoomPlanStartHandler(object source, EventArgs e);
     public event OnRoomPlanStartHandler OnRoomPlanStart;
 
-    [SerializeField] private List<EnemyController> _enemies;
+    public event EventHandler OnCombatStart;
+
+    [SerializeField] private TransformGameObjectDictionary _enemySpawnPoints;
+
+    //[SerializeField] private List<EnemyController> _enemies;
     [SerializeField] private NavMeshData _navMesh;
     [SerializeField] private GameObject _boundaryColliders;
     private NavMeshDataInstance _navMeshInstance;
     private bool _roomCompleted; public bool RoomCompleted {get => _roomCompleted;}
-    private HashSet<EnemyController> _deadEnemySet;
+     private List<EnemyController> _aliveEnemies;
     private PlayerController _player;
     private GameObject _cameraHolder;
     private bool _planning;
 
-    private int aliveEnemyCount;
-
     void OnEnable()
     {
-        //base.InitializeRoom();
-
         _navMesh.position = transform.position;
         _navMeshInstance = NavMesh.AddNavMeshData(_navMesh);
-
-        aliveEnemyCount = _enemies.Count;
-        foreach (EnemyController enemy in _enemies)
-        {
-            enemy.onEnemyDeath.AddListener(OnEnemyDeath);
-        }
+        _aliveEnemies = new List<EnemyController>();
+        //InitializeEnemies();
         _boundaryColliders.SetActive(false);
         _roomCompleted = false;
-        _deadEnemySet = new HashSet<EnemyController>();
         _player = null;
         _planning = false;
 
@@ -53,6 +48,7 @@ public class CombatRoom : Room
 
     public void PlanRoom(PlayerController player, GameObject cameraHolder)
     {
+        InitializeEnemies();
         _player = player;
         _cameraHolder = cameraHolder;
         SetCameraPos(cameraHolder);
@@ -69,15 +65,25 @@ public class CombatRoom : Room
         _boundaryColliders.SetActive(false);
         if (!_roomCompleted)
         {
-            foreach (EnemyController enemy in _enemies)
-            {
+            foreach (EnemyController enemy in _aliveEnemies) {
                 enemy.Target = _player.transform;
             }
-            //doorAttemptedEnter.CloseDoor();
         }
 
         _player = null;
         _cameraHolder = null;
+        OnCombatStart?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void Reset() {
+        // Remove alive enemies and place in new ones
+        // That way their health resets
+        while (_aliveEnemies.Count != 0) {
+            var currentEnemy = _aliveEnemies[0];
+            _aliveEnemies.Remove(currentEnemy);
+            Destroy(currentEnemy.gameObject);
+        }
+        //InitializeEnemies();
     }
 
     private void OnGameStateChanged(object sender, EventArgs e) {
@@ -92,11 +98,8 @@ public class CombatRoom : Room
 
     private void OnEnemyDeath(EnemyController enemy)
     {
-        _deadEnemySet.Add(enemy);
-        if (_deadEnemySet.Count == _enemies.Count)
-        {
-            RoomFinish();
-        }
+        _aliveEnemies.Remove(enemy);
+        if (_aliveEnemies.Count == 0) RoomFinish();
     }
 
     private void RoomFinish()
@@ -105,6 +108,17 @@ public class CombatRoom : Room
         _player = null;
         GameManager.CurrentState = GameState.PostCombat;
         OnRoomFinish?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void InitializeEnemies() {
+        foreach (Transform enemyTransform in _enemySpawnPoints.Keys)
+        {
+            GameObject enemyInstance = Instantiate(_enemySpawnPoints[enemyTransform],
+            enemyTransform.position, Quaternion.identity);
+            EnemyController enemyControllerInstance = enemyInstance.GetComponent<EnemyController>(); 
+            enemyControllerInstance.onEnemyDeath.AddListener(OnEnemyDeath);
+            _aliveEnemies.Add(enemyControllerInstance);
+        }
     }
 
 }

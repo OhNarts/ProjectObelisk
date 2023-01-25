@@ -34,8 +34,7 @@ public sealed class GameManager : MonoBehaviour
     #endregion
     
     #region Events
-    public delegate void OnGameStateChangedHandler(object sender, EventArgs e);
-    public static event OnGameStateChangedHandler OnGameStateChanged;
+    public static event EventHandler<OnGameStateChangedArgs> OnGameStateChanged;
     #endregion
 
     [SerializeField] private GameState _currentState; 
@@ -63,6 +62,7 @@ public sealed class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
+        PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
         CurrentState = GameState.PostCombat;
     }
 
@@ -70,6 +70,10 @@ public sealed class GameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+    private void OnPlayerStateRevert(object sender, OnPlayerStateRevertArgs e) {
+        GameManager.CurrentState = GameState.PostCombat;
     }
 
 

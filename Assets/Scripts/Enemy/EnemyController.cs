@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
         set
         {
             _target = value;
+            //agent.enabled = true;
         }
     }
 

@@ -7,6 +7,7 @@ using UnityEngine;
 /// Add a custom property drawer for each dictionary you want to serialize
 /// </summary>
 
+[CustomPropertyDrawer(typeof(TransformGameObjectDictionary))]
 [CustomPropertyDrawer(typeof(WeaponHashSet))]
 [CustomPropertyDrawer(typeof(DoorRoomDictionary))]
 [CustomPropertyDrawer(typeof(AmmoDictionary))]

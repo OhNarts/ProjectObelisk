@@ -24,6 +24,9 @@ public class AmmoDictionary : SerializableDictionary<AmmoType, int> {
 public class AmmoUIDictionary : SerializableDictionary<AmmoType, AmmoSlotUI> {}
 
 [Serializable]
+public class TransformGameObjectDictionary : SerializableDictionary<Transform, GameObject> {}
+
+[Serializable]
 public class WeaponHashSet : SerializableHashSet<WeaponItem> { 
     public WeaponHashSet CreateCopy() {
         WeaponHashSet copy = new WeaponHashSet();

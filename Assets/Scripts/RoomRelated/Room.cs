@@ -31,7 +31,8 @@ public class Room : MonoBehaviour
     [SerializeField] private float _cameraSize;
     [SerializeField] private Transform _camHolderPosRot;
 
-    private bool _occupied; public bool Occupied 
+    [Header("EXPOSED FOR DEBUG")]
+    [SerializeField] private bool _occupied; public bool Occupied 
     { 
         get => _occupied; 
         set 

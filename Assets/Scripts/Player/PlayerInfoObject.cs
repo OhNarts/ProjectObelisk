@@ -13,7 +13,6 @@ public class PlayerInfoObject : ScriptableObject
     public float Health;
     public float MaxHealth;
     public WeaponHashSet Weapons;
-    //public Weapon CurrentWeapon;
 }
 
 /// <summary>
@@ -25,6 +24,7 @@ public class PlayerInfo {
     public float MaxHealth;
     public WeaponHashSet Weapons;
     public Weapon CurrentWeapon;
+    public Vector3 Position;
 
     /// <summary>
     /// Copies over values from the info object instead of getting references to them
@@ -36,6 +36,7 @@ public class PlayerInfo {
         MaxHealth = infoObject.MaxHealth;
         Weapons = infoObject.Weapons.CreateCopy();
         CurrentWeapon = null;
+        Position = new Vector3();
     }
 
     public PlayerInfo() {
@@ -43,7 +44,9 @@ public class PlayerInfo {
         Health = 0;
         MaxHealth = 0;
         Weapons = new WeaponHashSet();
+        Position = new Vector3();
         CurrentWeapon = null;
+        Position = new Vector3();
     }
 
     public PlayerInfo CreateCopy() {
@@ -52,6 +55,7 @@ public class PlayerInfo {
             Health = this.Health,
             MaxHealth = this.MaxHealth,
             Weapons = this.Weapons.CreateCopy(),
+            Position = this.Position,
             CurrentWeapon = this.CurrentWeapon
         };
     }

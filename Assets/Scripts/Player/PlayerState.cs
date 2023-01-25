@@ -38,6 +38,14 @@ public class OnPlayerMaxHealthChangedArgs : EventArgs {
         _newMaxHealth = newMaxHealth;
     }
 }
+
+public class OnPlayerStateRevertArgs : EventArgs {
+    public enum PlayerRevertType { LastRoom, LevelStart }
+    private PlayerRevertType _revertType; public PlayerRevertType RevertType {get => _revertType;}
+    public OnPlayerStateRevertArgs(PlayerRevertType type) {
+        _revertType = type;
+    }
+}
 #endregion
 
 [CreateAssetMenu(fileName = "New Player State", menuName = "Player/Player State")]
@@ -80,14 +88,13 @@ public class PlayerState : ScriptableObject
     public delegate void OnPlayerMaxHealthChangedHandler(object sender, EventArgs e);
     public static event OnPlayerMaxHealthChangedHandler OnPlayerMaxHealthChanged;
 
-    public delegate void OnPlayerStateRevertHandler(object sender, EventArgs e);
-    public static event OnPlayerStateRevertHandler OnPlayerStateRevert;
+    public static event EventHandler<OnPlayerStateRevertArgs> OnPlayerStateRevert;
 
     #endregion 
     
     [SerializeField] private PlayerInfo _currentInfo; public static PlayerInfo CurrentInfo {get => _instance._currentInfo;}
     private PlayerInfo _lastRoomInfo; public static PlayerInfo LastRoomInfo {get => _instance._lastRoomInfo;}
-    [SerializeField] private PlayerInfo _levelStartInfo; public static PlayerInfo RoomStartInfo {get => _instance._levelStartInfo;}
+    [SerializeField] private PlayerInfo _levelStartInfo; public static PlayerInfo LevelStartInfo {get => _instance._levelStartInfo;}
     [SerializeField] private PlayerInfoObject _initialInfo; public static PlayerInfoObject InitialInfo {get => _instance._initialInfo;}
 
     public static AmmoDictionary Ammo {get => Instance._currentInfo.Ammo;}
@@ -150,21 +157,31 @@ public class PlayerState : ScriptableObject
         }
     }
 
+    public static Vector3 Position {
+        get => Instance._currentInfo.Position;
+        set {
+            Instance._currentInfo.Position = value;
+        }
+    }
+
     public static void SaveAsLastRoom() {
         _instance._lastRoomInfo = _instance._currentInfo.CreateCopy();
     }
     
     public static void RevertToLastRoom() {
-        Debug.LogFormat("Before: Health:{0}, WeaponCount:{1}", Health, Weapons.Count);
         _instance._currentInfo = _instance._lastRoomInfo.CreateCopy();
-        Debug.LogFormat("After: Health:{0}, WeaponCount:{1}", Health, Weapons.Count);
-        OnPlayerStateRevert?.Invoke(Instance, EventArgs.Empty);
+        Debug.Log(_instance._currentInfo.Health);
+        OnPlayerStateRevert?.Invoke(Instance, new OnPlayerStateRevertArgs(
+            OnPlayerStateRevertArgs.PlayerRevertType.LastRoom
+        ));
     }
 
     public static void RevertToLevelStart() {
         
         _instance._currentInfo = _instance._levelStartInfo.CreateCopy();
 
-        OnPlayerStateRevert?.Invoke(Instance, EventArgs.Empty);
+        OnPlayerStateRevert?.Invoke(Instance, new OnPlayerStateRevertArgs(
+            OnPlayerStateRevertArgs.PlayerRevertType.LevelStart
+        ));
     }
 }

@@ -25,10 +25,15 @@ public class PlayerController : MonoBehaviour
     private Vector3 _lookPt;
 
     // The point on the ground that the mouse is over
-    private Vector3 groundMousePt;
+    private Vector3 _groundMousePt;
 
     // The object that should follow the mouse pointer
-    private GameObject followObject;
+    private GameObject _followObject;
+
+    private bool _reverted;
+
+    [Header("EXPOSED FOR DEBUG")]
+    [SerializeField]private List<Weapon> _placedWeapons;
 
     private void Start()
     {
@@ -40,15 +45,19 @@ public class PlayerController : MonoBehaviour
         _healthHandler.MaxHealth = PlayerState.MaxHealth;
         _healthHandler.Health = PlayerState.Health;
 
-        PlayerState.OnPlayerStateRevert += RevertPlayer;
-
-        followObject = null;
+        _followObject = null;
         _rolling = false;
         _lastRolled = -1;
+        _placedWeapons = new List<Weapon>();
+        _reverted = false;
+
+        PlayerState.OnPlayerStateRevert += RevertPlayer;
+        GameManager.OnGameStateChanged += OnGameStateChange;
     }
 
     private void OnDisable() {
         PlayerState.OnPlayerStateRevert -= RevertPlayer;
+        GameManager.OnGameStateChanged -= OnGameStateChange;
     }
 
     // Update is called once per frame
@@ -60,25 +69,25 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(_lookPt);
             if (!_rolling) _rb.velocity = _velocity;
         } 
-        if (GameManager.CurrentState != GameState.Combat) {
-            if (_equippedWeapon != null) {
-                _equippedWeapon.DropWeapon();
-                PlayerState.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
-                PlayerState.AddWeapon(_equippedWeapon.WeaponItem);
-                Destroy(_equippedWeapon.gameObject);
-                _equippedWeapon = null;
-                PlayerState.CurrentWeapon = _equippedWeapon;
-            }
-        }
-        if (followObject != null) {
+        // if (GameManager.CurrentState != GameState.Combat) {
+        //     if (_equippedWeapon != null) {
+        //         _equippedWeapon.DropWeapon();
+        //         PlayerState.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
+        //         PlayerState.AddWeapon(_equippedWeapon.WeaponItem);
+        //         Destroy(_equippedWeapon.gameObject);
+        //         _equippedWeapon = null;
+        //         PlayerState.CurrentWeapon = _equippedWeapon;
+        //     }
+        // }
+        if (_followObject != null) {
             var gotoPt = new Vector3(_lookPt.x, _lookPt.y + 5, _lookPt.z);
-            followObject.transform.position = _lookPt;
+            _followObject.transform.position = _lookPt;
         }
     }
 
     public void PlanStateStart()
     {
-        _input.SwitchCurrentActionMap("Planning");
+        //_input.SwitchCurrentActionMap("Planning");
     }
 
     public void CombatStart(CallbackContext callback)
@@ -86,7 +95,42 @@ public class PlayerController : MonoBehaviour
         if (!callback.started) return;
         _input.SwitchCurrentActionMap("Combat");
         GameManager.CurrentState = GameState.Combat;
-        //OnCombatStart?.Invoke(this, EventArgs.Empty);
+    }
+    
+    public void RevertPlayer(object sender, EventArgs e) {
+        _healthHandler.MaxHealth = PlayerState.MaxHealth;
+        _healthHandler.Health = PlayerState.Health;
+        transform.position = PlayerState.Position;
+        _reverted = true;
+        _equippedWeapon = null;
+
+        while (_placedWeapons.Count != 0) {
+            Weapon currWeapon = _placedWeapons[0];
+            _placedWeapons.Remove(currWeapon);
+            Destroy(currWeapon.gameObject);
+        }
+    }
+
+    private void OnGameStateChange(object sender, OnGameStateChangedArgs e) {
+        switch (e.NewState) {
+            case GameState.Combat:
+                _input.SwitchCurrentActionMap("Combat");
+                break;
+            case GameState.Plan:
+                _input.SwitchCurrentActionMap("Planning");
+                break;
+            case GameState.PostCombat:
+                _input.SwitchCurrentActionMap("Combat");
+                if (_equippedWeapon != null) {
+                    _equippedWeapon.DropWeapon();
+                    PlayerState.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
+                    PlayerState.AddWeapon(_equippedWeapon.WeaponItem);
+                    Destroy(_equippedWeapon.gameObject);
+                    _equippedWeapon = null;
+                    PlayerState.CurrentWeapon = _equippedWeapon;
+                }
+                break;
+        }
     }
 
     #region Health
@@ -100,12 +144,6 @@ public class PlayerController : MonoBehaviour
     {
         PlayerState.Health = _healthHandler.Health;
     }
-
-    public void RevertPlayer(object sender, EventArgs e) {
-        _healthHandler.MaxHealth = PlayerState.MaxHealth;
-        _healthHandler.Health = PlayerState.Health;
-    }
-
     #endregion
 
     #region Movement
@@ -139,7 +177,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, lookLayers))
         {
-            groundMousePt = hit.point;
+            _groundMousePt = hit.point;
             _lookPt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
         }
     }
@@ -208,9 +246,9 @@ public class PlayerController : MonoBehaviour
         // make sure that this is only called once
         if (!context.started) return;
         // returns if the position the mouse is over is too far to interact
-        if (!(Vector3.Distance(groundMousePt, transform.position) < _maxPickUpDistance)) return;
+        if (!(Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) return;
 
-        Collider[] colliders = Physics.OverlapSphere(groundMousePt, _interactableRadius);
+        Collider[] colliders = Physics.OverlapSphere(_groundMousePt, _interactableRadius);
 
         // prioritizes weapons over interactables
         Interactable interactable = null;
@@ -275,12 +313,13 @@ public class PlayerController : MonoBehaviour
             if (PlayerState.Ammo[item.AmmoType1] < item.AmmoCost1) return;
 
             GameObject Instance = Instantiate(item.gameObject);
-            Weapon weapon = Instance.GetComponent<Weapon>(); 
+            Weapon weapon = Instance.GetComponent<Weapon>();
+            _placedWeapons.Add(weapon);
             PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
             weapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
-            followObject = Instance;
+            _followObject = Instance;
         } else if (context.canceled) {
-            followObject = null;
+            _followObject = null;
         }
     }
     #endregion

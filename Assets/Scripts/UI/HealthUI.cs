@@ -11,13 +11,15 @@ public class HealthUI : MonoBehaviour
     void OnEnable() {
         _textMesh.text = PlayerState.Health.ToString();
         PlayerState.OnPlayerHealthChanged += OnPlayerHealthChanged;
+        PlayerState.OnPlayerStateRevert += OnPlayerHealthChanged;
     }
 
     void Disable() {
         PlayerState.OnPlayerHealthChanged -= OnPlayerHealthChanged;
+        PlayerState.OnPlayerStateRevert -= OnPlayerHealthChanged;
     }
 
     private void OnPlayerHealthChanged(object sender, EventArgs e) {
-        _textMesh.text = ((OnPlayerHealthChangedArgs)e).NewHealth.ToString();
+        _textMesh.text = PlayerState.Health.ToString();
     }
 }
