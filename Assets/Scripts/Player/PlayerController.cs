@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
         _lastRolled = -1;
         _placedWeapons = new List<Weapon>();
 
+        PlayerState.Position = transform.position;
         PlayerState.OnPlayerStateRevert += RevertPlayer;
         GameManager.OnGameStateChanged += OnGameStateChange;
     }
@@ -103,15 +104,11 @@ public class PlayerController : MonoBehaviour
             case GameState.PostCombat:
                 _input.SwitchCurrentActionMap("Combat");
                 if (e.TriggeredByRevert) break;
-                Debug.Log("Not Reverted");
                 if (_equippedWeapon != null) 
                 {
                     _equippedWeapon.DropWeapon();
-                    if (!e.TriggeredByRevert) 
-                    {
-                        PlayerState.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
-                        PlayerState.AddWeapon(_equippedWeapon.WeaponItem);
-                    }
+                    PlayerState.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
+                    PlayerState.AddWeapon(_equippedWeapon.WeaponItem);
                     Destroy(_equippedWeapon.gameObject);
                     _equippedWeapon = null;
                     PlayerState.CurrentWeapon = _equippedWeapon;
@@ -134,7 +131,6 @@ public class PlayerController : MonoBehaviour
         if (!callback.started) return;
         if (GameManager.CurrentState == GameState.Plan) 
         {
-            //_input.SwitchCurrentActionMap("Combat");
             GameManager.CurrentState = GameState.PostCombat;
         }
     }

@@ -10,8 +10,8 @@ public class Level : MonoBehaviour
     [SerializeField] private Scene _nextScene; public Scene NextScene { get => _nextScene; }
     [SerializeField] private GameObject _cameraHolder;
 
-    private Room _previousRoom;
-    private Room _currentRoom;
+    [SerializeField] private Room _previousRoom;
+    [SerializeField] private Room _currentRoom;
     private CombatRoom _planningRoom;
 
     void Awake()
@@ -50,13 +50,24 @@ public class Level : MonoBehaviour
 
     private void OnPlayerStateRevert(object sender, OnPlayerStateRevertArgs e) {
         foreach (var room in _rooms) {
-            if (room.Occupied && room.GetType() == typeof(CombatRoom)) {
+            if (room.GetType() != typeof(CombatRoom)) continue;
+            CombatRoom combatRoom = (CombatRoom)room;
+            if (combatRoom.Occupied || 
+            (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart && combatRoom.RoomCompleted)) {
                 ((CombatRoom)room).Reset();
                 break;
             }
         }
+
         _currentRoom.Occupied = false;
-        _currentRoom = _previousRoom;
+
+        if (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart) {
+            _currentRoom = _rooms[0];
+            _previousRoom = null;
+        } else {
+            _currentRoom = _previousRoom;
+        }
+
         _currentRoom.SetCameraPos(_cameraHolder);
         _currentRoom.Occupied = true;
     }
