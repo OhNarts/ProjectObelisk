@@ -30,9 +30,8 @@ public class Room : MonoBehaviour
     // Change to increase the distance the camera can be from the room
     [SerializeField] private float _cameraSize;
     [SerializeField] private Transform _camHolderPosRot;
-
-    [Header("EXPOSED FOR DEBUG")]
-    [SerializeField] private bool _occupied; public bool Occupied 
+    
+    private bool _occupied; public bool Occupied 
     { 
         get => _occupied; 
         set 

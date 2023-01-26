@@ -66,7 +66,6 @@ public sealed class GameManager : MonoBehaviour
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
         PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
         CurrentState = GameState.PostCombat;
     }
@@ -74,7 +73,6 @@ public sealed class GameManager : MonoBehaviour
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
     private void OnPlayerStateRevert(object sender, OnPlayerStateRevertArgs e) {
@@ -86,13 +84,5 @@ public sealed class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         currLevel = GameObject.FindGameObjectsWithTag("Level")[0].GetComponent<Level>();
-    }
-
-    private void OnSceneUnloaded(Scene scene)
-    {
-        if (currLevel.NextScene != null)
-        {
-            SceneManager.LoadScene(currLevel.NextScene.name, LoadSceneMode.Single);
-        }
     }
 }

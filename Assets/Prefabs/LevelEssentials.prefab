@@ -214,6 +214,8 @@ MonoBehaviour:
   _nextScene:
     m_Handle: 0
   _cameraHolder: {fileID: 8054438384018747894}
+  _previousRoom: {fileID: 0}
+  _currentRoom: {fileID: 0}
 --- !u!1 &7539315591280306320
 GameObject:
   m_ObjectHideFlags: 0
