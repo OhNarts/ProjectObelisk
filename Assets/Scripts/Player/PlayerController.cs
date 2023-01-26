@@ -104,11 +104,11 @@ public class PlayerController : MonoBehaviour
         _reverted = true;
         _equippedWeapon = null;
 
-        while (_placedWeapons.Count != 0) {
-            Weapon currWeapon = _placedWeapons[0];
-            _placedWeapons.Remove(currWeapon);
-            Destroy(currWeapon.gameObject);
-        }
+        // while (_placedWeapons.Count != 0) {
+        //     Weapon currWeapon = _placedWeapons[0];
+        //     _placedWeapons.Remove(currWeapon);
+        //     Destroy(currWeapon.gameObject);
+        // }
     }
 
     private void OnGameStateChange(object sender, OnGameStateChangedArgs e) {
@@ -128,12 +128,17 @@ public class PlayerController : MonoBehaviour
                     Destroy(_equippedWeapon.gameObject);
                     _equippedWeapon = null;
                     PlayerState.CurrentWeapon = _equippedWeapon;
+                } 
+                while (_placedWeapons.Count != 0) {
+                    Weapon currWeapon = _placedWeapons[0];
+                    _placedWeapons.Remove(currWeapon);
+                    if (!_reverted) {
+                        PlayerState.AddToAmmo(currWeapon.WeaponItem.AmmoType1, currWeapon.AmmoAmount2);
+                    }
+                    Destroy(currWeapon.gameObject);
                 }
-
-                // Replaces the placed weapons list of state goes Combat -> PostCombat
-                if (e.OldState == GameState.Combat) {
-                    _placedWeapons = new List<Weapon>();
-                }
+                _placedWeapons = new List<Weapon>();
+                _reverted = false;
                 break;
         }
     }
@@ -142,7 +147,7 @@ public class PlayerController : MonoBehaviour
         if (!callback.started) return;
         if (GameManager.CurrentState == GameState.Plan) 
         {
-            _input.SwitchCurrentActionMap("Combat");
+            //_input.SwitchCurrentActionMap("Combat");
             GameManager.CurrentState = GameState.PostCombat;
         }
     }

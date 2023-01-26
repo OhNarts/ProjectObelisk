@@ -10,9 +10,9 @@ public class Level : MonoBehaviour
     [SerializeField] private Scene _nextScene; public Scene NextScene { get => _nextScene; }
     [SerializeField] private GameObject _cameraHolder;
 
-    [SerializeField] private Room _previousRoom;
-    [SerializeField] private Room _currentRoom;
-    [SerializeField] private CombatRoom _planningRoom;
+    private Room _previousRoom;
+    private Room _currentRoom;
+    private CombatRoom _planningRoom;
 
     void Awake()
     {
