@@ -256,6 +256,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _input: {fileID: 5053912482711007362}
+  _placedWeapons: []
   _rollDuration: 0.1
   _rollSpeed: 25
   _rollCooldown: 0.1
@@ -456,7 +457,19 @@ MonoBehaviour:
     m_ActionId: c74ce2d3-df3b-4b30-90a0-4f000734a5d9
     m_ActionName: Planning/PlaceItem[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3648394291031476892}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: RemoveFromWorld
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 0dca25e8-59f3-4b44-b7bf-7174a31d7361
     m_ActionName: Planning/RemoveItem[/Mouse/rightButton]
   - m_PersistentCalls:
