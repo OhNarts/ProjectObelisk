@@ -48,11 +48,12 @@ public class CombatRoom : Room
 
     public void PlanRoom(PlayerController player, GameObject cameraHolder)
     {
+        Reset();
         InitializeEnemies();
         _player = player;
         _cameraHolder = cameraHolder;
         SetCameraPos(cameraHolder);
-        _player.PlanStateStart();
+        //_player.PlanStateStart();
         _doorAttemptedEnter.PlanStageStart(_player);
         _boundaryColliders.SetActive(true);
         _planning = true;

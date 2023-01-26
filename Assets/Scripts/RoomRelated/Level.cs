@@ -12,17 +12,20 @@ public class Level : MonoBehaviour
 
     [SerializeField] private Room _previousRoom;
     [SerializeField] private Room _currentRoom;
+    [SerializeField] private CombatRoom _planningRoom;
 
     void Awake()
     {
+        _previousRoom = null;
         foreach (Room room in _rooms)
         {
             room.OnRoomEnterAttempt += OnRoomEnterAttempt;
         }   
-        _previousRoom = null;
+        GameManager.OnGameStateChanged += OnGameStateChange;
     }
 
     void Start() {
+        _planningRoom = null;
         _currentRoom = _rooms[0];
         _currentRoom.SetCameraPos(_cameraHolder);
         _currentRoom.Occupied = true;
@@ -34,6 +37,14 @@ public class Level : MonoBehaviour
         foreach (Room room in _rooms)
         {
             room.OnRoomEnterAttempt -= OnRoomEnterAttempt;
+        }
+        GameManager.OnGameStateChanged -= OnGameStateChange;
+    }
+
+    private void OnGameStateChange(object sender, OnGameStateChangedArgs e) {
+        if (e.OldState == GameState.Plan && e.NewState == GameState.PostCombat) {
+            _currentRoom?.SetCameraPos(_cameraHolder);
+            if (_planningRoom != null) _planningRoom.OnCombatStart -= OnCombatStart;
         }
     }
 
@@ -59,6 +70,7 @@ public class Level : MonoBehaviour
         if (sender.GetType() == typeof(CombatRoom) && !((CombatRoom)sender).RoomCompleted)
         {
             CombatRoom combatRoom = (CombatRoom)sender;
+            _planningRoom = combatRoom;
             combatRoom.PlanRoom(args.Player, _cameraHolder);
             combatRoom.OnCombatStart += OnCombatStart;
             PlayerState.Position = args.Player.transform.position;
@@ -72,6 +84,7 @@ public class Level : MonoBehaviour
 
     private void OnCombatStart(object sender, EventArgs e) {
         UpdateToCurrentRoom((Room)sender);
+        _planningRoom = null;
         // Unsubscribe itself so that it doesn't get called again by
         // the same room, unless you attempt to enter that room
         // again after a revert

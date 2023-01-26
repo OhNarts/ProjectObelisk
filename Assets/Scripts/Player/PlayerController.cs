@@ -129,6 +129,11 @@ public class PlayerController : MonoBehaviour
                     _equippedWeapon = null;
                     PlayerState.CurrentWeapon = _equippedWeapon;
                 }
+
+                // Replaces the placed weapons list of state goes Combat -> PostCombat
+                if (e.OldState == GameState.Combat) {
+                    _placedWeapons = new List<Weapon>();
+                }
                 break;
         }
     }
