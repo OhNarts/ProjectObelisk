@@ -21,7 +21,8 @@ public class CombatRoom : Room
     [SerializeField] private GameObject _boundaryColliders;
     private NavMeshDataInstance _navMeshInstance;
     private bool _roomCompleted; public bool RoomCompleted {get => _roomCompleted;}
-     private List<EnemyController> _aliveEnemies;
+    private List<EnemyController> _aliveEnemies;
+    private List<Weapon> _droppedWeapons;
     private PlayerController _player;
     private GameObject _cameraHolder;
     private bool _planning;
@@ -31,6 +32,7 @@ public class CombatRoom : Room
         _navMesh.position = transform.position;
         _navMeshInstance = NavMesh.AddNavMeshData(_navMesh);
         _aliveEnemies = new List<EnemyController>();
+        _droppedWeapons = new List<Weapon>();
         //InitializeEnemies();
         _boundaryColliders.SetActive(false);
         _roomCompleted = false;
@@ -81,8 +83,13 @@ public class CombatRoom : Room
         // That way their health resets
         while (_aliveEnemies.Count != 0) {
             var currentEnemy = _aliveEnemies[0];
-            _aliveEnemies.Remove(currentEnemy);
+            _aliveEnemies.RemoveAt(0);
             Destroy(currentEnemy.gameObject);
+        }
+        while (_droppedWeapons.Count != 0) {
+            var currentWeapon = _droppedWeapons[0];
+            _droppedWeapons.RemoveAt(0);
+            Destroy(currentWeapon.gameObject);
         }
         //InitializeEnemies();
     }
@@ -100,6 +107,7 @@ public class CombatRoom : Room
     private void OnEnemyDeath(EnemyController enemy)
     {
         _aliveEnemies.Remove(enemy);
+        _droppedWeapons.Add(enemy.EquippedWeapon);
         if (_aliveEnemies.Count == 0) RoomFinish();
     }
 

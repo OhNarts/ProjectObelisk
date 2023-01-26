@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
 
     
     [SerializeField] private float distToAttack;
-    [SerializeField] private Weapon weapon;
+    [SerializeField] private Weapon weapon; public Weapon EquippedWeapon {get => weapon;}
     [SerializeField] private Transform equipPos;
 
     [SerializeField] private Transform _target;

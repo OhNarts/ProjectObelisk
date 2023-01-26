@@ -30,8 +30,6 @@ public class PlayerController : MonoBehaviour
     // The object that should follow the mouse pointer
     private GameObject _followObject;
 
-    private bool _reverted;
-
     [Header("EXPOSED FOR DEBUG")]
     [SerializeField]private List<Weapon> _placedWeapons;
 
@@ -49,7 +47,6 @@ public class PlayerController : MonoBehaviour
         _rolling = false;
         _lastRolled = -1;
         _placedWeapons = new List<Weapon>();
-        _reverted = false;
 
         PlayerState.OnPlayerStateRevert += RevertPlayer;
         GameManager.OnGameStateChanged += OnGameStateChange;
@@ -60,34 +57,17 @@ public class PlayerController : MonoBehaviour
         GameManager.OnGameStateChanged -= OnGameStateChange;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // TODO: Replace these by subscribing to game manager stuff
         if (GameManager.CurrentState != GameState.Plan)
         {
             transform.LookAt(_lookPt);
             if (!_rolling) _rb.velocity = _velocity;
         } 
-        // if (GameManager.CurrentState != GameState.Combat) {
-        //     if (_equippedWeapon != null) {
-        //         _equippedWeapon.DropWeapon();
-        //         PlayerState.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
-        //         PlayerState.AddWeapon(_equippedWeapon.WeaponItem);
-        //         Destroy(_equippedWeapon.gameObject);
-        //         _equippedWeapon = null;
-        //         PlayerState.CurrentWeapon = _equippedWeapon;
-        //     }
-        // }
         if (_followObject != null) {
             var gotoPt = new Vector3(_lookPt.x, _lookPt.y + 5, _lookPt.z);
             _followObject.transform.position = _lookPt;
         }
-    }
-
-    public void PlanStateStart()
-    {
-        //_input.SwitchCurrentActionMap("Planning");
     }
 
     public void CombatStart(CallbackContext callback)
@@ -101,14 +81,15 @@ public class PlayerController : MonoBehaviour
         _healthHandler.MaxHealth = PlayerState.MaxHealth;
         _healthHandler.Health = PlayerState.Health;
         transform.position = PlayerState.Position;
-        _reverted = true;
+        
+        _equippedWeapon?.DropWeapon();
         _equippedWeapon = null;
 
-        // while (_placedWeapons.Count != 0) {
-        //     Weapon currWeapon = _placedWeapons[0];
-        //     _placedWeapons.Remove(currWeapon);
-        //     Destroy(currWeapon.gameObject);
-        // }
+        while (_placedWeapons.Count != 0) {
+            Weapon currWeapon = _placedWeapons[0];
+            _placedWeapons.Remove(currWeapon);
+            Destroy(currWeapon.gameObject);
+        }
     }
 
     private void OnGameStateChange(object sender, OnGameStateChangedArgs e) {
@@ -121,24 +102,30 @@ public class PlayerController : MonoBehaviour
                 break;
             case GameState.PostCombat:
                 _input.SwitchCurrentActionMap("Combat");
-                if (_equippedWeapon != null) {
+                if (e.TriggeredByRevert) break;
+                Debug.Log("Not Reverted");
+                if (_equippedWeapon != null) 
+                {
                     _equippedWeapon.DropWeapon();
-                    PlayerState.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
-                    PlayerState.AddWeapon(_equippedWeapon.WeaponItem);
+                    if (!e.TriggeredByRevert) 
+                    {
+                        PlayerState.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
+                        PlayerState.AddWeapon(_equippedWeapon.WeaponItem);
+                    }
                     Destroy(_equippedWeapon.gameObject);
                     _equippedWeapon = null;
                     PlayerState.CurrentWeapon = _equippedWeapon;
-                } 
-                while (_placedWeapons.Count != 0) {
-                    Weapon currWeapon = _placedWeapons[0];
-                    _placedWeapons.Remove(currWeapon);
-                    if (!_reverted) {
+                }
+                if (e.OldState != GameState.Combat)
+                {
+                    while (_placedWeapons.Count != 0) {
+                        Weapon currWeapon = _placedWeapons[0];
+                        _placedWeapons.Remove(currWeapon);
                         PlayerState.AddToAmmo(currWeapon.WeaponItem.AmmoType1, currWeapon.AmmoAmount2);
+                        Destroy(currWeapon.gameObject);
                     }
-                    Destroy(currWeapon.gameObject);
                 }
                 _placedWeapons = new List<Weapon>();
-                _reverted = false;
                 break;
         }
     }

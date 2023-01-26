@@ -11,9 +11,11 @@ public enum GameState { Plan, Combat, PostCombat, Pause }
 public class OnGameStateChangedArgs : EventArgs {
     private GameState _oldState; public GameState OldState{get => _oldState;}
     private GameState _newState; public GameState NewState{get => _newState;}
-    public OnGameStateChangedArgs(GameState oldState, GameState newState) {
+    private bool _triggeredByRevert; public bool TriggeredByRevert{get => _triggeredByRevert;}
+    public OnGameStateChangedArgs(GameState oldState, GameState newState, bool TriggeredByRevert = false) {
         _oldState = oldState;
         _newState = newState;
+        _triggeredByRevert = TriggeredByRevert;
     }
 }
 #endregion
@@ -44,9 +46,11 @@ public sealed class GameManager : MonoBehaviour
             var oldState = instance._currentState;
             instance._currentState = value;
             OnGameStateChanged?.Invoke(instance,
-            new OnGameStateChangedArgs (oldState, instance._currentState));
+            new OnGameStateChangedArgs (oldState, instance._currentState, instance._revertTriggered));
+            instance._revertTriggered = false;
         } 
     }
+    private bool _revertTriggered;
     private Level currLevel;
 
     private void Awake()
@@ -56,6 +60,7 @@ public sealed class GameManager : MonoBehaviour
             if (instance == null)
             {
                 instance = this;
+                transform.parent = null;
                 DontDestroyOnLoad(gameObject);
             }
         }
@@ -73,6 +78,7 @@ public sealed class GameManager : MonoBehaviour
     }
 
     private void OnPlayerStateRevert(object sender, OnPlayerStateRevertArgs e) {
+        _revertTriggered = true;
         GameManager.CurrentState = GameState.PostCombat;
     }
 
