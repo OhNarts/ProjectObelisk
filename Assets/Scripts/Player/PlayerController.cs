@@ -324,6 +324,36 @@ public class PlayerController : MonoBehaviour
             _followObject = null;
         }
     }
+
+    /// <summary>
+    /// Removes an already placed weapon during the planning state.
+    /// </summary>
+    /// <param name="context"></param>
+    public void RemoveFromWorld(CallbackContext context) {
+        if (!context.started) return;
+
+        Collider[] colliders = Physics.OverlapSphere(_groundMousePt, _interactableRadius);
+
+        foreach (Collider collider in colliders) {
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon")) {
+                Weapon wepToRemove = collider.transform.GetComponent<Weapon>();
+
+                if (GameManager.CurrentState == GameState.Plan) {
+                    // checking if the weapon is actually in the list, and then removing it
+                    if (_placedWeapons.Contains(wepToRemove)) {
+                        _placedWeapons.Remove(wepToRemove);
+                    } else { return; }
+
+                    // Adding the weapon back to player inventory
+                    PlayerState.AddToAmmo(wepToRemove.WeaponItem.AmmoType1, wepToRemove.AmmoAmount1);
+                    PlayerState.AddWeapon(wepToRemove.WeaponItem);
+
+                    Destroy(wepToRemove.gameObject);
+                    return;
+                }
+            }
+        }
+    }
     #endregion
 
     public void Quit(CallbackContext context) {
