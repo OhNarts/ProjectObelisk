@@ -7,11 +7,10 @@ using UnityEngine.SceneManagement;
 public class Level : MonoBehaviour
 {
     [SerializeField] private Room[] _rooms; public Room[] Rooms { get => _rooms; }
-    [SerializeField] private Scene _nextScene; public Scene NextScene { get => _nextScene; }
     [SerializeField] private GameObject _cameraHolder;
 
-    [SerializeField] private Room _previousRoom;
-    [SerializeField] private Room _currentRoom;
+    private Room _previousRoom;
+    private Room _currentRoom;
     private CombatRoom _planningRoom;
 
     void Awake()
