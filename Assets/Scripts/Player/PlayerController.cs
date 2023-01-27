@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         PlayerState.OnPlayerStateRevert -= RevertPlayer;
         GameManager.OnGameStateChanged -= OnGameStateChange;
     }
-
+    
     void Update()
     {
         if (GameManager.CurrentState != GameState.Plan)
@@ -68,6 +68,9 @@ public class PlayerController : MonoBehaviour
         if (_followObject != null) {
             var gotoPt = new Vector3(_lookPt.x, _lookPt.y + 5, _lookPt.z);
             _followObject.transform.position = _lookPt;
+        }
+        if (Input.GetKey("q") && _equippedWeapon != null) {
+            _equippedWeapon.DropWeapon();
         }
     }
 
