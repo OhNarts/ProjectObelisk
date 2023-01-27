@@ -69,9 +69,6 @@ public class PlayerController : MonoBehaviour
             var gotoPt = new Vector3(_lookPt.x, _lookPt.y + 5, _lookPt.z);
             _followObject.transform.position = _lookPt;
         }
-        if (Input.GetKey("q") && _equippedWeapon != null) {
-            _equippedWeapon.DropWeapon();
-        }
     }
 
     public void CombatStart(CallbackContext callback)
@@ -193,6 +190,12 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(RollSequence());
     }
 
+    public void Drop(CallbackContext context) {
+        if (!context.started) return;
+        if (_equippedWeapon != null) {
+            _equippedWeapon.DropWeapon();
+        }
+    }
     private IEnumerator RollSequence() {
         _lastRolled = Time.fixedTime;
         _rolling = true;
