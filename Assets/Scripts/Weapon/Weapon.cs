@@ -87,8 +87,10 @@ public abstract class Weapon : MonoBehaviour
         transform.parent = null;
         transform.GetComponent<BoxCollider>().enabled = true;
         transform.GetComponent<Rigidbody>().isKinematic = false;
+        if (AmmoAmount1 == 0) {
+            Destroy(gameObject);
+        }
     }
-
 
     // Use ammo defaults to false because player is the only
     // case where ammo is going to be used

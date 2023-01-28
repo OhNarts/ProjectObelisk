@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         PlayerState.OnPlayerStateRevert -= RevertPlayer;
         GameManager.OnGameStateChanged -= OnGameStateChange;
     }
-
+    
     void Update()
     {
         if (GameManager.CurrentState != GameState.Plan)
@@ -190,6 +190,12 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(RollSequence());
     }
 
+    public void Drop(CallbackContext context) {
+        if (!context.started) return;
+        if (_equippedWeapon != null) {
+            _equippedWeapon.DropWeapon();
+        }
+    }
     private IEnumerator RollSequence() {
         _lastRolled = Time.fixedTime;
         _rolling = true;
