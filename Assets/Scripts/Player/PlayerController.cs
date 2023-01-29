@@ -264,7 +264,7 @@ public class PlayerController : MonoBehaviour
         {
             if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon"))
             {
-                Weapon wep = collider.transform.GetComponent<Weapon>();
+                Weapon wep = collider.transform.root.GetComponent<Weapon>();
         
                 // Skip over weapons that already have an owner
                 if (wep.Holder != null) { continue; }
@@ -342,7 +342,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (Collider collider in colliders) {
             if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon")) {
-                Weapon wepToRemove = collider.transform.GetComponent<Weapon>();
+                Weapon wepToRemove = collider.transform.root.GetComponent<Weapon>();
 
                 if (GameManager.CurrentState == GameState.Plan) {
                     // checking if the weapon is actually in the list, and then removing it

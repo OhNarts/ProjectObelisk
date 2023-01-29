@@ -27,6 +27,7 @@ public abstract class Weapon : MonoBehaviour
 
     [Header("Weapon Info")]
     [SerializeField] private WeaponItem _weaponItem; public WeaponItem WeaponItem { get => _weaponItem; }
+    [SerializeField] private List<MeshCollider> _colliders; public List<MeshCollider> Colliders{get => _colliders;}
     // The damage an attack does
     [SerializeField] protected float _damage;
     [SerializeField] protected WeaponType _weaponType;
@@ -53,11 +54,16 @@ public abstract class Weapon : MonoBehaviour
     public delegate void OnWeaponAmmoChangedHandler(object sender, EventArgs e);
     public event OnWeaponAmmoChangedHandler OnWeaponAmmoChanged;
     #endregion
-
+    
     public void InitializeWeapon(int ammoAmount1, int ammoAmount2) {
         _holder = null;
         transform.parent = null;
-        transform.GetComponent<BoxCollider>().enabled = true;
+        foreach (MeshCollider collider in _colliders) {
+            collider.enabled = true;
+        }
+   
+       //transform.GetComponent<BoxCollider>().enabled = true;
+        
         transform.GetComponent<Rigidbody>().isKinematic = false;
         _ammoAmount1 = ammoAmount1;
         _ammoAmount2 = ammoAmount2;
@@ -74,7 +80,10 @@ public abstract class Weapon : MonoBehaviour
         transform.parent = equipPos;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(_holder.transform.forward);
-        transform.GetComponent<BoxCollider>().enabled = false;
+        foreach (MeshCollider collider in _colliders) {
+            collider.enabled = false;
+        }
+        //transform.GetComponent<BoxCollider>().enabled = false;
         transform.GetComponent<Rigidbody>().isKinematic = true;
     }
 
@@ -85,7 +94,12 @@ public abstract class Weapon : MonoBehaviour
     {
         _holder = null;
         transform.parent = null;
-        transform.GetComponent<BoxCollider>().enabled = true;
+
+        foreach (MeshCollider collider in _colliders) {
+            collider.enabled = true;
+        }
+
+        //transform.GetComponent<BoxCollider>().enabled = true;
         transform.GetComponent<Rigidbody>().isKinematic = false;
         if (AmmoAmount1 == 0) {
             Destroy(gameObject);
