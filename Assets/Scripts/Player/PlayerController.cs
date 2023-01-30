@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case GameState.Plan:
                 _input.SwitchCurrentActionMap("Planning");
+                _rb.velocity = Vector3.zero;
                 break;
             case GameState.PostCombat:
                 _input.SwitchCurrentActionMap("Combat");
