@@ -232,7 +232,10 @@ public class PlayerController : MonoBehaviour
 
     public void Fire1(CallbackContext context)
     {
-        if (_equippedWeapon == null) Melee(context);
+        if (_equippedWeapon == null)  {
+            Melee(context);
+            return;
+        }
         if (context.started)
         {
             _equippedWeapon.Fire1(true);
@@ -266,15 +269,19 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Melee(CallbackContext context) {
+        if (!context.started) return;
         DamageInfo damageInfo = new DamageInfo() {
             damage = _damage,
             attacker = gameObject
         };
 
+        Debug.Log("melee");
+
         Collider[] colliders = Physics.OverlapSphere(_attackPoint.position, _attackRange, _attackMask);
         foreach(Collider collider in colliders) {
-            Transform hitTransform = collider.transform;
+            Transform hitTransform = collider.transform.root;
             HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();
+            Debug.Log(hitHealth != null);
             if (hitHealth != null) {
                 hitHealth.Damage(damageInfo);
             }
