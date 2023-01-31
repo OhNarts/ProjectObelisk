@@ -223,11 +223,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _interactableRadius;
     [SerializeField] private LayerMask _interactableMask;
     private Weapon _equippedWeapon; public Weapon EquippedWeapon {get => _equippedWeapon;}
-    
+
+    [Header("Attack Properties")]
+    [SerializeField] private Transform _attackPoint;
+    [SerializeField] private float _attackRange;
+    [SerializeField] private LayerMask _attackMask;
+    public float _damage;
 
     public void Fire1(CallbackContext context)
     {
-        if (_equippedWeapon == null) return;
+        if (_equippedWeapon == null) Melee(context);
         if (context.started)
         {
             _equippedWeapon.Fire1(true);
@@ -247,6 +252,32 @@ public class PlayerController : MonoBehaviour
         else if (context.canceled)
         {
             _equippedWeapon.Fire2Stop(true);
+        }
+    }
+
+    //To visualize the hitbox for melee attack
+    public void OnDrawGizmos() {
+        if (_attackPoint is null) {
+            return;
+        }
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
+    }
+
+    public void Melee(CallbackContext context) {
+        DamageInfo damageInfo = new DamageInfo() {
+            damage = _damage,
+            attacker = gameObject
+        };
+
+        Collider[] colliders = Physics.OverlapSphere(_attackPoint.position, _attackRange, _attackMask);
+        foreach(Collider collider in colliders) {
+            Transform hitTransform = collider.transform;
+            HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();
+            if (hitHealth != null) {
+                hitHealth.Damage(damageInfo);
+            }
         }
     }
 
