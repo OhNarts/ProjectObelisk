@@ -37,6 +37,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Paused) return;
         switch (currState)
         {
             case EnemyState.Idle:

@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     // The object that should follow the mouse pointer
     private GameObject _followObject;
+    private string _currentActionMap;
 
     [Header("EXPOSED FOR DEBUG")]
     [SerializeField]private List<Weapon> _placedWeapons;
@@ -51,15 +52,18 @@ public class PlayerController : MonoBehaviour
         PlayerState.Position = transform.position;
         PlayerState.OnPlayerStateRevert += RevertPlayer;
         GameManager.OnGameStateChanged += OnGameStateChange;
+        GameManager.OnGamePauseChange += OnGamePauseChange;
     }
 
     private void OnDisable() {
         PlayerState.OnPlayerStateRevert -= RevertPlayer;
         GameManager.OnGameStateChanged -= OnGameStateChange;
+        GameManager.OnGamePauseChange -= OnGamePauseChange;
     }
     
     void Update()
     {
+        if (GameManager.Paused) return;
         if (GameManager.CurrentState != GameState.Plan)
         {
             transform.LookAt(_lookPt);
@@ -126,6 +130,16 @@ public class PlayerController : MonoBehaviour
                 _placedWeapons = new List<Weapon>();
                 break;
         }
+    }
+
+    private void OnGamePauseChange (object sender, OnGamePauseChangeArgs e) {
+        if (GameManager.Paused) {
+            _currentActionMap = _input.currentActionMap.name;
+            _input.SwitchCurrentActionMap("Pause");
+        } else {
+            _input.SwitchCurrentActionMap(_currentActionMap);
+        }
+
     }
 
     public void CancelPlanState(CallbackContext callback) {
@@ -401,7 +415,10 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    public void Quit(CallbackContext context) {
-        if (context.started) Application.Quit();
+    public void Pause(CallbackContext context) {
+        //if (context.started) Application.Quit();
+        if (!context.started) return;
+        if (GameManager.Paused) GameManager.UnPause();
+        else GameManager.Pause();
     }
 }
