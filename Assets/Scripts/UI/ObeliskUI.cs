@@ -7,6 +7,13 @@ public class ObeliskUI : MonoBehaviour
     [SerializeField] private Canvas _inGameUI;
 
     void Start() {
+        if (GameManager.Paused) {
+            _inGameUI.enabled = false;
+            _pauseMenu.enabled = true;
+        } else {
+            _inGameUI.enabled = true;
+            _pauseMenu.enabled = false;
+        }
         GameManager.OnGamePauseChange += OnGamePauseChange;
     }
 
