@@ -37,11 +37,7 @@ public class Shotgun : Weapon
 
             Bullet b = bullets[i].GetComponent<Bullet>();
 
-            b.damageInfo = new DamageInfo()
-            {
-                damage = _damage,
-                attacker = _holder
-            };
+            b.damageInfo = CreateDamageInfo();
 
             bullets[i].GetComponent<Rigidbody>().velocity = bullets[i].transform.forward * bulletSpeed;
 
