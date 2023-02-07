@@ -46,7 +46,7 @@ public sealed class GameManager : MonoBehaviour
     public static event EventHandler<OnGameStateChangedArgs> OnGameStateChanged;
     public static event EventHandler<OnGamePauseChangeArgs> OnGamePauseChange;
     #endregion
-
+    
     [SerializeField] private GameState _currentState; 
     public static GameState CurrentState { 
         get => _instance._currentState;
