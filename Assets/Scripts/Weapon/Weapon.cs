@@ -54,16 +54,13 @@ public abstract class Weapon : MonoBehaviour
     public delegate void OnWeaponAmmoChangedHandler(object sender, EventArgs e);
     public event OnWeaponAmmoChangedHandler OnWeaponAmmoChanged;
     #endregion
-    
+
     public void InitializeWeapon(int ammoAmount1, int ammoAmount2) {
         _holder = null;
         transform.parent = null;
         foreach (MeshCollider collider in _colliders) {
             collider.enabled = true;
         }
-   
-       //transform.GetComponent<BoxCollider>().enabled = true;
-        
         transform.GetComponent<Rigidbody>().isKinematic = false;
         _ammoAmount1 = ammoAmount1;
         _ammoAmount2 = ammoAmount2;
@@ -114,5 +111,12 @@ public abstract class Weapon : MonoBehaviour
     public virtual void Fire2(bool useAmmo = false) { }
     public virtual void Fire2Stop(bool useAmmo = false) { }
 
+    protected DamageInfo CreateDamageInfo() {
+        return new DamageInfo {
+            damage = _damage,
+            attacker = _holder,
+            ammoType = _weaponItem.AmmoType1
+        };
+    }
 }
 

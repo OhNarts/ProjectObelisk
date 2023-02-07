@@ -39,13 +39,6 @@ public class HealthHandler : MonoBehaviour
         }
     }
 
-    // public HealthHandler(float maxHealth, float health)
-    // {
-    //     this._maxHealth = maxHealth;
-    //     this._health = health;
-    // }
-
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -56,7 +49,7 @@ public class HealthHandler : MonoBehaviour
     /// Damages this health handler
     /// </summary>
     /// <param name="info"></param>
-    public void Damage(DamageInfo info)
+    public virtual void Damage(DamageInfo info)
     {
         if (_isInvincible) return;
         _health -= info.damage;
@@ -93,4 +86,5 @@ public struct DamageInfo
 {
     public float damage;
     public GameObject attacker;
+    public AmmoType ammoType;
 }

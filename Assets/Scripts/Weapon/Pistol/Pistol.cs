@@ -34,11 +34,7 @@ public class Pistol : Weapon
         // Fire the weapon
         GameObject bulletInstance = Instantiate(bullet, _attackPoint.position, _holder.transform.rotation);
         Bullet b = bulletInstance.GetComponent<Bullet>();
-        b.damageInfo = new DamageInfo()
-        {
-            damage = _damage,
-            attacker = _holder
-        };
+        b.damageInfo = CreateDamageInfo();
         bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.forward * bulletSpeed;
     }
 

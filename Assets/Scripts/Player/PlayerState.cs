@@ -167,8 +167,13 @@ public class PlayerState : ScriptableObject
     public static void SaveAsLastRoom() {
         _instance._lastRoomInfo = _instance._currentInfo.CreateCopy();
     }
+
+    public static bool CanRevertToLastRoom() {
+        return _instance._lastRoomInfo != null;
+    }
     
     public static void RevertToLastRoom() {
+        if (!CanRevertToLastRoom()) return;
         _instance._currentInfo = _instance._lastRoomInfo.CreateCopy();
         Debug.Log(_instance._currentInfo.Health);
         OnPlayerStateRevert?.Invoke(Instance, new OnPlayerStateRevertArgs(
