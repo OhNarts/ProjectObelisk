@@ -33,8 +33,6 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected WeaponType _weaponType;
 
     [Header("Ammo Costs/Types")]
-    // [SerializeField] protected int _ammoCost1; public int AmmoCost1 { get => _ammoCost1; }
-    // [SerializeField] protected AmmoType _ammoType1; public AmmoType AmmoType1 { get => _ammoType1; }
     [SerializeField] protected int _ammoAmount1; public int AmmoAmount1 { 
         get => _ammoAmount1;
         protected set {
@@ -44,11 +42,14 @@ public abstract class Weapon : MonoBehaviour
             new OnWeaponAmmoChangedArgs(oldAmount, _ammoAmount1));
         } 
     }
-    // [SerializeField] protected int _ammoCost2; public int AmmoCost2 { get => _ammoCost2; }
-    // [SerializeField] protected AmmoType _ammoType2; public AmmoType AmmoType2 { get => _ammoType2; }
     [SerializeField] protected int _ammoAmount2; public int AmmoAmount2 { get => _ammoAmount2; }
 
     protected GameObject _holder = null; public GameObject Holder { get => _holder; }
+
+    private bool _canPlace = true; public bool CanPlace {get => _canPlace; 
+    set {
+        _canPlace = value;
+    }}
 
     #region Events
     public delegate void OnWeaponAmmoChangedHandler(object sender, EventArgs e);

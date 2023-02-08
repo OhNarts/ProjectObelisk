@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _groundMousePt;
 
     // The object that should follow the mouse pointer
-    private GameObject _followObject;
+    private Weapon _followWeapon;
     private string _currentActionMap;
 
     [Header("EXPOSED FOR DEBUG")]
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         _healthHandler.MaxHealth = PlayerState.MaxHealth;
         _healthHandler.Health = PlayerState.Health;
 
-        _followObject = null;
+        _followWeapon = null;
         _rolling = false;
         _lastRolled = -1;
         _placedWeapons = new List<Weapon>();
@@ -69,9 +69,9 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(_lookPt);
             if (!_rolling) _rb.velocity = _velocity;
         } 
-        if (_followObject != null) {
+        if (_followWeapon != null) {
             var gotoPt = new Vector3(_lookPt.x, _lookPt.y + 5, _lookPt.z);
-            _followObject.transform.position = _lookPt;
+            _followWeapon.transform.position = _lookPt;
         }
     }
 
@@ -374,13 +374,14 @@ public class PlayerController : MonoBehaviour
             if (PlayerState.Ammo[item.AmmoType1] < item.AmmoCost1) return;
 
             GameObject Instance = Instantiate(item.gameObject);
-            Weapon weapon = Instance.GetComponent<Weapon>();
-            _placedWeapons.Add(weapon);
+            _followWeapon = Instance.GetComponent<Weapon>();
+            _placedWeapons.Add(_followWeapon);
             PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
-            weapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
-            _followObject = Instance;
+            _followWeapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
+            // _followWeapon = Instance;
         } else if (context.canceled) {
-            _followObject = null;
+            if (!_followWeapon.CanPlace) WeaponPlanRemove(_followWeapon);
+            _followWeapon = null;
         }
     }
 
@@ -412,6 +413,19 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Helper method that correctly removes a weapon from the world that the player placed during the plan stage
+    /// </summary>
+    /// <param name="context"></param>
+    private void WeaponPlanRemove(Weapon weapon) {
+        if (_placedWeapons.Contains(weapon)) {
+            _placedWeapons.Remove(weapon);
+        } else return;
+        PlayerState.AddToAmmo(weapon.WeaponItem.AmmoType1, weapon.AmmoAmount1);
+        PlayerState.AddWeapon(weapon.WeaponItem);
+        Destroy(weapon.gameObject);
     }
     #endregion
 
