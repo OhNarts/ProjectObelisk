@@ -351,6 +351,10 @@ public class PlayerController : MonoBehaviour
 
     # region Inventory
 
+    public void RewardAmmo(AmmoType type, int amount) {
+        PlayerState.AddToAmmo(type, amount);
+    }
+
     /// <summary>
     /// Spawns a weapon into the world
     /// </summary>
