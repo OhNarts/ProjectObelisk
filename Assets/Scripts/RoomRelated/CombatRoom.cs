@@ -18,7 +18,6 @@ public class CombatRoom : Room
     [SerializeField] private NavMeshData _navMesh;
     [SerializeField] private GameObject _boundaryColliders;
     [SerializeField] private RoomReward _rewardObject;
-    [SerializeField] private AmmoRewardDictionary _reward;
     private NavMeshDataInstance _navMeshInstance;
     private bool _roomCompleted; public bool RoomCompleted {get => _roomCompleted;}
     private List<EnemyController> _aliveEnemies;
@@ -37,6 +36,7 @@ public class CombatRoom : Room
         _roomCompleted = false;
         _player = null;
         _planning = false;
+        _rewardObject.RoomName = gameObject.name;
         _rewardObject.gameObject.SetActive(false);
 
         GameManager.OnGameStateChanged += OnGameStateChanged;
@@ -115,7 +115,6 @@ public class CombatRoom : Room
         _player = null;
         GameManager.CurrentState = GameState.PostCombat;
         _rewardObject.gameObject.SetActive(true);
-        _rewardObject.Reward = _reward;
         OnRoomFinish?.Invoke(this, EventArgs.Empty);
     }
 

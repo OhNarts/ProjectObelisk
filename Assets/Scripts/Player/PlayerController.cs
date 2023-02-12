@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
                     while (_placedWeapons.Count != 0) {
                         Weapon currWeapon = _placedWeapons[0];
                         _placedWeapons.Remove(currWeapon);
-                        PlayerState.AddToAmmo(currWeapon.WeaponItem.AmmoType1, currWeapon.AmmoAmount2);
+                        PlayerState.AddToAmmo(currWeapon.WeaponItem.AmmoType1, currWeapon.AmmoAmount1);
                         Destroy(currWeapon.gameObject);
                     }
                 }
@@ -242,7 +242,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private float _attackRange;
     [SerializeField] private LayerMask _attackMask;
-    public float _damage;
+    [SerializeField] private float _damage;
+    public AmmoDictionary Ammo {get => PlayerState.Ammo; }
 
     public void Fire1(CallbackContext context)
     {

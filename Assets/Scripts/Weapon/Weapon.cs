@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public enum WeaponType { Gun, Melee }
-public enum AmmoType { Rifle, Pistol, Energy, Shotgun, NONE }
+public enum AmmoType { Explosive, Pistol, Energy, Shotgun, NONE }
 
 #region Event Args
 public class OnWeaponAmmoChangedArgs : EventArgs {
@@ -42,7 +42,6 @@ public abstract class Weapon : MonoBehaviour
             new OnWeaponAmmoChangedArgs(oldAmount, _ammoAmount1));
         } 
     }
-    [SerializeField] protected int _ammoAmount2; public int AmmoAmount2 { get => _ammoAmount2; }
 
     protected GameObject _holder = null; public GameObject Holder { get => _holder; }
 
@@ -64,7 +63,6 @@ public abstract class Weapon : MonoBehaviour
         }
         transform.GetComponent<Rigidbody>().isKinematic = false;
         _ammoAmount1 = ammoAmount1;
-        _ammoAmount2 = ammoAmount2;
     }
 
     /// <summary>
