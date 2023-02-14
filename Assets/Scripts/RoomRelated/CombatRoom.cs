@@ -90,6 +90,7 @@ public class CombatRoom : Room
             _droppedWeapons.RemoveAt(0);
             Destroy(currentWeapon.gameObject);
         }
+        _roomCompleted = false;
     }
 
     private void OnGameStateChanged(object sender, EventArgs e) {

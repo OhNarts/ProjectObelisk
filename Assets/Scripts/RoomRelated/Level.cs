@@ -12,6 +12,7 @@ public class Level : MonoBehaviour
     private Room _previousRoom;
     private Room _currentRoom;
     private CombatRoom _planningRoom;
+    public TransformWeaponDictionary BaseWeapons;
 
     void Awake()
     {
@@ -52,9 +53,8 @@ public class Level : MonoBehaviour
             if (room.GetType() != typeof(CombatRoom)) continue;
             CombatRoom combatRoom = (CombatRoom)room;
             if (combatRoom.Occupied || 
-            (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart && combatRoom.RoomCompleted)) {
+            (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart)) {
                 ((CombatRoom)room).Reset();
-                break;
             }
         }
 
@@ -63,6 +63,7 @@ public class Level : MonoBehaviour
         if (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart) {
             _currentRoom = _rooms[0];
             _previousRoom = null;
+            InitializeWeapons();
         } else {
             _currentRoom = _previousRoom;
         }
@@ -104,5 +105,11 @@ public class Level : MonoBehaviour
     private void UpdateToCurrentRoom(Room room) {
         _previousRoom = _currentRoom;
         _currentRoom = room;
+    }
+    
+    private void InitializeWeapons() {
+        foreach (KeyValuePair<Transform, Weapon> weaponKVP in BaseWeapons) {
+            Weapon weaponInstance = Instantiate(weaponKVP.Value, weaponKVP.Key.position, Quaternion.identity);
+        }
     }
 }
