@@ -95,11 +95,12 @@ public class CombatRoom : Room
     private void OnGameStateChanged(object sender, EventArgs e) {
         OnGameStateChangedArgs args = (OnGameStateChangedArgs)e;
         if (_planning &&
-            args.OldState == GameState.Plan && 
-            args.NewState == GameState.Combat) {
-                CombatEnter();
-                _planning = false;
-            } 
+            args.OldState == GameState.Plan &&
+            args.NewState == GameState.Combat)
+        {
+            CombatEnter();
+            _planning = false;
+        }
     }
 
     private void OnEnemyDeath(EnemyController enemy)

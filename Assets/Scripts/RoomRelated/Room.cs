@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using UnityEngine;
+using System.Collections.Generic;
 
 #region Event Args
 public class OnRoomEnterAttemptArgs : EventArgs
@@ -23,6 +24,7 @@ public class Room : MonoBehaviour
     public delegate void OnRoomEnterAttemptHandler(object sender, EventArgs e);
     public event OnRoomEnterAttemptHandler OnRoomEnterAttempt;
 
+
     [Header("Edit in level creation")]
     [SerializeField] private DoorRoomDictionary adjacentRooms;
 
@@ -30,7 +32,17 @@ public class Room : MonoBehaviour
     // Change to increase the distance the camera can be from the room
     [SerializeField] private float _cameraSize;
     [SerializeField] private Transform _camHolderPosRot;
-    
+
+    /* TODO: disable colliders of all children in previous room when planning in current room
+     * 
+     * Figure out a way to keep track of previous room
+     * Make sure we're in planning phase in current room
+     * Find and track colliders in children of previous room (floor and wall parts)
+     * Disable collider in each part
+     * 
+     * Bonus: make player kinematic during planning phase
+     */
+
     private bool _occupied; public bool Occupied 
     { 
         get => _occupied; 
