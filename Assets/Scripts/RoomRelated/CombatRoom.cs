@@ -42,7 +42,7 @@ public class CombatRoom : Room
         GameManager.OnGameStateChanged += OnGameStateChanged;
     }
 
-    void OnDisable() {
+    void OnDestroy() {
         // Clean up nav mesh data
         NavMesh.RemoveNavMeshData(_navMeshInstance);
         GameManager.OnGameStateChanged -= OnGameStateChanged;
@@ -100,6 +100,15 @@ public class CombatRoom : Room
         {
             CombatEnter();
             _planning = false;
+        } else if(!_planning && GameManager.CurrentState == GameState.Plan)
+        {
+            gameObject.SetActive(false);
+        } else if(!_planning && GameManager.CurrentState == GameState.PostCombat) // You should see other room disappear in plan state
+        {
+            Debug.Log("planning?: " + _planning);
+            Debug.Log("state: " + GameManager.CurrentState);
+            Debug.Log("room: " + gameObject.name);
+            gameObject.SetActive(true);
         }
     }
 

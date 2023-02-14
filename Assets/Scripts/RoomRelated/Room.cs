@@ -54,6 +54,14 @@ public class Room : MonoBehaviour
 
     protected Door _doorAttemptedEnter;
 
+    // Add a private function that will subscribe to the gamemanager.onGameStateChanged and check for
+    // If it's in planning stage and then setActive to false if in planning stage
+    // Else set true
+    private void OnEnable()
+    {
+        GameManager.OnGameStateChanged += OnGameStateChanged;
+    }
+
     void Awake()
     {
         _occupied = false;
@@ -65,7 +73,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         foreach (Door door in adjacentRooms.Keys)
         {
@@ -100,4 +108,15 @@ public class Room : MonoBehaviour
         cameraHolder.transform.rotation = _camHolderPosRot.rotation;
         Camera.main.orthographicSize = _cameraSize;
     }
+
+    private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) 
+    {
+        if (GameManager.CurrentState == GameState.Plan)
+        {
+            gameObject.SetActive(false);
+        } else if(GameManager.CurrentState == GameState.PostCombat)
+        {
+            gameObject.SetActive(true);
+        }
+    } 
 }
