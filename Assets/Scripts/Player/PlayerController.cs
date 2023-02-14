@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _groundMousePt;
 
     // The object that should follow the mouse pointer
-    private GameObject _followObject;
+    private Weapon _followWeapon;
     private string _currentActionMap;
 
     [Header("EXPOSED FOR DEBUG")]
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         _healthHandler.MaxHealth = PlayerState.MaxHealth;
         _healthHandler.Health = PlayerState.Health;
 
-        _followObject = null;
+        _followWeapon = null;
         _rolling = false;
         _lastRolled = -1;
         _placedWeapons = new List<Weapon>();
@@ -69,9 +69,9 @@ public class PlayerController : MonoBehaviour
             transform.LookAt(_lookPt);
             if (!_rolling) _rb.velocity = _velocity;
         } 
-        if (_followObject != null) {
+        if (_followWeapon != null) {
             var gotoPt = new Vector3(_lookPt.x, _lookPt.y + 5, _lookPt.z);
-            _followObject.transform.position = _lookPt;
+            _followWeapon.transform.position = _lookPt;
         }
     }
 
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
                     while (_placedWeapons.Count != 0) {
                         Weapon currWeapon = _placedWeapons[0];
                         _placedWeapons.Remove(currWeapon);
-                        PlayerState.AddToAmmo(currWeapon.WeaponItem.AmmoType1, currWeapon.AmmoAmount2);
+                        PlayerState.AddToAmmo(currWeapon.WeaponItem.AmmoType1, currWeapon.AmmoAmount1);
                         Destroy(currWeapon.gameObject);
                     }
                 }
@@ -242,7 +242,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private float _attackRange;
     [SerializeField] private LayerMask _attackMask;
-    public float _damage;
+    [SerializeField] private float _damage;
+    public AmmoDictionary Ammo {get => PlayerState.Ammo; }
 
     public void Fire1(CallbackContext context)
     {
@@ -309,17 +310,10 @@ public class PlayerController : MonoBehaviour
         // returns if the position the mouse is over is too far to interact
         if (!(Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) return;
 
-        Collider[] colliders = Physics.OverlapSphere(_groundMousePt, _interactableRadius);
-
-        // prioritizes weapons over interactables
-        Interactable interactable = null;
-        foreach(Collider collider in colliders)
-        {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon"))
+        List<Weapon> weaponsPointedAt = GetWeaponsPointedAt();
+        if (weaponsPointedAt.Count != 0) {
+            foreach (Weapon wep in weaponsPointedAt)
             {
-                Weapon wep = collider.transform.root.GetComponent<Weapon>();
-        
-                // Skip over weapons that already have an owner
                 if (wep.Holder != null) { continue; }
 
                 // If in the postCombat stage, then just add it to the weapons
@@ -340,6 +334,13 @@ public class PlayerController : MonoBehaviour
                 PlayerState.CurrentWeapon = wep;
                 return;
             }
+        }
+
+        // If no weapons found, then search for interactables
+        Collider[] colliders = Physics.OverlapSphere(_groundMousePt, _interactableRadius);
+        Interactable interactable = null;
+        foreach(Collider collider in colliders)
+        {
             if (collider.gameObject.layer == LayerMask.NameToLayer("Interactable"))
             {
                 interactable = collider.transform.GetComponent<Interactable>();
@@ -350,6 +351,10 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     # region Inventory
+
+    public void RewardAmmo(AmmoType type, int amount) {
+        PlayerState.AddToAmmo(type, amount);
+    }
 
     /// <summary>
     /// Spawns a weapon into the world
@@ -362,25 +367,32 @@ public class PlayerController : MonoBehaviour
             graphicCaster.Raycast(new PointerEventData(EventSystem.current) {
                 position = Mouse.current.position.ReadValue()
             }, clickResults);
-            if (clickResults.Count == 0) return;
-            InventorySlot chosenSlot = null;
-            foreach(var result in clickResults) {
-                chosenSlot = result.gameObject.GetComponent<InventorySlot>();
-                if (chosenSlot != null) break;
+
+            if (clickResults.Count != 0) {
+                InventorySlot chosenSlot = null;
+                foreach(var result in clickResults) {
+                    chosenSlot = result.gameObject.GetComponent<InventorySlot>();
+                    if (chosenSlot != null) break;
+                }
+                if (chosenSlot == null) return;
+                var item = chosenSlot.Weapon;
+
+                if (PlayerState.Ammo[item.AmmoType1] < item.AmmoCost1) return;
+
+                GameObject Instance = Instantiate(item.gameObject);
+                _followWeapon = Instance.GetComponent<Weapon>();
+                _placedWeapons.Add(_followWeapon);
+                PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
+                _followWeapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
+            } else {
+                List<Weapon> weaponsPointedAt = GetWeaponsPointedAt();
+                if (weaponsPointedAt.Count != 0) {
+                    _followWeapon = weaponsPointedAt[0];
+                }
             }
-            if (chosenSlot == null) return;
-            var item = chosenSlot.Weapon;
-
-            if (PlayerState.Ammo[item.AmmoType1] < item.AmmoCost1) return;
-
-            GameObject Instance = Instantiate(item.gameObject);
-            Weapon weapon = Instance.GetComponent<Weapon>();
-            _placedWeapons.Add(weapon);
-            PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
-            weapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
-            _followObject = Instance;
         } else if (context.canceled) {
-            _followObject = null;
+            if (_followWeapon != null && !_followWeapon.CanPlace) WeaponPlanRemove(_followWeapon);
+            _followWeapon = null;
         }
     }
 
@@ -390,28 +402,44 @@ public class PlayerController : MonoBehaviour
     /// <param name="context"></param>
     public void RemoveFromWorld(CallbackContext context) {
         if (!context.started) return;
+        List<Weapon> wepsPointedAt = GetWeaponsPointedAt();
+        foreach (Weapon weapon in wepsPointedAt) {
+            if (_placedWeapons.Contains(weapon)) {
+                _placedWeapons.Remove(weapon);
+                PlayerState.AddToAmmo(weapon.WeaponItem.AmmoType1,
+                weapon.AmmoAmount1);
+                Destroy(weapon.gameObject);
+            }
+        }
+    }
 
+    /// <summary>
+    /// Helper method that correctly removes a weapon from the world that the player placed during the plan stage
+    /// </summary>
+    /// <param name="context"></param>
+    private void WeaponPlanRemove(Weapon weapon) {
+        if (_placedWeapons.Contains(weapon)) {
+            _placedWeapons.Remove(weapon);
+        } else return;
+        PlayerState.AddToAmmo(weapon.WeaponItem.AmmoType1, weapon.AmmoAmount1);
+        PlayerState.AddWeapon(weapon.WeaponItem);
+        Destroy(weapon.gameObject);
+    }
+
+    /// <summary>
+    /// Helper method that gets a list of weapons that the player's cursor is over
+    /// </summary>
+    /// <returns>The list of weapons</returnsZ>
+    private List<Weapon> GetWeaponsPointedAt() {
         Collider[] colliders = Physics.OverlapSphere(_groundMousePt, _interactableRadius);
+        List<Weapon> weapons = new List<Weapon>();
 
         foreach (Collider collider in colliders) {
             if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon")) {
-                Weapon wepToRemove = collider.transform.root.GetComponent<Weapon>();
-
-                if (GameManager.CurrentState == GameState.Plan) {
-                    // checking if the weapon is actually in the list, and then removing it
-                    if (_placedWeapons.Contains(wepToRemove)) {
-                        _placedWeapons.Remove(wepToRemove);
-                    } else { return; }
-
-                    // Adding the weapon back to player inventory
-                    PlayerState.AddToAmmo(wepToRemove.WeaponItem.AmmoType1, wepToRemove.AmmoAmount1);
-                    PlayerState.AddWeapon(wepToRemove.WeaponItem);
-
-                    Destroy(wepToRemove.gameObject);
-                    return;
-                }
+                weapons.Add(collider.transform.root.GetComponent<Weapon>());
             }
         }
+        return weapons;
     }
     #endregion
 
