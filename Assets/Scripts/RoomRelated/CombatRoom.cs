@@ -88,7 +88,10 @@ public class CombatRoom : Room
         while (_droppedWeapons.Count != 0) {
             var currentWeapon = _droppedWeapons[0];
             _droppedWeapons.RemoveAt(0);
-            Destroy(currentWeapon.gameObject);
+            if (currentWeapon == null) continue;
+            else {
+                Destroy(currentWeapon.gameObject);
+            }
         }
         _roomCompleted = false;
     }
