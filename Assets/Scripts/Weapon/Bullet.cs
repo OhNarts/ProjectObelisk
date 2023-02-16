@@ -14,6 +14,7 @@ public class Bullet : MonoBehaviour
     public void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.layer == 9) return;
+
         
         Destroy(gameObject);
         Transform hitTransform = collider.transform;
