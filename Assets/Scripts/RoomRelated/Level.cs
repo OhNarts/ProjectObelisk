@@ -12,6 +12,8 @@ public class Level : MonoBehaviour
     private Room _previousRoom;
     private Room _currentRoom;
     private CombatRoom _planningRoom;
+    private List<Weapon> _baseWeapons;
+    public TransformWeaponDictionary BaseWeapons;
 
     void Awake()
     {
@@ -29,6 +31,8 @@ public class Level : MonoBehaviour
         _currentRoom.SetCameraPos(_cameraHolder);
         _currentRoom.Occupied = true;
         PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
+        _baseWeapons = new List<Weapon>();
+        InitializeWeapons();
     }
 
     private void OnDisable()
@@ -52,9 +56,8 @@ public class Level : MonoBehaviour
             if (room.GetType() != typeof(CombatRoom)) continue;
             CombatRoom combatRoom = (CombatRoom)room;
             if (combatRoom.Occupied || 
-            (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart && combatRoom.RoomCompleted)) {
+            (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart)) {
                 ((CombatRoom)room).Reset();
-                break;
             }
         }
 
@@ -63,6 +66,8 @@ public class Level : MonoBehaviour
         if (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart) {
             _currentRoom = _rooms[0];
             _previousRoom = null;
+            DestroyWeapons();
+            InitializeWeapons();
         } else {
             _currentRoom = _previousRoom;
         }
@@ -104,5 +109,23 @@ public class Level : MonoBehaviour
     private void UpdateToCurrentRoom(Room room) {
         _previousRoom = _currentRoom;
         _currentRoom = room;
+    }
+    
+    private void InitializeWeapons() {
+        foreach (KeyValuePair<Transform, Weapon> weaponKVP in BaseWeapons) {
+            Weapon weaponInstance = Instantiate(weaponKVP.Value, weaponKVP.Key.position, Quaternion.identity);
+            _baseWeapons.Add(weaponInstance);
+        }
+    }
+    
+    private void DestroyWeapons() {
+        while (_baseWeapons.Count != 0) {
+            var currentWeapon = _baseWeapons[0];
+            _baseWeapons.RemoveAt(0);
+            if (currentWeapon == null) continue;
+            else{
+                Destroy(currentWeapon.gameObject);
+            }
+        }
     }
 }
