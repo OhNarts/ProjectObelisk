@@ -248,21 +248,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _damage;
     public AmmoDictionary Ammo {get => PlayerState.Ammo; }
 
+    
     public void Fire1(CallbackContext context)
     {
+      
         if (_equippedWeapon == null)  {
             Melee(context);
             return;
         }
-        if (context.started)
-        {
+        if (context.started) {
+            Debug.Log("started");
             _equippedWeapon.Fire1(true);
-        } else if (context.canceled)
+        }
+        else if (context.canceled)
         {
+            Debug.Log("cancelled");
             _equippedWeapon.Fire1Stop(true);
+            
+        } else if (context.performed) {
+            Debug.Log("held");
+            _equippedWeapon.Fire1Held(true);
         }
     }
-
     public void Fire2(CallbackContext context)
     {
         if (_equippedWeapon == null) return;
