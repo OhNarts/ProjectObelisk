@@ -13,6 +13,7 @@ public class PlayerInfoObject : ScriptableObject
     public float Health;
     public float MaxHealth;
     public WeaponHashSet Weapons;
+    public Vector3 StartPosition;
 }
 
 /// <summary>
@@ -36,7 +37,7 @@ public class PlayerInfo {
         MaxHealth = infoObject.MaxHealth;
         Weapons = infoObject.Weapons.CreateCopy();
         CurrentWeapon = null;
-        Position = new Vector3();
+        Position = infoObject.StartPosition;
     }
 
     public PlayerInfo() {

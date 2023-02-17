@@ -42,7 +42,7 @@ public class CombatRoom : Room
         GameManager.OnGameStateChanged += OnGameStateChanged;
     }
 
-    void OnDisable() {
+    void OnDestroy() {
         // Clean up nav mesh data
         NavMesh.RemoveNavMeshData(_navMeshInstance);
         GameManager.OnGameStateChanged -= OnGameStateChanged;
@@ -88,18 +88,32 @@ public class CombatRoom : Room
         while (_droppedWeapons.Count != 0) {
             var currentWeapon = _droppedWeapons[0];
             _droppedWeapons.RemoveAt(0);
-            Destroy(currentWeapon.gameObject);
+            if (currentWeapon == null) continue;
+            else {
+                Destroy(currentWeapon.gameObject);
+            }
         }
+        _roomCompleted = false;
     }
 
     private void OnGameStateChanged(object sender, EventArgs e) {
         OnGameStateChangedArgs args = (OnGameStateChangedArgs)e;
         if (_planning &&
-            args.OldState == GameState.Plan && 
-            args.NewState == GameState.Combat) {
-                CombatEnter();
-                _planning = false;
-            } 
+            args.OldState == GameState.Plan &&
+            args.NewState == GameState.Combat)
+        {
+            CombatEnter();
+            _planning = false;
+        } else if(!_planning && GameManager.CurrentState == GameState.Plan)
+        {
+            gameObject.SetActive(false);
+        } else if(!_planning && GameManager.CurrentState == GameState.PostCombat) // You should see other room disappear in plan state
+        {
+            Debug.Log("planning?: " + _planning);
+            Debug.Log("state: " + GameManager.CurrentState);
+            Debug.Log("room: " + gameObject.name);
+            gameObject.SetActive(true);
+        }
     }
 
     private void OnEnemyDeath(EnemyController enemy)
