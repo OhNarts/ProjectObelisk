@@ -15,10 +15,9 @@ public class CombatRoom : Room
     public event EventHandler OnCombatStart;
 
     [SerializeField] private TransformGameObjectDictionary _enemySpawnPoints;
-
-    //[SerializeField] private List<EnemyController> _enemies;
     [SerializeField] private NavMeshData _navMesh;
     [SerializeField] private GameObject _boundaryColliders;
+    [SerializeField] private RoomReward _rewardObject;
     private NavMeshDataInstance _navMeshInstance;
     private bool _roomCompleted; public bool RoomCompleted {get => _roomCompleted;}
     private List<EnemyController> _aliveEnemies;
@@ -33,16 +32,17 @@ public class CombatRoom : Room
         _navMeshInstance = NavMesh.AddNavMeshData(_navMesh);
         _aliveEnemies = new List<EnemyController>();
         _droppedWeapons = new List<Weapon>();
-        //InitializeEnemies();
         _boundaryColliders.SetActive(false);
         _roomCompleted = false;
         _player = null;
         _planning = false;
+        _rewardObject.RoomName = gameObject.name;
+        _rewardObject.gameObject.SetActive(false);
 
         GameManager.OnGameStateChanged += OnGameStateChanged;
     }
 
-    void OnDisable() {
+    void OnDestroy() {
         // Clean up nav mesh data
         NavMesh.RemoveNavMeshData(_navMeshInstance);
         GameManager.OnGameStateChanged -= OnGameStateChanged;
@@ -55,7 +55,6 @@ public class CombatRoom : Room
         _player = player;
         _cameraHolder = cameraHolder;
         SetCameraPos(cameraHolder);
-        //_player.PlanStateStart();
         _doorAttemptedEnter.PlanStageStart(_player);
         _boundaryColliders.SetActive(true);
         _planning = true;
@@ -89,19 +88,32 @@ public class CombatRoom : Room
         while (_droppedWeapons.Count != 0) {
             var currentWeapon = _droppedWeapons[0];
             _droppedWeapons.RemoveAt(0);
-            Destroy(currentWeapon.gameObject);
+            if (currentWeapon == null) continue;
+            else {
+                Destroy(currentWeapon.gameObject);
+            }
         }
-        //InitializeEnemies();
+        _roomCompleted = false;
     }
 
     private void OnGameStateChanged(object sender, EventArgs e) {
         OnGameStateChangedArgs args = (OnGameStateChangedArgs)e;
         if (_planning &&
-            args.OldState == GameState.Plan && 
-            args.NewState == GameState.Combat) {
-                CombatEnter();
-                _planning = false;
-            } 
+            args.OldState == GameState.Plan &&
+            args.NewState == GameState.Combat)
+        {
+            CombatEnter();
+            _planning = false;
+        } else if(!_planning && GameManager.CurrentState == GameState.Plan)
+        {
+            gameObject.SetActive(false);
+        } else if(!_planning && GameManager.CurrentState == GameState.PostCombat) // You should see other room disappear in plan state
+        {
+            Debug.Log("planning?: " + _planning);
+            Debug.Log("state: " + GameManager.CurrentState);
+            Debug.Log("room: " + gameObject.name);
+            gameObject.SetActive(true);
+        }
     }
 
     private void OnEnemyDeath(EnemyController enemy)
@@ -116,6 +128,7 @@ public class CombatRoom : Room
         _roomCompleted = true;
         _player = null;
         GameManager.CurrentState = GameState.PostCombat;
+        _rewardObject.gameObject.SetActive(true);
         OnRoomFinish?.Invoke(this, EventArgs.Empty);
     }
 

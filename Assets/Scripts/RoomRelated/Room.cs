@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using UnityEngine;
+using System.Collections.Generic;
 
 #region Event Args
 public class OnRoomEnterAttemptArgs : EventArgs
@@ -23,6 +24,7 @@ public class Room : MonoBehaviour
     public delegate void OnRoomEnterAttemptHandler(object sender, EventArgs e);
     public event OnRoomEnterAttemptHandler OnRoomEnterAttempt;
 
+
     [Header("Edit in level creation")]
     [SerializeField] private DoorRoomDictionary adjacentRooms;
 
@@ -30,7 +32,17 @@ public class Room : MonoBehaviour
     // Change to increase the distance the camera can be from the room
     [SerializeField] private float _cameraSize;
     [SerializeField] private Transform _camHolderPosRot;
-    
+
+    /* TODO: disable colliders of all children in previous room when planning in current room
+     * 
+     * Figure out a way to keep track of previous room
+     * Make sure we're in planning phase in current room
+     * Find and track colliders in children of previous room (floor and wall parts)
+     * Disable collider in each part
+     * 
+     * Bonus: make player kinematic during planning phase
+     */
+
     private bool _occupied; public bool Occupied 
     { 
         get => _occupied; 
@@ -41,6 +53,14 @@ public class Room : MonoBehaviour
     }
 
     protected Door _doorAttemptedEnter;
+
+    // Add a private function that will subscribe to the gamemanager.onGameStateChanged and check for
+    // If it's in planning stage and then setActive to false if in planning stage
+    // Else set true
+    private void OnEnable()
+    {
+        GameManager.OnGameStateChanged += OnGameStateChanged;
+    }
 
     void Awake()
     {
@@ -53,7 +73,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         foreach (Door door in adjacentRooms.Keys)
         {
@@ -88,4 +108,15 @@ public class Room : MonoBehaviour
         cameraHolder.transform.rotation = _camHolderPosRot.rotation;
         Camera.main.orthographicSize = _cameraSize;
     }
+
+    private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) 
+    {
+        if (GameManager.CurrentState == GameState.Plan)
+        {
+            gameObject.SetActive(false);
+        } else if(GameManager.CurrentState == GameState.PostCombat)
+        {
+            gameObject.SetActive(true);
+        }
+    } 
 }

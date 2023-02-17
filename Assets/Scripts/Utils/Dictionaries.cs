@@ -10,6 +10,12 @@ using UnityEngine;
 public class AmmoTypeFloatDictionary : SerializableDictionary<AmmoType, float> {}
 
 [Serializable]
+public class IntListStorage : SerializableDictionary.Storage<List<int>> {}
+
+[Serializable]
+public class AmmoRewardDictionary : SerializableDictionary<AmmoType, List<int>, IntListStorage> {}
+
+[Serializable]
 public class DoorRoomDictionary : SerializableDictionary<Door, Room> {}
 
 [Serializable]
@@ -39,3 +45,6 @@ public class WeaponHashSet : SerializableHashSet<WeaponItem> {
         return copy;
     }
 }
+
+[Serializable]
+public class TransformWeaponDictionary : SerializableDictionary<Transform, Weapon> {}
