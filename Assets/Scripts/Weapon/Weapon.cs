@@ -106,6 +106,7 @@ public abstract class Weapon : MonoBehaviour
     // case where ammo is going to be used
     public virtual void Fire1(bool useAmmo = false) { }
     public virtual void Fire1Stop(bool useAmmo = false) { }
+    public virtual void Fire1Held(bool useAmmo = false) { }
 
     public virtual void Fire2(bool useAmmo = false) { }
     public virtual void Fire2Stop(bool useAmmo = false) { }
