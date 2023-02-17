@@ -10,13 +10,11 @@ public class SMG : Weapon
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float bulletRotationDifference;
     private float lastFired;
-    private bool fired;
     private bool currentlyFiring;
     private bool useAmmo;
     
     private void Awake()
     {
-        //fired = false;
         lastFired = 0;
     }
     private void Update() {
@@ -48,7 +46,6 @@ public class SMG : Weapon
 
     public override void Fire1Stop(bool useAmmo = false)
     {
-        fired = false;
         this.currentlyFiring = false;
     }
 }

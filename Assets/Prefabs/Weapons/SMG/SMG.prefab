@@ -365,9 +365,7 @@ MonoBehaviour:
   - {fileID: 3041723254695758501}
   _damage: 10
   _weaponType: 0
-  _ammoAmount1: 10
-  auto: 1
-  held: 1
+  _ammoAmount1: 20
   coolDownTime: 0.3
   bullet: {fileID: 3667196397110752525, guid: ffa3f4db51b56144baf59f9e3b8e5687, type: 3}
   bulletSpeed: 20

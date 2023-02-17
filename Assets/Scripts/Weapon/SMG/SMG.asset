@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SMG
   m_EditorClassIdentifier: 
   WeaponName: SMG
-  AmmoCost1: 1000
-  AmmoType1: 0
+  AmmoCost1: 20
+  AmmoType1: 1
   AmmoCost2: 0
   AmmoType2: 0
   gameObject: {fileID: 6945854898439343772, guid: 964020ef112be694db1de7fffff0c6bd, type: 3}
