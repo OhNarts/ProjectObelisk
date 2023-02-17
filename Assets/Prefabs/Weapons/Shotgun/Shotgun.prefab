@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 6945854898439343745}
   - component: {fileID: 6945854898439343774}
   - component: {fileID: 6945854898439343744}
+  - component: {fileID: 9036462346604633180}
   m_Layer: 10
   m_Name: Shotgun
   m_TagString: Untagged
@@ -365,12 +366,27 @@ MonoBehaviour:
   - {fileID: 3041723254695758501}
   _damage: 20
   _weaponType: 0
+  _thrownDamage: 50
+  _thrownSpeed: 20
   _ammoAmount1: 10
   _ammoAmount2: 0
   coolDownTime: 1.5
   bullet: {fileID: 3667196397110752525, guid: ffa3f4db51b56144baf59f9e3b8e5687, type: 3}
   bulletSpeed: 20
   bulletRotationDifference: 3
+--- !u!65 &9036462346604633180
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6945854898439343772}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 1.7}
+  m_Center: {x: 0, y: -0.05, z: 0}
 --- !u!1 &6945854898702257161
 GameObject:
   m_ObjectHideFlags: 0
