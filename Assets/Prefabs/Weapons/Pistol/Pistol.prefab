@@ -87,8 +87,8 @@ MonoBehaviour:
   _weaponType: 0
   _thrownDamage: 0
   _thrownSpeed: 20
+  _thrownStunDuration: 2
   _ammoAmount1: 10
-  _ammoAmount2: 0
   coolDownTime: 0.3
   range: 1e+12
   bulletSpeed: 20

@@ -32,7 +32,8 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float _damage;
     [SerializeField] protected WeaponType _weaponType;
     [SerializeField] protected float _thrownDamage;
-    [SerializeField] private float _thrownSpeed = 20;
+    [SerializeField] private float _thrownSpeed;
+    [SerializeField] private float _thrownStunDuration;
 
     [Header("Ammo Costs/Types")]
     [SerializeField] protected int _ammoAmount1; public int AmmoAmount1 { 
@@ -46,7 +47,6 @@ public abstract class Weapon : MonoBehaviour
     }
 
     protected GameObject _holder = null; public GameObject Holder { get => _holder; }
-    protected DamageInfo _thrownDamageInfo;
     protected bool _isProjectile;
 
     private bool _canPlace = true; public bool CanPlace {get => _canPlace; 
@@ -84,6 +84,9 @@ public abstract class Weapon : MonoBehaviour
         foreach (MeshCollider collider in _colliders) {
             collider.enabled = false;
         }
+        if (_isProjectile) {
+            Debug.Log("Weapon was Projectile!!!");
+        }
         _isProjectile = false;
         GetComponent<Collider>().enabled = false;
         //transform.GetComponent<BoxCollider>().enabled = false;
@@ -109,11 +112,6 @@ public abstract class Weapon : MonoBehaviour
         }
     }
     public virtual void ThrowWeapon() {
-        _thrownDamageInfo = new DamageInfo {
-            damage = _thrownDamage,
-            attacker = _holder,
-            ammoType = _weaponItem.AmmoType1
-        };
         _holder = null;
         transform.parent = null;
 
@@ -130,14 +128,14 @@ public abstract class Weapon : MonoBehaviour
         if (!_isProjectile) return;
         if (collider.gameObject.layer == 9) return;
         if (collider.gameObject.name == "Player") return;
-        
+
         _isProjectile = false;
         GetComponent<Collider>().enabled = false;
         Transform hitTransform = collider.transform;
         HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();
-        if (hitHealth != null)
-        {
-            hitHealth.Damage(_thrownDamageInfo);
+        if (collider.CompareTag("Enemy")) {
+            Debug.Log("Stunned Enemy!!!");   
+            collider.transform.GetComponent<EnemyController>().Stunned(_thrownStunDuration);
         }
         if (AmmoAmount1 == 0) {
             Destroy(gameObject);
