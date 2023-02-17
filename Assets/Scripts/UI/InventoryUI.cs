@@ -13,6 +13,7 @@ public class InventoryUI : MonoBehaviour
             slot.SetActive(false);
         }
         _currSlot = 0;
+        PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
     }
 
     void OnEnable() {
@@ -31,5 +32,14 @@ public class InventoryUI : MonoBehaviour
         GameObject slot = _inventorySlots[_currSlot++];
         slot.GetComponent<InventorySlot>().Weapon = weapon;
         slot.SetActive(true);
+    }
+
+    private void OnPlayerStateRevert(object sender, OnPlayerStateRevertArgs e) {
+        if (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart) { 
+            while (_currSlot > 0) {
+                GameObject slot = _inventorySlots[--_currSlot];
+                slot.SetActive(false);
+            }
+        }
     }
 }

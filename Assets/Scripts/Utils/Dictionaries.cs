@@ -45,3 +45,6 @@ public class WeaponHashSet : SerializableHashSet<WeaponItem> {
         return copy;
     }
 }
+
+[Serializable]
+public class TransformWeaponDictionary : SerializableDictionary<Transform, Weapon> {}

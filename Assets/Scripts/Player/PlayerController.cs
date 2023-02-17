@@ -101,13 +101,16 @@ public class PlayerController : MonoBehaviour
         switch (e.NewState) {
             case GameState.Combat:
                 _input.SwitchCurrentActionMap("Combat");
+                _rb.isKinematic = false;
                 break;
             case GameState.Plan:
                 _input.SwitchCurrentActionMap("Planning");
                 _rb.velocity = Vector3.zero;
+                _rb.isKinematic = true;
                 break;
             case GameState.PostCombat:
                 _input.SwitchCurrentActionMap("Combat");
+                _rb.isKinematic = false;
                 if (e.TriggeredByRevert) break;
                 if (_equippedWeapon != null) 
                 {

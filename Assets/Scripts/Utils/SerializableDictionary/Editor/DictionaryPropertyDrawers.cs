@@ -14,5 +14,6 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(DoorRoomDictionary))]
 [CustomPropertyDrawer(typeof(AmmoDictionary))]
 [CustomPropertyDrawer(typeof(AmmoUIDictionary))]
+[CustomPropertyDrawer(typeof(TransformWeaponDictionary))]
 public class AnySerializableDictionaryPropertyDrawer : SerializableDictionaryPropertyDrawer { }
 
