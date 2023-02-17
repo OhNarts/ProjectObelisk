@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EnemyState { Idle, Chase, Attack }
+public enum EnemyState { Idle, Chase, Attack, Stunned }
 public class EnemyController : MonoBehaviour
 {
     public UnityEventEnemy onEnemyDeath;
@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     private EnemyState currState;
     private NavMeshAgent agent;
     private AmmoDictionary ammo;
+    private float stun;
 
     
     [SerializeField] private float distToAttack;
@@ -55,6 +56,13 @@ public class EnemyController : MonoBehaviour
                 if (Vector3.Distance(_target.position, transform.position) > distToAttack)
                     currState = EnemyState.Chase;
                 break;
+            case EnemyState.Stunned:
+                Stunned(stun);
+                stun -= Time.deltaTime;
+                if (stun <= 0.0f) {
+                    currState = EnemyState.Idle;
+                }
+                break;
         }
     }
 
@@ -73,6 +81,15 @@ public class EnemyController : MonoBehaviour
         transform.LookAt(_target);
         weapon.Fire1();
         weapon.Fire1Stop();
+    }
+
+    public void Stunned(float stunTime) 
+    {
+        if (currState != EnemyState.Stunned) {
+            stun = stunTime;
+            currState = EnemyState.Stunned;
+        }
+        agent.isStopped = true;
     }
     #endregion
 
