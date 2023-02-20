@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
         }
         if (context.started) {
             Debug.Log("started");
-            _equippedWeapon.Fire1(true);
+            _equippedWeapon.Fire1Start(true);
         }
         else if (context.canceled)
         {

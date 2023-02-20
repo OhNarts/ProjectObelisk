@@ -79,7 +79,7 @@ public class EnemyController : MonoBehaviour
     {
         agent.isStopped = true;
         transform.LookAt(_target);
-        weapon.Fire1();
+        weapon.Fire1Start();
         weapon.Fire1Stop();
     }
 

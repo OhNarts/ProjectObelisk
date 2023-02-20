@@ -9,7 +9,7 @@ public class ShockTrap : Weapon
     [SerializeField] private float shockTime;
     [SerializeField] private float shockRadius;
 
-    public override void Fire1(bool useAmmo = false) {
+    public override void Fire1Start(bool useAmmo = false) {
         return;
     }
 

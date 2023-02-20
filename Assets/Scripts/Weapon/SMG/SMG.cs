@@ -38,7 +38,7 @@ public class SMG : Weapon
         bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.forward * bulletSpeed;
     }
     }
-    public override void Fire1(bool useAmmo = false)
+    public override void Fire1Start(bool useAmmo = false)
     {
         this.useAmmo = useAmmo;
         this.currentlyFiring = true;

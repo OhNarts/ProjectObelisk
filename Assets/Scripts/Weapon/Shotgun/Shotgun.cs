@@ -18,7 +18,7 @@ public class Shotgun : Weapon
         lastFired = 0;
     }
 
-    public override void Fire1(bool useAmmo = false)
+    public override void Fire1Start(bool useAmmo = false)
     {
         if ( Time.unscaledTime - lastFired < coolDownTime || fired == true ) { return; }    
         if (useAmmo) {
