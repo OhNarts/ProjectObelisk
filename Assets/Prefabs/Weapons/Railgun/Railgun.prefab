@@ -221,9 +221,8 @@ MonoBehaviour:
   _damage: 30
   _weaponType: 0
   _ammoAmount1: 5
-  _ammoAmount2: 0
   coolDownTime: 2
-  bulletSpeed: 10
+  bulletSpeed: 30
   bullet: {fileID: 3667196397110752525, guid: fea7c68f0169cef49814b2d4c5b863c3, type: 3}
   waitSeconds: 1
 --- !u!54 &1003591532308817985

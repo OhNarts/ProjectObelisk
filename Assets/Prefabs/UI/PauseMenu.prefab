@@ -358,10 +358,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7685921950323037535, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}
       propertyPath: m_text
-      value: '//QUIT
+      value: 'Quit()
+
 
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7685921950323037535, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}
+      propertyPath: m_fontSize
+      value: 28.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}
@@ -475,14 +480,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7685921950323037535, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}
       propertyPath: m_text
-      value: '//RESTART ROOM
+      value: 'RestartRoom()
+
 
 
 '
       objectReference: {fileID: 0}
     - target: {fileID: 7685921950323037535, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}
       propertyPath: m_fontSize
-      value: 23.1
+      value: 28.2
       objectReference: {fileID: 0}
     - target: {fileID: 7685921950323037535, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}
       propertyPath: m_VerticalAlignment
@@ -596,10 +602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7685921950323037535, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}
       propertyPath: m_text
-      value: '//RESUME
-
-
-'
+      value: Resume()
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}
@@ -713,7 +716,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7685921950323037535, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}
       propertyPath: m_text
-      value: '//RESTART LEVEL
+      value: 'RestartLevel()
+
 
 
 
@@ -721,7 +725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7685921950323037535, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}
       propertyPath: m_fontSize
-      value: 21.55
+      value: 26.85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8033caa16dd0c745a3d39a76f17dbff, type: 3}

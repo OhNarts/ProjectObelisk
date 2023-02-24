@@ -98,7 +98,8 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     public void Die()
     {
-        weapon.DropWeapon();
+        weapon = null;
+        //weapon.DropWeapon();
         onEnemyDeath?.Invoke(this);
 
         // Temp, can make ragdoll here instead of destroy

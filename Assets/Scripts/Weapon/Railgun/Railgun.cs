@@ -1,6 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public class OnRailgunChargeChangeArgs : EventArgs {
+    private bool _started; public bool Started {get => _started;}
+    public OnRailgunChargeChangeArgs (bool started) {
+        _started = started;
+    }
+}
 
 public class Railgun : Weapon
 {
@@ -8,11 +16,13 @@ public class Railgun : Weapon
     [SerializeField] private float coolDownTime;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private GameObject bullet;
-    [SerializeField] private float waitSeconds;
+    [SerializeField] private float waitSeconds; public float WaitSeconds{get => waitSeconds;}
 
     private float lastFired;
     private float timePressed;
     private float timeReleased;
+
+    public event EventHandler<OnRailgunChargeChangeArgs> OnRailGunChargeChange;
     
     // Update is called once per frame
     private void Awake()
@@ -23,7 +33,8 @@ public class Railgun : Weapon
     public override void Fire1Start(bool useAmmo = false)
     {
         timePressed = Time.unscaledTime;
-        if (Time.unscaledTime - lastFired < coolDownTime) { return; }
+        if (Time.unscaledTime - lastFired < coolDownTime || AmmoAmount1 == 0) { return; }
+        OnRailGunChargeChange?.Invoke(this, new OnRailgunChargeChangeArgs(true));
     }
 
     public override void Fire1Stop(bool useAmmo = false)
@@ -35,12 +46,14 @@ public class Railgun : Weapon
             lastFired = Time.unscaledTime;
             FireBullet();
         }
+        OnRailGunChargeChange?.Invoke(this, new OnRailgunChargeChangeArgs(false));
     }
 
     private void FireBullet() {
         GameObject bulletInstance = Instantiate(bullet, _attackPoint.position, _holder.transform.rotation);
         Bullet b = bulletInstance.GetComponent<Bullet>();
         b.damageInfo = CreateDamageInfo();
+        //b.destroyOnContact = false;
         bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.forward * bulletSpeed;
     }
 }
