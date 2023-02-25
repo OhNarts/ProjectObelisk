@@ -15,6 +15,7 @@ public class ChargeUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         PlayerState.OnPlayerCurrentWeaponChanged += OnPlayerCurrentWeaponChanged;
+        GameManager.OnGameStateChanged += OnGameStateChanged; 
     }
 
     void OnDestroy() {
@@ -26,11 +27,22 @@ public class ChargeUI : MonoBehaviour
     private void OnPlayerCurrentWeaponChanged(object sender, EventArgs e) {
         if (PlayerState.CurrentWeapon.GetType() == typeof(Railgun))  {
             _railgun = (Railgun)(PlayerState.CurrentWeapon);
-            _railgun.OnRailGunChargeChange += OnRailGunChargeChange;    
+            _railgun.OnRailGunChargeChange += OnRailGunChargeChange;   
+            gameObject.SetActive(true); 
             return;
         }
         if (_railgun != null) _railgun.OnRailGunChargeChange -= OnRailGunChargeChange;
         gameObject.SetActive(false); 
+    }
+
+    private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) {
+        if (e.OldState == GameState.Combat && e.NewState == GameState.PostCombat) {
+            if (_railgun != null) {
+                _railgun.OnRailGunChargeChange -= OnRailGunChargeChange;
+                _railgun = null;
+            }
+        }
+        gameObject.SetActive(false);
     }
 
     private void OnRailGunChargeChange(object sender, OnRailgunChargeChangeArgs e) {
@@ -41,7 +53,7 @@ public class ChargeUI : MonoBehaviour
 
     void Update() {
         if (!_charging) return;
-        
+        Debug.Log("Display Charge");
     }
 
 }
