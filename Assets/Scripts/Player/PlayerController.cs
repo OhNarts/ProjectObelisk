@@ -318,34 +318,22 @@ public class PlayerController : MonoBehaviour
     {
         // make sure that this is only called once
         if (!context.started) return;
-        // returns if the position the mouse is over is too far to interact
-        if (!(Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) return;
 
         List<Weapon> weaponsPointedAt = GetWeaponsPointedAt();
+        List<Weapon> weaponsAround = GetWeaponsAround();
+
         if (weaponsPointedAt.Count != 0) {
-            foreach (Weapon wep in weaponsPointedAt)
-            {
-                if (wep.Holder != null) { continue; }
-
-                // If in the postCombat stage, then just add it to the weapons
-                if (GameManager.CurrentState == GameState.PostCombat) {
-                    // Add the amount of ammo the weapon had into the ammo dictionary
-                    PlayerState.AddToAmmo(wep.WeaponItem.AmmoType1, wep.AmmoAmount1);
-                    PlayerState.AddWeapon(wep.WeaponItem);
-                    Destroy(wep.gameObject);
-                    return;
-                }
-
-                if (_equippedWeapon != null)
-                {
-                    _equippedWeapon.DropWeapon();
-                }
-                wep.PickUpWeapon(gameObject, _weaponPos);
-                _equippedWeapon = wep;
-                PlayerState.CurrentWeapon = wep;
-                return;
+            if ((Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) {
+                InteractWithWeapons(weaponsPointedAt);
             }
         }
+
+        if (weaponsAround.Count != 0) {
+            InteractWithWeapons(weaponsAround);
+        }
+
+        // returns if the position the mouse is over is too far to interact
+        if (!(Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) return;
 
         // If no weapons found, then search for interactables
         Collider[] colliders = Physics.OverlapSphere(_groundMousePt, _interactableRadius);
@@ -451,6 +439,51 @@ public class PlayerController : MonoBehaviour
             }
         }
         return weapons;
+    }
+
+    /// <summary>
+    /// Helper method that gets a list of weapons that the player is around
+    /// </summary>
+    /// <returns>The list of weapons</returnsZ>
+    private List<Weapon> GetWeaponsAround() {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _interactableRadius);
+        List<Weapon> weapons = new List<Weapon>();
+
+        foreach (Collider collider in colliders) {
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Weapon")) {
+                weapons.Add(collider.transform.root.GetComponent<Weapon>());
+            }
+        }
+        return weapons;
+    }
+
+    /// <summary>
+    /// Helper method to interact with the weapons pointed at or nearby.
+    /// </summary>
+    /// <param name="weaponsList"></param>
+    private void InteractWithWeapons(List<Weapon> weaponsList) {
+        foreach (Weapon wep in weaponsList) {
+            if (wep.Holder != null) { continue; }
+
+            // If in the postCombat stage, then just add it to the weapons
+            if (GameManager.CurrentState == GameState.PostCombat) {
+                // Add the amount of ammo the weapon had into the ammo dictionary
+                PlayerState.AddToAmmo(wep.WeaponItem.AmmoType1, wep.AmmoAmount1);
+                PlayerState.AddWeapon(wep.WeaponItem);
+                Destroy(wep.gameObject);
+                return;
+            }
+
+            if (_equippedWeapon != null)
+            {
+                _equippedWeapon.DropWeapon();
+            }
+            wep.PickUpWeapon(gameObject, _weaponPos);
+            _equippedWeapon = wep;
+            PlayerState.CurrentWeapon = wep;
+            return;
+        }
+        
     }
     #endregion
 
