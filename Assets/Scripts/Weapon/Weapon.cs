@@ -144,7 +144,7 @@ public abstract class Weapon : MonoBehaviour
 
     // Use ammo defaults to false because player is the only
     // case where ammo is going to be used
-    public virtual void Fire1(bool useAmmo = false) { }
+    public virtual void Fire1Start(bool useAmmo = false) { }
     public virtual void Fire1Stop(bool useAmmo = false) { }
     public virtual void Fire1Held(bool useAmmo = false) { }
 

@@ -20,7 +20,7 @@ public class Railgun : Weapon
         lastFired = 0;
     }
 
-    public override void Fire1(bool useAmmo = false)
+    public override void Fire1Start(bool useAmmo = false)
     {
         timePressed = Time.unscaledTime;
         if (Time.unscaledTime - lastFired < coolDownTime) { return; }

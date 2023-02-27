@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shotgun : Weapon
+public class DoubleBarrelShotgun : Weapon
 {
-    [Header("Shotgun Specific")]
+    [Header("DoubleBarrelShotgun Specific")]
     [SerializeField] private float coolDownTime;
     [SerializeField] private GameObject bullet;
     [SerializeField] private float bulletSpeed;
@@ -20,14 +20,14 @@ public class Shotgun : Weapon
 
     public override void Fire1Start(bool useAmmo = false)
     {
-        if ( Time.unscaledTime - lastFired < coolDownTime || fired == true ) { return; }    
+        if ( Time.unscaledTime - lastFired < coolDownTime || fired == true ) { return; }
         if (useAmmo) {
             if (AmmoAmount1 == 0) return;
             AmmoAmount1--;
         }
-        GameObject[] bullets = new GameObject[3];
+        GameObject[] bullets = new GameObject[5];
         Vector3 currRotOffset = new Vector3(0, -bulletRotationDifference, 0);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
             Vector3 currRot = _holder.transform.rotation.eulerAngles + currRotOffset;
 
@@ -52,6 +52,4 @@ public class Shotgun : Weapon
     {
         fired = false;
     }
-
 }
-
