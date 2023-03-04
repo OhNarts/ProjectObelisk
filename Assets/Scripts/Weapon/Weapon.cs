@@ -43,6 +43,8 @@ public abstract class Weapon : MonoBehaviour
         } 
     }
 
+    private Vector3 _scale;
+
     protected GameObject _holder = null; public GameObject Holder { get => _holder; }
 
     private bool _canPlace = true; public bool CanPlace {get => _canPlace; 
@@ -55,13 +57,20 @@ public abstract class Weapon : MonoBehaviour
     public event OnWeaponAmmoChangedHandler OnWeaponAmmoChanged;
     #endregion
 
-    public void InitializeWeapon(int ammoAmount1, int ammoAmount2) {
+    /// <summary>
+    /// Initializes this weapon with the given ammo ammounts
+    /// WARNING: AMMO AMOUNT 2 IS NOT YET IMPLEMENTED
+    /// </summary>
+    /// <param name="ammoAmount1"></param>
+    /// <param name="ammoAmount2"></param>
+    public void InitializeWeapon(int ammoAmount1, int ammoAmount2 = 0) {
         _holder = null;
         transform.parent = null;
         foreach (MeshCollider collider in _colliders) {
             collider.enabled = true;
         }
-        transform.GetComponent<Rigidbody>().isKinematic = false;
+        transform.GetComponent<Rigidbody>().isKinematic = false; 
+        _scale = transform.localScale;   
         _ammoAmount1 = ammoAmount1;
     }
 
@@ -72,6 +81,7 @@ public abstract class Weapon : MonoBehaviour
     /// <param name="equipPos"></param>
     public void PickUpWeapon(GameObject holder, Transform equipPos)
     {
+        _scale = transform.localScale;
         _holder = holder;
         transform.parent = equipPos;
         transform.localPosition = Vector3.zero;
@@ -81,6 +91,7 @@ public abstract class Weapon : MonoBehaviour
         }
         //transform.GetComponent<BoxCollider>().enabled = false;
         transform.GetComponent<Rigidbody>().isKinematic = true;
+        transform.localScale = _scale;
     }
 
     /// <summary>
@@ -94,6 +105,8 @@ public abstract class Weapon : MonoBehaviour
         foreach (MeshCollider collider in _colliders) {
             collider.enabled = true;
         }
+
+        transform.localScale = _scale;
 
         //transform.GetComponent<BoxCollider>().enabled = true;
         transform.GetComponent<Rigidbody>().isKinematic = false;
