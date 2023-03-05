@@ -213,6 +213,7 @@ public class PlayerController : MonoBehaviour
         if (_equippedWeapon != null) {
             _equippedWeapon.DropWeapon();
             _equippedWeapon = null;
+            PlayerState.CurrentWeapon = _equippedWeapon;
         }
     }
     private IEnumerator RollSequence() {

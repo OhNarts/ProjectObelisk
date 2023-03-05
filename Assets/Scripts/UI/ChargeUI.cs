@@ -1,10 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChargeUI : MonoBehaviour
 {
+    [SerializeField] private Slider _slider;
     private Railgun _railgun;
     private bool _charging;
     private float _chargeTimeEnd;
@@ -25,10 +25,11 @@ public class ChargeUI : MonoBehaviour
 
 
     private void OnPlayerCurrentWeaponChanged(object sender, EventArgs e) {
-        if (PlayerState.CurrentWeapon.GetType() == typeof(Railgun))  {
+        if ( PlayerState.CurrentWeapon != null && PlayerState.CurrentWeapon.GetType() == typeof(Railgun))  {
             _railgun = (Railgun)(PlayerState.CurrentWeapon);
             _railgun.OnRailGunChargeChange += OnRailGunChargeChange;   
-            gameObject.SetActive(true); 
+            gameObject.SetActive(true);
+
             return;
         }
         if (_railgun != null) _railgun.OnRailGunChargeChange -= OnRailGunChargeChange;
@@ -52,8 +53,15 @@ public class ChargeUI : MonoBehaviour
     }
 
     void Update() {
-        if (!_charging) return;
-        Debug.Log("Display Charge");
+        if (!_charging) {
+            _slider.value = 0;
+            return;
+        }
+        if (Time.unscaledTime >= _chargeTimeEnd) {
+            _slider.value = 1;
+            return;
+        }
+        _slider.value = 1 - (_chargeTimeEnd - Time.unscaledTime)/(_chargeTimeEnd - _startTime);
     }
 
 }
