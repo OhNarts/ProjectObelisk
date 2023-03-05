@@ -26,19 +26,23 @@ public class Railgun : Weapon
     private void Awake()
     {
         lastFired = 0;
+        timePressed = -1;
     }
 
     public override void Fire1Start(bool useAmmo = false)
     {
         timePressed = Time.unscaledTime;
-        if (Time.unscaledTime - lastFired < coolDownTime || AmmoAmount1 == 0) { return; }
+        if (Time.unscaledTime - lastFired < coolDownTime || AmmoAmount1 == 0) {
+            timePressed = -1; 
+            return; 
+        }
         OnRailGunChargeChange?.Invoke(this, new OnRailgunChargeChangeArgs(true));
     }
 
     public override void Fire1Stop(bool useAmmo = false)
     {
         timeReleased = Time.unscaledTime;
-        if (timeReleased - timePressed > waitSeconds && useAmmo) {
+        if (timePressed != -1 && timeReleased - timePressed > waitSeconds && useAmmo) {
             if (AmmoAmount1 == 0) return;
             AmmoAmount1--;
             lastFired = Time.unscaledTime;
