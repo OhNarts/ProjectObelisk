@@ -119,7 +119,7 @@ public class CombatRoom : Room
     private void OnEnemyDeath(EnemyController enemy)
     {
         _aliveEnemies.Remove(enemy);
-        _droppedWeapons.Add(enemy.EquippedWeapon);
+        if (enemy.EquippedWeapon != null) _droppedWeapons.Add(enemy.EquippedWeapon);
         if (_aliveEnemies.Count == 0) RoomFinish();
     }
 

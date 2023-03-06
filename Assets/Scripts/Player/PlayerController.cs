@@ -212,6 +212,8 @@ public class PlayerController : MonoBehaviour
         if (!context.started) return;
         if (_equippedWeapon != null) {
             _equippedWeapon.DropWeapon();
+            _equippedWeapon = null;
+            PlayerState.CurrentWeapon = _equippedWeapon;
         }
     }
     public void Throw(CallbackContext context) {
