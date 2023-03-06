@@ -147,7 +147,6 @@ public abstract class Weapon : MonoBehaviour
         Transform hitTransform = collider.transform;
         HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();
         if (collider.CompareTag("Enemy")) {
-            Debug.Log("Stunned Enemy!!!");   
             collider.transform.GetComponent<EnemyController>().Stunned(_thrownStunDuration);
         }
         if (AmmoAmount1 == 0) {
