@@ -178,7 +178,7 @@ PrefabInstance:
       objectReference: {fileID: 1023838786}
     - target: {fileID: 5281309980421915372, guid: 398270f9ac4f2264495ac81fbb23b127, type: 3}
       propertyPath: m_VersionIndex
-      value: 223
+      value: 226
       objectReference: {fileID: 0}
     - target: {fileID: 5281309981233764978, guid: 398270f9ac4f2264495ac81fbb23b127, type: 3}
       propertyPath: m_Name
@@ -250,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 2078693657}
     - target: {fileID: 6592294350439548469, guid: 398270f9ac4f2264495ac81fbb23b127, type: 3}
       propertyPath: m_VersionIndex
-      value: 217
+      value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 6968286010990967472, guid: 398270f9ac4f2264495ac81fbb23b127, type: 3}
       propertyPath: m_Mesh
@@ -576,7 +576,7 @@ PrefabInstance:
       objectReference: {fileID: 1714835321}
     - target: {fileID: 5281309980421915372, guid: 398270f9ac4f2264495ac81fbb23b127, type: 3}
       propertyPath: m_VersionIndex
-      value: 226
+      value: 229
       objectReference: {fileID: 0}
     - target: {fileID: 5281309981233764978, guid: 398270f9ac4f2264495ac81fbb23b127, type: 3}
       propertyPath: m_Name
@@ -648,7 +648,7 @@ PrefabInstance:
       objectReference: {fileID: 1108843785}
     - target: {fileID: 6592294350439548469, guid: 398270f9ac4f2264495ac81fbb23b127, type: 3}
       propertyPath: m_VersionIndex
-      value: 220
+      value: 223
       objectReference: {fileID: 0}
     - target: {fileID: 6968286010990967472, guid: 398270f9ac4f2264495ac81fbb23b127, type: 3}
       propertyPath: m_Mesh
@@ -839,46 +839,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 633565026320407400, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-      propertyPath: m_ActionEvents.Array.size
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 633565026320407400, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_ActionId
-      value: 6b40896c-2c93-4149-b74d-828564380232
-      objectReference: {fileID: 0}
-    - target: {fileID: 633565026320407400, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_ActionName
-      value: Combat/Throw[/Keyboard/f]
-      objectReference: {fileID: 0}
-    - target: {fileID: 633565026320407400, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 633565026320407400, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 633565026320407400, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1916176220}
-    - target: {fileID: 633565026320407400, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 633565026320407400, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Throw
-      objectReference: {fileID: 0}
-    - target: {fileID: 633565026320407400, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 633565026320407400, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 2974932697292794046, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
       propertyPath: _rooms.Array.size
       value: 4
@@ -1567,7 +1527,7 @@ PrefabInstance:
       objectReference: {fileID: 366686179}
     - target: {fileID: 5329048563632891813, guid: 5fba7376c2d0c8c4788b4d241ee661dc, type: 3}
       propertyPath: m_VersionIndex
-      value: 751
+      value: 754
       objectReference: {fileID: 0}
     - target: {fileID: 5329048564618262950, guid: 5fba7376c2d0c8c4788b4d241ee661dc, type: 3}
       propertyPath: m_Mesh
@@ -1575,7 +1535,7 @@ PrefabInstance:
       objectReference: {fileID: 1394544011}
     - target: {fileID: 5329048564618262950, guid: 5fba7376c2d0c8c4788b4d241ee661dc, type: 3}
       propertyPath: m_VersionIndex
-      value: 754
+      value: 757
       objectReference: {fileID: 0}
     - target: {fileID: 5468140184945480118, guid: 5fba7376c2d0c8c4788b4d241ee661dc, type: 3}
       propertyPath: adjacentRooms.m_keys.Array.size
@@ -1716,7 +1676,7 @@ PrefabInstance:
       objectReference: {fileID: 1428338553}
     - target: {fileID: 4765236425176561511, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: m_VersionIndex
-      value: 118
+      value: 121
       objectReference: {fileID: 0}
     - target: {fileID: 4765236427025951076, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: m_Mesh
@@ -1724,7 +1684,7 @@ PrefabInstance:
       objectReference: {fileID: 627805419}
     - target: {fileID: 4765236427025951076, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: m_VersionIndex
-      value: 112
+      value: 115
       objectReference: {fileID: 0}
     - target: {fileID: 5771352970796731160, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: m_Name
@@ -2700,17 +2660,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!114 &1916176220 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8955489152479535478, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
-  m_PrefabInstance: {fileID: 816316203}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d470993a3794704aa3c5131663f46d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1948077162
 PrefabInstance:
   m_ObjectHideFlags: 0
