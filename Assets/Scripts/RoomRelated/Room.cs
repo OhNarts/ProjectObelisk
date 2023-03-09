@@ -21,8 +21,9 @@ public class OnRoomEnterAttemptArgs : EventArgs
 [Serializable]
 public class Room : MonoBehaviour
 {
-    public delegate void OnRoomEnterAttemptHandler(object sender, EventArgs e);
-    public event OnRoomEnterAttemptHandler OnRoomEnterAttempt;
+   public event EventHandler<OnRoomEnterAttemptArgs> OnRoomEnterAttempt;
+   public event EventHandler OnRoomEnter;
+   public event EventHandler OnRoomExit;
 
 
     [Header("Edit in level creation")]
@@ -49,6 +50,9 @@ public class Room : MonoBehaviour
         set 
             {
                 _occupied = value;
+                if (_occupied) {
+                    OnRoomEnter?.Invoke(this, EventArgs.Empty);
+                }
             } 
     }
 
@@ -96,11 +100,13 @@ public class Room : MonoBehaviour
         _occupied = true;
         adjacentRooms[_doorAttemptedEnter].Exit();
         _doorAttemptedEnter.EnterDoor();
+        OnRoomEnter?.Invoke(this, EventArgs.Empty);
         //doorAttemptedEnter.CloseDoor();
     }
 
     public virtual void Exit() {
         _occupied = false;
+        OnRoomExit?.Invoke(this, EventArgs.Empty);
     }
 
     public void SetCameraPos(GameObject cameraHolder) {
