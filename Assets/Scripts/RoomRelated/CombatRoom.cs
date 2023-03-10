@@ -24,7 +24,7 @@ public class CombatRoom : Room
     private List<Weapon> _droppedWeapons;
     private PlayerController _player;
     private GameObject _cameraHolder;
-    private bool _planning;
+    private bool _planning; public bool Planning {get => _planning;}
 
     void Awake()
     {

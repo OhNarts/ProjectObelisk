@@ -57,8 +57,8 @@ public abstract class Weapon : MonoBehaviour
     }}
 
     #region Events
-    public delegate void OnWeaponAmmoChangedHandler(object sender, EventArgs e);
-    public event OnWeaponAmmoChangedHandler OnWeaponAmmoChanged;
+    public EventHandler<OnWeaponAmmoChangedArgs> OnWeaponAmmoChanged;
+    public EventHandler OnWeaponDestroyed;
     #endregion
 
     /// <summary>
@@ -152,6 +152,10 @@ public abstract class Weapon : MonoBehaviour
         if (AmmoAmount1 == 0) {
             Destroy(gameObject);
         }
+    }
+
+    void OnDestroy() {
+        OnWeaponDestroyed?.Invoke(this, EventArgs.Empty);
     }
 
     // Use ammo defaults to false because player is the only

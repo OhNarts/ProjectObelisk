@@ -19,7 +19,7 @@ public class CombatTutorialSequence : MonoBehaviour {
 
     private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) {
         // Kinda jank, but hey it works
-        if (!_combatRoom.isActiveAndEnabled) return;
+        if (!_combatRoom.Planning) return;
         string toDisplay;
         switch(e.NewState) {
             case GameState.Plan:

@@ -87,12 +87,13 @@ public class PlayerController : MonoBehaviour
         _healthHandler.Health = PlayerState.Health;
         transform.position = PlayerState.Position;
         
-        EquippedWeapon?.DropWeapon();
-        EquippedWeapon = null;
+        _equippedWeapon?.DropWeapon();
+        _equippedWeapon = null;
 
         while (_placedWeapons.Count != 0) {
             Weapon currWeapon = _placedWeapons[0];
             _placedWeapons.Remove(currWeapon);
+            currWeapon.OnWeaponDestroyed -= OnWeaponDestroyed;
             Destroy(currWeapon.gameObject);
         }
     }
@@ -399,6 +400,7 @@ public class PlayerController : MonoBehaviour
                 GameObject Instance = Instantiate(item.gameObject);
                 _followWeapon = Instance.GetComponent<Weapon>();
                 _placedWeapons.Add(_followWeapon);
+                _followWeapon.OnWeaponDestroyed += OnWeaponDestroyed;
                 PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
                 _followWeapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
             } else {
@@ -423,11 +425,16 @@ public class PlayerController : MonoBehaviour
         foreach (Weapon weapon in wepsPointedAt) {
             if (_placedWeapons.Contains(weapon)) {
                 _placedWeapons.Remove(weapon);
+                weapon.OnWeaponDestroyed -= OnWeaponDestroyed;
                 PlayerState.AddToAmmo(weapon.WeaponItem.AmmoType1,
                 weapon.AmmoAmount1);
                 Destroy(weapon.gameObject);
             }
         }
+    }
+
+    private void OnWeaponDestroyed(object sender, EventArgs e) {
+        _placedWeapons.Remove((Weapon)sender);
     }
 
     /// <summary>
@@ -437,6 +444,7 @@ public class PlayerController : MonoBehaviour
     private void WeaponPlanRemove(Weapon weapon) {
         if (_placedWeapons.Contains(weapon)) {
             _placedWeapons.Remove(weapon);
+            weapon.OnWeaponDestroyed -= OnWeaponDestroyed;
         } else return;
         PlayerState.AddToAmmo(weapon.WeaponItem.AmmoType1, weapon.AmmoAmount1);
         PlayerState.AddWeapon(weapon.WeaponItem);
