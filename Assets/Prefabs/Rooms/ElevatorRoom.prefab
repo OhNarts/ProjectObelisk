@@ -1,37 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &953124654
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 953124655}
-  m_Layer: 7
-  m_Name: Model
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &953124655
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953124654}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2005173003}
-  m_Father: {fileID: 1730891984}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1730891983
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1730891984}
-  - component: {fileID: 1730891985}
   m_Layer: 7
   m_Name: Elevator
   m_TagString: Untagged
@@ -61,22 +28,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 953124655}
+  - {fileID: 2005173003}
   m_Father: {fileID: 3787472344201109387}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1730891985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1730891983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 954ad7179358a4a4786ca5ccbb08a0c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2005173002
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +44,7 @@ GameObject:
   - component: {fileID: 2005173006}
   - component: {fileID: 2005173005}
   - component: {fileID: 2005173004}
-  - component: {fileID: 8783158846059366041}
+  - component: {fileID: 7306792907886818361}
   m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
@@ -104,12 +59,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2005173002}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.0001202, z: 0}
-  m_LocalScale: {x: 7, y: 6.608968, z: 7}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.1762371, z: 0}
+  m_LocalScale: {x: 4.37276, y: 2.9799175, z: 5.0521097}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 953124655}
+  m_Father: {fileID: 1730891984}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2005173006
@@ -175,7 +130,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8783158846059366041
+--- !u!114 &7306792907886818361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

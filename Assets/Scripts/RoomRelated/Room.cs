@@ -34,6 +34,8 @@ public class Room : MonoBehaviour
     [SerializeField] private float _cameraSize;
     [SerializeField] private Transform _camHolderPosRot;
 
+    private new string name;
+
     /* TODO: disable colliders of all children in previous room when planning in current room
      * 
      * Figure out a way to keep track of previous room
@@ -51,7 +53,6 @@ public class Room : MonoBehaviour
             {
                 _occupied = value;
                 if (_occupied) {
-                    Debug.Log("Occupied");
                     OnRoomEnter?.Invoke(this, EventArgs.Empty);
                 }
             } 
@@ -64,11 +65,17 @@ public class Room : MonoBehaviour
     // Else set true
     private void OnEnable()
     {
-        GameManager.OnGameStateChanged += OnGameStateChanged;
+        // GameManager.OnGameStateChanged += OnGameStateChanged;
     }
 
     void Awake()
     {
+        OnAwake();
+        GameManager.OnGameStateChanged += OnGameStateChanged;
+    }
+
+    protected virtual void OnAwake() {
+        name = gameObject.name;
         _occupied = false;
         _doorAttemptedEnter = null;
 
@@ -76,14 +83,17 @@ public class Room : MonoBehaviour
         {
             door.OnDoorInteract += OnDoorInteract;
         }
+        
     }
 
     private void OnDestroy()
     {
+        Debug.Log("Destroyed " + name);
         foreach (Door door in adjacentRooms.Keys)
         {
             door.OnDoorInteract -= OnDoorInteract;
         }
+        GameManager.OnGameStateChanged -= OnGameStateChanged;
     }
 
     private void OnDoorInteract( object sender, EventArgs e )
@@ -118,6 +128,7 @@ public class Room : MonoBehaviour
 
     private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) 
     {
+        Debug.Log(name);
         if (GameManager.CurrentState == GameState.Plan)
         {
             gameObject.SetActive(false);

@@ -84,12 +84,11 @@ public sealed class GameManager : MonoBehaviour
                 _instance = this;
                 transform.parent = null;
                 DontDestroyOnLoad(gameObject);
+                SceneManager.sceneLoaded += OnSceneLoaded;
+                PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
+                CurrentState = GameState.PostCombat;
             }
         }
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
-        CurrentState = GameState.PostCombat;
     }
 
     private void OnDisable()
@@ -106,5 +105,11 @@ public sealed class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         currLevel = GameObject.FindGameObjectsWithTag("Level")[0].GetComponent<Level>();
+        int i = 0;
+        foreach (var subscriber in OnGameStateChanged.GetInvocationList()) {
+            i++;
+            Debug.Log(((MonoBehaviour)(subscriber.Target)).name + " " + subscriber.Target.ToString());
+        }
+        Debug.Log("Subscribers # = " + i);
     }
 }

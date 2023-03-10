@@ -26,8 +26,9 @@ public class CombatRoom : Room
     private GameObject _cameraHolder;
     private bool _planning;
 
-    void OnEnable()
+    void Awake()
     {
+        base.OnAwake();
         _navMesh.position = transform.position;
         _navMeshInstance = NavMesh.AddNavMeshData(_navMesh);
         _aliveEnemies = new List<EnemyController>();
@@ -39,7 +40,7 @@ public class CombatRoom : Room
         _rewardObject.RoomName = gameObject.name;
         _rewardObject.gameObject.SetActive(false);
 
-        GameManager.OnGameStateChanged += OnGameStateChanged;
+       GameManager.OnGameStateChanged += OnGameStateChanged;
     }
 
     void OnDestroy() {
@@ -96,16 +97,16 @@ public class CombatRoom : Room
         _roomCompleted = false;
     }
 
-    private void OnGameStateChanged(object sender, EventArgs e) {
-        OnGameStateChangedArgs args = (OnGameStateChangedArgs)e;
+    private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) {
         if (_planning &&
-            args.OldState == GameState.Plan &&
-            args.NewState == GameState.Combat)
+            e.OldState == GameState.Plan &&
+            e.NewState == GameState.Combat)
         {
             CombatEnter();
             _planning = false;
         } else if(!_planning && GameManager.CurrentState == GameState.Plan)
         {
+            Debug.Log(name + " Is not planning");
             gameObject.SetActive(false);
         } else if(!_planning && GameManager.CurrentState == GameState.PostCombat) // You should see other room disappear in plan state
         {

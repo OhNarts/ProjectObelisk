@@ -20,6 +20,7 @@ public class ChargeUI : MonoBehaviour
 
     void OnDestroy() {
         PlayerState.OnPlayerCurrentWeaponChanged -= OnPlayerCurrentWeaponChanged;
+        GameManager.OnGameStateChanged -= OnGameStateChanged;
     }
 
 

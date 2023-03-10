@@ -91,7 +91,6 @@ public class PlayerState : ScriptableObject
     public static event EventHandler<OnPlayerStateRevertArgs> OnPlayerStateRevert;
 
     #endregion 
-    
     [SerializeField] private PlayerInfo _currentInfo; public static PlayerInfo CurrentInfo {get => _instance._currentInfo;}
     private PlayerInfo _lastRoomInfo; public static PlayerInfo LastRoomInfo {get => _instance._lastRoomInfo;}
     [SerializeField] private PlayerInfo _levelStartInfo; public static PlayerInfo LevelStartInfo {get => _instance._levelStartInfo;}
