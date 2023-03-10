@@ -218,8 +218,9 @@ public class PlayerController : MonoBehaviour
     }
     public void Throw(CallbackContext context) {
         if (!context.started) return;
-        if (_equippedWeapon != null) {
-            _equippedWeapon.ThrowWeapon();
+        if (EquippedWeapon != null) {
+            EquippedWeapon.ThrowWeapon();
+            EquippedWeapon = null;
         }
     }
     private IEnumerator RollSequence() {
