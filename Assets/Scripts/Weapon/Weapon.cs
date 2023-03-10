@@ -31,6 +31,9 @@ public abstract class Weapon : MonoBehaviour
     // The damage an attack does
     [SerializeField] protected float _damage;
     [SerializeField] protected WeaponType _weaponType;
+    [SerializeField] protected float _thrownDamage;
+    [SerializeField] private float _thrownSpeed;
+    [SerializeField] private float _thrownStunDuration;
 
     [Header("Ammo Costs/Types")]
     [SerializeField] protected int _ammoAmount1; public int AmmoAmount1 { 
@@ -46,6 +49,7 @@ public abstract class Weapon : MonoBehaviour
     private Vector3 _scale;
 
     protected GameObject _holder = null; public GameObject Holder { get => _holder; }
+    protected bool _isProjectile;
 
     private bool _canPlace = true; public bool CanPlace {get => _canPlace; 
     set {
@@ -72,6 +76,7 @@ public abstract class Weapon : MonoBehaviour
         transform.GetComponent<Rigidbody>().isKinematic = false; 
         _scale = transform.localScale;   
         _ammoAmount1 = ammoAmount1;
+        _isProjectile = false;
     }
 
     /// <summary>
@@ -89,6 +94,11 @@ public abstract class Weapon : MonoBehaviour
         foreach (MeshCollider collider in _colliders) {
             collider.enabled = false;
         }
+        if (_isProjectile) {
+            Debug.Log("Weapon was Projectile!!!");
+        }
+        _isProjectile = false;
+        GetComponent<Collider>().enabled = false;
         //transform.GetComponent<BoxCollider>().enabled = false;
         transform.GetComponent<Rigidbody>().isKinematic = true;
         transform.localScale = _scale;
@@ -110,6 +120,35 @@ public abstract class Weapon : MonoBehaviour
 
         //transform.GetComponent<BoxCollider>().enabled = true;
         transform.GetComponent<Rigidbody>().isKinematic = false;
+        if (AmmoAmount1 == 0) {
+            Destroy(gameObject);
+        }
+    }
+    public virtual void ThrowWeapon() {
+        _holder = null;
+        transform.parent = null;
+
+        foreach (MeshCollider collider in _colliders) {
+            collider.enabled = true;
+        }
+        transform.GetComponent<Rigidbody>().isKinematic = false;
+        _isProjectile = true;
+        GetComponent<Collider>().enabled = true;
+        GetComponent<Rigidbody>().velocity = _attackPoint.forward * _thrownSpeed;
+    }
+
+    public void OnTriggerEnter(Collider collider) {
+        if (!_isProjectile) return;
+        if (collider.gameObject.layer == 9) return;
+        if (collider.gameObject.name == "Player") return;
+
+        _isProjectile = false;
+        GetComponent<Collider>().enabled = false;
+        Transform hitTransform = collider.transform;
+        HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();
+        if (collider.CompareTag("Enemy")) {
+            collider.transform.GetComponent<EnemyController>().Stunned(_thrownStunDuration);
+        }
         if (AmmoAmount1 == 0) {
             Destroy(gameObject);
         }
