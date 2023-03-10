@@ -18,4 +18,4 @@ MonoBehaviour:
   AmmoCost2: 5
   AmmoType2: 4
   gameObject: {fileID: 5317201120755570408, guid: 3922f505c164a174dbb7e5a7779b03d2, type: 3}
-  Sprite: {fileID: 21300000, guid: 88f37ced11c0ada4dbc3118b6b92e5a0, type: 3}
+  Sprite: {fileID: 21300000, guid: 338626392fd3bc141b290cd951cd3c90, type: 3}

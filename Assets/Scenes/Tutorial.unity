@@ -1037,6 +1037,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &773422113 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3787472344201109389, guid: fea5b56ace26fe644b1454695a9eadf4, type: 3}
+  m_PrefabInstance: {fileID: 897840823}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &815071840
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,12 +1349,27 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2221486331836568801, guid: fea5b56ace26fe644b1454695a9eadf4, type: 3}
   m_PrefabInstance: {fileID: 897840823}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 773422113}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7cecc3f7c1c2f404f848de67298190ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &897840826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773422113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01df8f65a211c5748bfc717584ddc0ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialUI: {fileID: 863809614}
+  _message: Interact with box to move to next level
+  _secondsBeforeMessage: 0
 --- !u!1 &921101300
 GameObject:
   m_ObjectHideFlags: 0
