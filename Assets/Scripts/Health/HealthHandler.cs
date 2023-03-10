@@ -10,7 +10,7 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] public UnityEventFloat onHeal;
     [SerializeField] public UnityEvent onHealthChange;
     [SerializeField] public UnityEvent onDeath;
-
+    [SerializeField] public UnityEventDamage onHit;
     [SerializeField] private float _maxHealth;
     public float MaxHealth
     {
@@ -51,6 +51,7 @@ public class HealthHandler : MonoBehaviour
     /// <param name="info"></param>
     public virtual void Damage(DamageInfo info)
     {
+        onHit?.Invoke(info);
         if (_isInvincible) return;
         _health -= info.damage;
         onHealthChange?.Invoke();
