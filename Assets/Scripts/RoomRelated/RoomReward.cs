@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class RoomReward : MonoBehaviour, Interactable
 {
-    [SerializeField] private AmmoRewardDictionary _reward; public AmmoRewardDictionary Reward {get => _reward;}
+    [SerializeField] private AmmoRewardDictionary _ammoReward; public AmmoRewardDictionary AmmoReward {get => _ammoReward;}
+    [SerializeField] private Weapon[] _weaponRewards; public Weapon[] WeaponRewards {get => _weaponRewards;}
     private string _roomName; public string RoomName {get => _roomName;
     set  {
         _roomName = value;
@@ -13,22 +14,26 @@ public class RoomReward : MonoBehaviour, Interactable
 
     void Interactable.Interact(PlayerController player)
     {
-        foreach (var ammoType in _reward.Keys) {
+        foreach (var ammoType in _ammoReward.Keys) {
             // Check for the upper bound
-            if (player.Ammo[ammoType] > _reward[ammoType][1]) continue;
-            player.RewardAmmo(ammoType, _reward[ammoType][0]);
-            while (player.Ammo[ammoType] % _reward[ammoType][0] != 0) {
+            if (player.Ammo.ContainsKey(ammoType) && player.Ammo[ammoType] > _ammoReward[ammoType][1]) continue;
+            player.RewardAmmo(ammoType, _ammoReward[ammoType][0]);
+            Debug.Log("Player ammo = "+ PlayerState.Ammo[ammoType]);
+            while (player.Ammo[ammoType] % _ammoReward[ammoType][0] != 0) {
                 player.RewardAmmo(ammoType, 1);
             }
+        }
+        foreach (var weapon in _weaponRewards) {
+            player.GiveWeapon(weapon);
         }
         gameObject.SetActive(false);
     }
     
     private void ErrorCheck() {
-        foreach (AmmoType ammoType in _reward.Keys) {
+        foreach (AmmoType ammoType in _ammoReward.Keys) {
             if (ammoType == AmmoType.NONE) continue;
             string errorMessage = null;
-            var bounds = _reward[ammoType];
+            var bounds = _ammoReward[ammoType];
             if (bounds.Count != 2 && bounds.Count != 0) {
                 errorMessage = "Ammo Type " + ammoType.ToString() + " does not have both upper and lower bounds.";
             } else if (bounds[1] <= bounds[0]){

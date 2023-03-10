@@ -369,6 +369,10 @@ public class PlayerController : MonoBehaviour
         PlayerState.AddToAmmo(type, amount);
     }
 
+    public void GiveWeapon(Weapon weapon) {
+        PlayerState.AddWeapon(weapon.WeaponItem);
+    }
+
     /// <summary>
     /// Spawns a weapon into the world
     /// </summary>

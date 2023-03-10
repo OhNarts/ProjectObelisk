@@ -367,8 +367,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _maxHealth: 100
-  _health: 100
+  onHit:
+    m_PersistentCalls:
+      m_Calls: []
+  _maxHealth: 50
+  _health: 50
   _isInvincible: 0
 --- !u!114 &171522303682918168
 MonoBehaviour:

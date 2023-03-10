@@ -10,7 +10,7 @@ public class TutorialSequence : MonoBehaviour
     private IEnumerator _tutorialRoutine;
     private Room _room;
 
-    void Start() {
+    void Awake() {
         _room = gameObject.GetComponent<Room>();
         _room.OnRoomEnter += OnRoomEnter;
         _room.OnRoomExit += OnRoomExit;
@@ -26,28 +26,8 @@ public class TutorialSequence : MonoBehaviour
         _tutorialUI.Message = null;
     }
 
-    // void Start() {
-    //     _tutorialRoutine = TutorialRoutine();
-    //     StartCoroutine(_tutorialRoutine);
-    // }
-
-    // public override void Enter(PlayerController player, GameObject cameraHolder)
-    // {
-    //     base.Enter(player, cameraHolder);
-    //     _tutorialRoutine = TutorialRoutine();
-    //     StartCoroutine(_tutorialRoutine);
-    // }
-
-    // public override void Exit()
-    // {
-    //     base.Exit();
-    //     StopCoroutine(_tutorialRoutine);
-    //     _tutorialUI.Message = null;
-    // }
-
     private IEnumerator TutorialRoutine() 
     {
-        // Very bad not very good actually, need to change
         yield return new WaitForSeconds(_secondsBeforeMessage);
         _tutorialUI.Message = _message;
     }

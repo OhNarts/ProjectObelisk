@@ -51,6 +51,7 @@ public class Room : MonoBehaviour
             {
                 _occupied = value;
                 if (_occupied) {
+                    Debug.Log("Occupied");
                     OnRoomEnter?.Invoke(this, EventArgs.Empty);
                 }
             } 

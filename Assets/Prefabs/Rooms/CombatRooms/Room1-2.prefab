@@ -743,6 +743,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reward
       objectReference: {fileID: 0}
+    - target: {fileID: 7475728165794774030, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
+      propertyPath: _ammoReward.m_keys.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475728165794774030, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
+      propertyPath: _ammoReward.m_values.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475728165794774030, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
+      propertyPath: _ammoReward.m_keys.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475728165794774030, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
+      propertyPath: _ammoReward.m_keys.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475728165794774030, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
+      propertyPath: _ammoReward.m_values.Array.data[0].data.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475728165794774030, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
+      propertyPath: _ammoReward.m_values.Array.data[1].data.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475728165794774030, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
+      propertyPath: _ammoReward.m_values.Array.data[0].data.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475728165794774030, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
+      propertyPath: _ammoReward.m_values.Array.data[0].data.Array.data[1]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475728165794774030, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
+      propertyPath: _ammoReward.m_values.Array.data[1].data.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475728165794774030, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
+      propertyPath: _ammoReward.m_values.Array.data[1].data.Array.data[1]
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 9188867855370307330, guid: 0657e6dac83d78b409d9cf81eb5ba819, type: 3}
       propertyPath: m_RootOrder
       value: 9
