@@ -71,6 +71,9 @@ MonoBehaviour:
   - {fileID: 5303761032066431544}
   _damage: 35
   _weaponType: 0
+  _thrownDamage: 0
+  _thrownSpeed: 5
+  _thrownStunDuration: 25
   _ammoAmount1: 2
   coolDownTime: 2
   bullet: {fileID: 3667196397110752525, guid: ffa3f4db51b56144baf59f9e3b8e5687, type: 3}

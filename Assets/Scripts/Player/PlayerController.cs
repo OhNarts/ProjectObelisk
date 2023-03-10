@@ -216,6 +216,13 @@ public class PlayerController : MonoBehaviour
             // PlayerState.CurrentWeapon = _equippedWeapon;
         }
     }
+    public void Throw(CallbackContext context) {
+        if (!context.started) return;
+        if (EquippedWeapon != null) {
+            EquippedWeapon.ThrowWeapon();
+            EquippedWeapon = null;
+        }
+    }
     private IEnumerator RollSequence() {
         _lastRolled = Time.fixedTime;
         _rolling = true;
