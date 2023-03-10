@@ -67,7 +67,7 @@ MonoBehaviour:
   _attackPoint: {fileID: 6945854898702257160}
   _weaponItem: {fileID: 11400000, guid: c987ec85108fa614ca602e5c5ceb91dc, type: 2}
   _colliders:
-  - {fileID: 0}
+  - {fileID: 7397744050278042452}
   _damage: 10
   _weaponType: 0
   _thrownDamage: 0
@@ -224,6 +224,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d146c94777465f946b998c00a16d743e, type: 3}
       propertyPath: m_Name
       value: smg (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d146c94777465f946b998c00a16d743e, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d146c94777465f946b998c00a16d743e, type: 3}
