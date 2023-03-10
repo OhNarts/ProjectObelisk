@@ -9,8 +9,8 @@ public class Level : MonoBehaviour
     [SerializeField] private Room[] _rooms; public Room[] Rooms { get => _rooms; }
     [SerializeField] private GameObject _cameraHolder;
 
-    private Room _previousRoom;
-    private Room _currentRoom;
+    [SerializeField] private Room _previousRoom;
+    [SerializeField] private Room _currentRoom;
     private CombatRoom _planningRoom;
     private List<Weapon> _baseWeapons;
     public TransformWeaponDictionary BaseWeapons;
@@ -35,13 +35,14 @@ public class Level : MonoBehaviour
         InitializeWeapons();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         foreach (Room room in _rooms)
         {
             room.OnRoomEnterAttempt -= OnRoomEnterAttempt;
         }
         GameManager.OnGameStateChanged -= OnGameStateChange;
+        PlayerState.OnPlayerStateRevert -= OnPlayerStateRevert;
     }
 
     private void OnGameStateChange(object sender, OnGameStateChangedArgs e) {

@@ -106,7 +106,6 @@ public class CombatRoom : Room
             _planning = false;
         } else if(!_planning && GameManager.CurrentState == GameState.Plan)
         {
-            Debug.Log(name + " Is not planning");
             gameObject.SetActive(false);
         } else if(!_planning && GameManager.CurrentState == GameState.PostCombat) // You should see other room disappear in plan state
         {

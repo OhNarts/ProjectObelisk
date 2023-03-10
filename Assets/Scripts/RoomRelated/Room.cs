@@ -63,11 +63,6 @@ public class Room : MonoBehaviour
     // Add a private function that will subscribe to the gamemanager.onGameStateChanged and check for
     // If it's in planning stage and then setActive to false if in planning stage
     // Else set true
-    private void OnEnable()
-    {
-        // GameManager.OnGameStateChanged += OnGameStateChanged;
-    }
-
     void Awake()
     {
         OnAwake();
@@ -88,7 +83,6 @@ public class Room : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Destroyed " + name);
         foreach (Door door in adjacentRooms.Keys)
         {
             door.OnDoorInteract -= OnDoorInteract;
@@ -128,7 +122,6 @@ public class Room : MonoBehaviour
 
     private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) 
     {
-        Debug.Log(name);
         if (GameManager.CurrentState == GameState.Plan)
         {
             gameObject.SetActive(false);

@@ -105,11 +105,5 @@ public sealed class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         currLevel = GameObject.FindGameObjectsWithTag("Level")[0].GetComponent<Level>();
-        int i = 0;
-        foreach (var subscriber in OnGameStateChanged.GetInvocationList()) {
-            i++;
-            Debug.Log(((MonoBehaviour)(subscriber.Target)).name + " " + subscriber.Target.ToString());
-        }
-        Debug.Log("Subscribers # = " + i);
     }
 }

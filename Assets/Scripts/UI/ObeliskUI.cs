@@ -17,7 +17,7 @@ public class ObeliskUI : MonoBehaviour
         GameManager.OnGamePauseChange += OnGamePauseChange;
     }
 
-    void Disable() {
+    void OnDestroy() {
         GameManager.OnGamePauseChange -= OnGamePauseChange;
     }
 
