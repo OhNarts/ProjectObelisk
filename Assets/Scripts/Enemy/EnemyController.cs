@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EnemyState { Idle, Chase, Attack, Stunned }
+public enum EnemyState { Idle, Chase, Attack, Stunned, Hide }
 public class EnemyController : MonoBehaviour
 {
     public UnityEventEnemy onEnemyDeath;
@@ -12,8 +12,9 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     private AmmoDictionary ammo;
     private float stun;
+    private float hideTimer;
 
-    
+    [SerializeField] private EnemySerializable.EnemyData enemyData;
     [SerializeField] private float distToAttack;
     [SerializeField] private Weapon weapon; public Weapon EquippedWeapon {get => weapon;}
     [SerializeField] private Transform equipPos;
@@ -42,7 +43,25 @@ public class EnemyController : MonoBehaviour
         switch (currState)
         {
             case EnemyState.Idle:
-                if (_target != null) currState = EnemyState.Chase;
+                if (_target != null)
+                {
+                    if (enemyData.needsCover)
+                    {
+                        Debug.Log("Enemy needs cover");
+                        Vector3 targetCoverNode = new Vector3(0.0f, 0.0f, 0.0f);
+                        bool foundCover = CoverFinder.Instance.FindCover(transform, _target, targetCoverNode);
+                        //bool foundCover = CoverFinder.Instance.FindCover(gameObject.transform, _target, targetCoverNode);
+                        Debug.Log("found cover? " + foundCover);
+                        Debug.Log("target cover node: " + targetCoverNode);
+                        if (foundCover)
+                        {
+                            MoveToCover(targetCoverNode);
+                            break;
+                        }
+                    }
+
+                    currState = EnemyState.Chase;
+                }
                 break;
 
             case EnemyState.Chase:
@@ -61,6 +80,17 @@ public class EnemyController : MonoBehaviour
                 stun -= Time.deltaTime;
                 if (stun <= 0.0f) {
                     currState = EnemyState.Idle;
+                }
+                break;
+            case EnemyState.Hide:
+                Hide();
+                hideTimer -= Time.deltaTime;
+
+                // if AI was in cover and timer has run out, go back to chasing
+                if (hideTimer <= 0.0f) 
+                {
+                    // go back to chasing
+                    currState = EnemyState.Chase;
                 }
                 break;
         }
@@ -83,6 +113,7 @@ public class EnemyController : MonoBehaviour
         weapon.Fire1Stop();
     }
 
+    // called directly from ShockTrap, sets own state, gets reset in state machine when timer runs out
     public void Stunned(float stunTime) 
     {
         if (currState != EnemyState.Stunned) {
@@ -90,6 +121,34 @@ public class EnemyController : MonoBehaviour
             currState = EnemyState.Stunned;
         }
         agent.isStopped = true;
+    }
+
+    // navigates to cover node
+    public void MoveToCover(Vector3 targetCoverPos) 
+    {
+        Debug.Log("Moving to cover");
+        if (agent.destination != targetCoverPos)
+        {
+            agent.SetDestination(targetCoverPos);
+        }
+        
+        agent.isStopped = false;
+        if (Vector3.Distance(targetCoverPos, transform.position) < 2.0f)
+        {
+            Hide();
+        }
+    }
+
+    // Currently just keeps track of time spent hiding at cover node
+    public void Hide()
+    {
+        if (currState != EnemyState.Hide)
+        {
+            // initialize hideTimer
+            hideTimer = 2.0f;
+        }
+        
+        // stretch goal: peek
     }
     #endregion
 
