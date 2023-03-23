@@ -18,6 +18,7 @@ public class CoverFinder : MonoBehaviour
     GameObject[] nodeList;
     void Awake() 
     {
+        _instance = this;
         nodeList = GameObject.FindGameObjectsWithTag("CoverNode");
     }
 
