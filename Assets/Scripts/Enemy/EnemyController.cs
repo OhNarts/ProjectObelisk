@@ -47,12 +47,12 @@ public class EnemyController : MonoBehaviour
                 {
                     if (enemyData.needsCover)
                     {
-                        Debug.Log("Enemy needs cover");
+                        //Debug.Log("Enemy needs cover");
                         Vector3 targetCoverNode = new Vector3(0.0f, 0.0f, 0.0f);
-                        bool foundCover = CoverFinder.Instance.FindCover(transform, _target, targetCoverNode);
+                        bool foundCover = CoverFinder.Instance.FindCover(transform, _target, ref targetCoverNode);
                         //bool foundCover = CoverFinder.Instance.FindCover(gameObject.transform, _target, targetCoverNode);
-                        Debug.Log("found cover? " + foundCover);
-                        Debug.Log("target cover node: " + targetCoverNode);
+                        //Debug.Log("found cover? " + foundCover);
+                        //Debug.Log("target cover node: " + targetCoverNode);
                         if (foundCover)
                         {
                             MoveToCover(targetCoverNode);
@@ -85,7 +85,7 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Hide:
                 Hide();
                 hideTimer -= Time.deltaTime;
-
+                
                 // if AI was in cover and timer has run out, go back to chasing
                 if (hideTimer <= 0.0f) 
                 {
@@ -126,7 +126,7 @@ public class EnemyController : MonoBehaviour
     // navigates to cover node
     public void MoveToCover(Vector3 targetCoverPos) 
     {
-        Debug.Log("Moving to cover");
+        // Debug.Log("Moving to cover");
         if (agent.destination != targetCoverPos)
         {
             agent.SetDestination(targetCoverPos);
@@ -146,6 +146,7 @@ public class EnemyController : MonoBehaviour
         {
             // initialize hideTimer
             hideTimer = 2.0f;
+            currState = EnemyState.Hide;
         }
         
         // stretch goal: peek
