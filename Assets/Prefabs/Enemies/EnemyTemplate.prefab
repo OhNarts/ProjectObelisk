@@ -392,6 +392,9 @@ MonoBehaviour:
   weapon: {fileID: 3499945893481665749}
   equipPos: {fileID: 171522302949338082}
   _target: {fileID: 0}
+  knockbacked: 0
+  knockbackVel: 5
+  knockbackTime: 0.5
 --- !u!195 &171522303682918171
 NavMeshAgent:
   m_ObjectHideFlags: 0
