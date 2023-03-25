@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Enemy
   - Level
-  - CoverNode
   layers:
   - Default
   - TransparentFX

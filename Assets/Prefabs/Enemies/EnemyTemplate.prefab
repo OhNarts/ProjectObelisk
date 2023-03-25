@@ -388,12 +388,6 @@ MonoBehaviour:
   onEnemyDeath:
     m_PersistentCalls:
       m_Calls: []
-  enemyData:
-    enemyType: 
-    needsCover: 1
-    distToAttack: 8
-    weapon: {fileID: 3499945893481665749}
-    equipPos: {fileID: 171522302949338082}
   distToAttack: 8
   weapon: {fileID: 3499945893481665749}
   equipPos: {fileID: 171522302949338082}
