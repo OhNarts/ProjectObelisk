@@ -325,6 +325,10 @@ public class PlayerController : MonoBehaviour
             Debug.Log(hitHealth != null);
             if (hitHealth != null) {
                 hitHealth.Damage(damageInfo);
+                var enemy = collider.GetComponent<EnemyController>();
+                if (enemy != null && !hitHealth.IsInvincible) {
+                    enemy.Knockback(gameObject.transform.position);
+                }
             }
         }
     }

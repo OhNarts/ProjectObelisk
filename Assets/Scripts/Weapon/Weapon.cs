@@ -171,6 +171,7 @@ public abstract class Weapon : MonoBehaviour
         return new DamageInfo {
             damage = _damage,
             attacker = _holder,
+            attackerPosition = new Vector3(_holder.transform.position.x, _holder.transform.position.y, _holder.transform.position.z),
             ammoType = _weaponItem.AmmoType1
         };
     }

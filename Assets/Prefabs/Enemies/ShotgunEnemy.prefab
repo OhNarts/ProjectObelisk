@@ -106,6 +106,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onHit:
+    m_PersistentCalls:
+      m_Calls: []
   _maxHealth: 100
   _health: 100
   _isInvincible: 0
@@ -134,6 +137,9 @@ MonoBehaviour:
   weapon: {fileID: 1037578184577606059}
   equipPos: {fileID: 6934517009726515511}
   _target: {fileID: 0}
+  knockbacked: 0
+  knockbackVel: 3
+  knockbackTime: 0.5
 --- !u!195 &6934517008993007054
 NavMeshAgent:
   m_ObjectHideFlags: 0
