@@ -34,6 +34,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float _thrownDamage;
     [SerializeField] private float _thrownSpeed;
     [SerializeField] private float _thrownStunDuration;
+    [SerializeField] private float knockbackVelocity;
 
     [Header("Ammo Costs/Types")]
     [SerializeField] protected int _ammoAmount1; public int AmmoAmount1 { 
@@ -172,7 +173,8 @@ public abstract class Weapon : MonoBehaviour
             damage = _damage,
             attacker = _holder,
             attackerPosition = new Vector3(_holder.transform.position.x, _holder.transform.position.y, _holder.transform.position.z),
-            ammoType = _weaponItem.AmmoType1
+            ammoType = _weaponItem.AmmoType1,
+            knockbackValue = knockbackVelocity
         };
     }
 }

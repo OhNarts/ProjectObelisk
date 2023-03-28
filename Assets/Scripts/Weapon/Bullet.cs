@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
             hitHealth.Damage(damageInfo);
             var enemy = collider.GetComponent<EnemyController>();
             if (enemy != null && !hitHealth.IsInvincible) {
-                enemy.Knockback(damageInfo.attackerPosition);
+                enemy.Knockback(damageInfo.attackerPosition, damageInfo.knockbackValue);
             }
         }
     }
