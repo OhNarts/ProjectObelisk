@@ -23,6 +23,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform equipPos;
 
     [SerializeField] private Transform _target;
+
+    //[SerializeField] private bool knockbacked;
+    [SerializeField] private float knockbackTime;
     public Transform Target
     {
         set
@@ -133,5 +136,27 @@ public class EnemyController : MonoBehaviour
         if (healthHandler == null || healthBar == null) return;
         if (healthHandler.Health < healthHandler.MaxHealth) healthBar.SetActive(true);
         healthBar.GetComponentInChildren<Slider>(true).value = healthHandler.Health / healthHandler.MaxHealth;
+    }
+
+    public void Knockback(Vector3 bulletPos, float knockbackValue) {
+        //knockbacked = true;
+        StartCoroutine(PerformKnockback(bulletPos, knockbackValue));
+    }
+
+    private IEnumerator PerformKnockback(Vector3 bulletPos, float knockbackValue)
+    {
+        //agent.enabled = false;
+        //rb.isKinematic = false;
+
+        Vector3 dir = (transform.position - bulletPos).normalized;
+        agent.velocity = dir * knockbackValue;
+        // or rb.velocity = dir * knockbackVel; --> with rigidbody initialized
+
+        yield return new WaitForSeconds(knockbackTime);
+
+        //agent.enabled = true;
+        //rb.isKinematic = true;
+
+        //knockbacked = false;
     }
 }

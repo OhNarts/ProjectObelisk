@@ -87,5 +87,7 @@ public struct DamageInfo
 {
     public float damage;
     public GameObject attacker;
+    public Vector3 attackerPosition;
     public AmmoType ammoType;
+    public float knockbackValue;
 }

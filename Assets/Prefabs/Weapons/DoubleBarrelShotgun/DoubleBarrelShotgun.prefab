@@ -74,6 +74,7 @@ MonoBehaviour:
   _thrownDamage: 0
   _thrownSpeed: 5
   _thrownStunDuration: 25
+  knockbackVelocity: 1
   _ammoAmount1: 2
   coolDownTime: 2
   bullet: {fileID: 3667196397110752525, guid: ffa3f4db51b56144baf59f9e3b8e5687, type: 3}
