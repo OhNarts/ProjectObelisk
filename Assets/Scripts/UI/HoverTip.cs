@@ -29,7 +29,7 @@ public class HoverTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         InventorySlot chosenSlot = gameObject.GetComponent<InventorySlot>();
         var item = chosenSlot.Weapon;
 
-        HoverTipManager.OnMouseHover(tipToShow + item.AmmoCost1, Input.mousePosition);
+        HoverTipManager.OnMouseHover(tipToShow + item.AmmoCost1 + "<sprite name=\"" + item.AmmoType1 + "\">", Input.mousePosition);
     }
 
     private IEnumerator StartTimer()
