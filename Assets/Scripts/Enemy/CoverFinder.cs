@@ -18,13 +18,14 @@ public class CoverFinder : MonoBehaviour
     GameObject[] nodeList;
     void Awake() 
     {
+        _instance = this;
         nodeList = GameObject.FindGameObjectsWithTag("CoverNode");
     }
 
     // will find a node closest to currentPos that obscures line of sight from target pos
-    public bool FindCover(Transform currentPos, Transform targetPos, Vector3 returnNodePos)
+    public bool FindCover(Transform currentPos, Transform targetPos, ref Vector3 returnNodePos)
     {
-        Debug.Log("trying to find cover");
+        // Debug.Log("trying to find cover");
         // brute force: raycast from every cover node starting with closest to find line of sight
         PriorityQueue<GameObject, float> nodeDists = GetNodeDists(currentPos);
 
@@ -41,7 +42,6 @@ public class CoverFinder : MonoBehaviour
                 return true;
             }
         }
-
         return false;
     }
 
