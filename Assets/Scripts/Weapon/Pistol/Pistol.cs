@@ -36,6 +36,10 @@ public class Pistol : Weapon
         Bullet b = bulletInstance.GetComponent<Bullet>();
         b.damageInfo = CreateDamageInfo();
         bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.forward * bulletSpeed;
+        // fire audio
+        var isPlayer = _holder.GetComponent<PlayerController>();
+        if (isPlayer != null) 
+            FindObjectOfType<AudioManager>().Play("Pistol");
     }
 
 

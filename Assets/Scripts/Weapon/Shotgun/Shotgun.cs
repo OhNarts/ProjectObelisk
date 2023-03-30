@@ -46,6 +46,10 @@ public class Shotgun : Weapon
 
         fired = true;
         lastFired = Time.unscaledTime;
+        // fire audio
+        var isPlayer = _holder.GetComponent<PlayerController>();
+        if (isPlayer != null)
+            FindObjectOfType<AudioManager>().Play("Shotgun");
     }
 
     public override void Fire1Stop(bool useAmmo = false)

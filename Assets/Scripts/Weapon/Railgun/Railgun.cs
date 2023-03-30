@@ -57,5 +57,9 @@ public class Railgun : Weapon
         b.damageInfo = CreateDamageInfo();
         //b.destroyOnContact = false;
         bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.forward * bulletSpeed;
+        // fire audio
+        var isPlayer = _holder.GetComponent<PlayerController>();
+        if (isPlayer != null)
+            FindObjectOfType<AudioManager>().Play("Railgun");
     }
 }
