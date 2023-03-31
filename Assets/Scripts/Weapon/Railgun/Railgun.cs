@@ -45,6 +45,7 @@ public class Railgun : Weapon
         if (timePressed != -1 && timeReleased - timePressed > waitSeconds && useAmmo) {
             if (AmmoAmount1 == 0) return;
             AmmoAmount1--;
+            base.Fire1Stop();
             lastFired = Time.unscaledTime;
             FireBullet();
         }
@@ -57,9 +58,5 @@ public class Railgun : Weapon
         b.damageInfo = CreateDamageInfo();
         //b.destroyOnContact = false;
         bulletInstance.GetComponent<Rigidbody>().velocity = bulletInstance.transform.forward * bulletSpeed;
-        // fire audio
-        var isPlayer = _holder.GetComponent<PlayerController>();
-        if (isPlayer != null)
-            FindObjectOfType<AudioManager>().Play("Railgun");
     }
 }

@@ -68,6 +68,11 @@ MonoBehaviour:
   _weaponItem: {fileID: 11400000, guid: 54e95dfa0d02bef4c9d9d8c255a17d87, type: 2}
   _colliders:
   - {fileID: 6363235648006660548}
+  soundWhenFired:
+    clip: {fileID: 8300000, guid: c0087417c63ebb142a34aab88a9b5b20, type: 3}
+    volume: 0.75
+    pitch: 1
+    source: {fileID: 0}
   _damage: 20
   _weaponType: 0
   _thrownDamage: 0

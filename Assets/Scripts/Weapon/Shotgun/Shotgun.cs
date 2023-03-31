@@ -24,6 +24,7 @@ public class Shotgun : Weapon
         if (useAmmo) {
             if (AmmoAmount1 == 0) return;
             AmmoAmount1--;
+            base.Fire1Start();
         }
         GameObject[] bullets = new GameObject[3];
         Vector3 currRotOffset = new Vector3(0, -bulletRotationDifference, 0);
@@ -46,10 +47,6 @@ public class Shotgun : Weapon
 
         fired = true;
         lastFired = Time.unscaledTime;
-        // fire audio
-        var isPlayer = _holder.GetComponent<PlayerController>();
-        if (isPlayer != null)
-            FindObjectOfType<AudioManager>().Play("Shotgun");
     }
 
     public override void Fire1Stop(bool useAmmo = false)

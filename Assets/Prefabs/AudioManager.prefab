@@ -45,22 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7614e231ea504b04697274a05ab62297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - name: Pistol
-    clip: {fileID: 8300000, guid: 9e2053350bf3ebc4bb83b656a6ddd968, type: 3}
-    volume: 0.75
-    pitch: 1
-    source: {fileID: 8226657878439280684}
-  - name: Shotgun
-    clip: {fileID: 8300000, guid: c0087417c63ebb142a34aab88a9b5b20, type: 3}
-    volume: 0.75
-    pitch: 1
-    source: {fileID: 8226657878439280684}
-  - name: Railgun
-    clip: {fileID: 8300000, guid: 87ae7b4e54936a546864e84feb441913, type: 3}
-    volume: 0.75
-    pitch: 1
-    source: {fileID: 8226657878439280684}
+  sounds: []
 --- !u!82 &8226657878439280684
 AudioSource:
   m_ObjectHideFlags: 0
