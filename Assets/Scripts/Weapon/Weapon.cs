@@ -29,6 +29,8 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private WeaponItem _weaponItem; public WeaponItem WeaponItem { get => _weaponItem; }
     [SerializeField] private List<MeshCollider> _colliders; public List<MeshCollider> Colliders{get => _colliders;}
     // The damage an attack does
+
+    [SerializeField] protected Sound soundWhenFired;
     [SerializeField] protected float _damage;
     [SerializeField] protected WeaponType _weaponType;
     [SerializeField] protected float _thrownDamage;
@@ -56,6 +58,14 @@ public abstract class Weapon : MonoBehaviour
     set {
         _canPlace = value;
     }}
+
+    private void Start() {
+        soundWhenFired.source = gameObject.AddComponent<AudioSource>();
+        //Debug.Log("Audio source added");
+        soundWhenFired.source.clip = soundWhenFired.clip;
+        soundWhenFired.source.volume = soundWhenFired.volume;
+        soundWhenFired.source.pitch = soundWhenFired.pitch;
+    }
 
     #region Events
     public EventHandler<OnWeaponAmmoChangedArgs> OnWeaponAmmoChanged;
@@ -161,8 +171,12 @@ public abstract class Weapon : MonoBehaviour
 
     // Use ammo defaults to false because player is the only
     // case where ammo is going to be used
-    public virtual void Fire1Start(bool useAmmo = false) { }
-    public virtual void Fire1Stop(bool useAmmo = false) { }
+    public virtual void Fire1Start(bool useAmmo = false) {
+        PlaySound(soundWhenFired);
+    }
+    public virtual void Fire1Stop(bool useAmmo = false) {
+        PlaySound(soundWhenFired);
+    }
     public virtual void Fire1Held(bool useAmmo = false) { }
 
     public virtual void Fire2(bool useAmmo = false) { }
@@ -176,6 +190,12 @@ public abstract class Weapon : MonoBehaviour
             ammoType = _weaponItem.AmmoType1,
             knockbackValue = knockbackVelocity
         };
+    }
+
+    private void PlaySound(Sound sound) {
+        var isPlayer = _holder.GetComponent<PlayerController>();
+        if (isPlayer != null) 
+            sound.source.Play();
     }
 }
 
