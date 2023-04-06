@@ -109,7 +109,7 @@ public abstract class Weapon : MonoBehaviour
             Debug.Log("Weapon was Projectile!!!");
         }
         _isProjectile = false;
-        GetComponent<Collider>().enabled = false;
+        if (GetComponent<Collider>() != null) GetComponent<Collider>().enabled = false;
         //transform.GetComponent<BoxCollider>().enabled = false;
         transform.GetComponent<Rigidbody>().isKinematic = true;
         transform.localScale = _scale;
