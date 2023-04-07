@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class TurretController : MonoBehaviour
@@ -13,6 +14,10 @@ public class TurretController : MonoBehaviour
 
     [SerializeField] private Weapon head;
 
+    [SerializeField] private HealthHandler healthHandler;
+    [SerializeField] private GameObject healthBar;
+    private Camera mainCamera;
+
     public Transform Target
     {
         set
@@ -24,6 +29,8 @@ public class TurretController : MonoBehaviour
     private void Awake()
     {
         currState = EnemyState.Idle;
+        CreateHealthBar();
+        mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -45,6 +52,12 @@ public class TurretController : MonoBehaviour
                     currState = EnemyState.Idle;
                 break;
         }
+
+        // Fix Health Bar Direction
+        if (healthBar.activeSelf)
+        {
+            healthBar.transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward, mainCamera.transform.rotation * Vector3.up);
+        }
     }
 
     private void Attack()
@@ -56,5 +69,29 @@ public class TurretController : MonoBehaviour
     private void Idle()
     {
         head.Fire1Stop();
+    }
+
+    private void CreateHealthBar()
+    {
+        if (healthBar == null) return;
+        /* if (healthBar.TryGetComponent<FaceCamera>(out FaceCamera faceCamera)) {
+            faceCamera = GameObject.FindWithTag("MainCamera");
+        } */
+        if (healthHandler != null && healthHandler.Health < healthHandler.MaxHealth)
+        {
+            healthBar.SetActive(true);
+        }
+        else
+        {
+            healthBar.SetActive(false);
+        }
+        UpdateHealthBar();
+    }
+
+    public void UpdateHealthBar()
+    {
+        if (healthHandler == null || healthBar == null) return;
+        if (healthHandler.Health < healthHandler.MaxHealth) healthBar.SetActive(true);
+        healthBar.GetComponentInChildren<Slider>(true).value = healthHandler.Health / healthHandler.MaxHealth;
     }
 }
