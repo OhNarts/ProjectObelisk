@@ -68,6 +68,11 @@ MonoBehaviour:
   _weaponItem: {fileID: 11400000, guid: c987ec85108fa614ca602e5c5ceb91dc, type: 2}
   _colliders:
   - {fileID: 7397744050278042452}
+  soundWhenFired:
+    clip: {fileID: 8300000, guid: def2a9a94bd85d94e8efc64c2a94f692, type: 3}
+    volume: 0.75
+    pitch: 1
+    source: {fileID: 0}
   _damage: 10
   _weaponType: 0
   _thrownDamage: 0
@@ -75,7 +80,7 @@ MonoBehaviour:
   _thrownStunDuration: 5
   knockbackVelocity: 1
   _ammoAmount1: 20
-  coolDownTime: 0.3
+  coolDownTime: 0.175
   bullet: {fileID: 3667196397110752525, guid: ffa3f4db51b56144baf59f9e3b8e5687, type: 3}
   bulletSpeed: 20
   bulletRotationDifference: 0

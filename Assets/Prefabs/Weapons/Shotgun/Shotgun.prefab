@@ -73,6 +73,11 @@ MonoBehaviour:
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+  soundWhenFireStopped:
+    clip: {fileID: 8300000, guid: f80060add406a3f4bbbd699ba1c3bf92, type: 3}
+    volume: 0.75
+    pitch: 1
+    source: {fileID: 0}
   _damage: 20
   _weaponType: 0
   _thrownDamage: 0
