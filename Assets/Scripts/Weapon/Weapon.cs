@@ -31,6 +31,7 @@ public abstract class Weapon : MonoBehaviour
     // The damage an attack does
 
     [SerializeField] protected Sound soundWhenFired;
+    [SerializeField] protected Sound soundWhenFireStopped;
     [SerializeField] protected float _damage;
     [SerializeField] protected WeaponType _weaponType;
     [SerializeField] protected float _thrownDamage;
@@ -65,6 +66,11 @@ public abstract class Weapon : MonoBehaviour
         soundWhenFired.source.clip = soundWhenFired.clip;
         soundWhenFired.source.volume = soundWhenFired.volume;
         soundWhenFired.source.pitch = soundWhenFired.pitch;
+
+        soundWhenFireStopped.source = gameObject.AddComponent<AudioSource>();
+        soundWhenFireStopped.source.clip = soundWhenFireStopped.clip;
+        soundWhenFireStopped.source.volume = soundWhenFireStopped.volume;
+        soundWhenFireStopped.source.pitch = soundWhenFireStopped.pitch;
     }
 
     #region Events
@@ -175,7 +181,7 @@ public abstract class Weapon : MonoBehaviour
         PlaySound(soundWhenFired);
     }
     public virtual void Fire1Stop(bool useAmmo = false) {
-        PlaySound(soundWhenFired);
+        PlaySound(soundWhenFireStopped);
     }
     public virtual void Fire1Held(bool useAmmo = false) { }
 

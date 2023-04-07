@@ -358,6 +358,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _maxHealth: 0
+  soundWhenDamaged:
+    clip: {fileID: 8300000, guid: 7e3ea9d8b7cc59e4882c8d4aed3d256e, type: 3}
+    volume: 0.75
+    pitch: 1
+    source: {fileID: 0}
   _health: 0
   _isInvincible: 0
 --- !u!114 &5053912482711007362

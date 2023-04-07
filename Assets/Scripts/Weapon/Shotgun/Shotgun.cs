@@ -25,6 +25,7 @@ public class Shotgun : Weapon
             if (AmmoAmount1 == 0) return;
             AmmoAmount1--;
             base.Fire1Start();
+            StartCoroutine(ReloadSound());
         }
         GameObject[] bullets = new GameObject[3];
         Vector3 currRotOffset = new Vector3(0, -bulletRotationDifference, 0);
@@ -54,5 +55,9 @@ public class Shotgun : Weapon
         fired = false;
     }
 
+    IEnumerator ReloadSound() {
+        yield return new WaitForSeconds(0.5f);
+        base.Fire1Stop();
+    }
 }
 

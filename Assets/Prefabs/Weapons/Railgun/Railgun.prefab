@@ -116,6 +116,11 @@ MonoBehaviour:
   _colliders:
   - {fileID: 7704837942250172078}
   soundWhenFired:
+    clip: {fileID: 0}
+    volume: 0.75
+    pitch: 1
+    source: {fileID: 0}
+  soundWhenFireStopped:
     clip: {fileID: 8300000, guid: 87ae7b4e54936a546864e84feb441913, type: 3}
     volume: 0.75
     pitch: 1

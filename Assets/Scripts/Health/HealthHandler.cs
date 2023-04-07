@@ -12,6 +12,7 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] public UnityEvent onDeath;
     [SerializeField] public UnityEventDamage onHit;
     [SerializeField] private float _maxHealth;
+    [SerializeField] private Sound soundWhenDamaged;
     public float MaxHealth
     {
         get { return _maxHealth; }
@@ -43,6 +44,10 @@ public class HealthHandler : MonoBehaviour
     void Awake()
     {
         if (!healthInitialized) _health = _maxHealth;
+        soundWhenDamaged.source = gameObject.AddComponent<AudioSource>();
+        soundWhenDamaged.source.clip = soundWhenDamaged.clip;
+        soundWhenDamaged.source.volume = soundWhenDamaged.volume;
+        soundWhenDamaged.source.pitch = soundWhenDamaged.pitch;
     }
 
     /// <summary>
@@ -53,6 +58,7 @@ public class HealthHandler : MonoBehaviour
     {
         onHit?.Invoke(info);
         if (_isInvincible) return;
+        soundWhenDamaged.source.Play();
         _health -= info.damage;
         onHealthChange?.Invoke();
         onDamage?.Invoke(info);
