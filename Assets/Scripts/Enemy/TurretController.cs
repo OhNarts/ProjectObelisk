@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class TurretController : MonoBehaviour
 {
+
+    public UnityEventEnemy onEnemyDeath;
     private EnemyState currState;
     private float stun;
     [SerializeField] Transform _target;
@@ -69,6 +71,12 @@ public class TurretController : MonoBehaviour
     private void Idle()
     {
         head.Fire1Stop();
+    }
+
+    public void Die()
+    {
+        // Temp, can make ragdoll here instead of destroy
+        Destroy(gameObject);
     }
 
     private void CreateHealthBar()
