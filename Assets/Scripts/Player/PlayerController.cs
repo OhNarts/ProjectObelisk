@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
         while (_placedWeapons.Count != 0) {
             Weapon currWeapon = _placedWeapons[0];
             _placedWeapons.Remove(currWeapon);
+            currWeapon.OnWeaponDestroyed -= OnWeaponDestroyed;
             Destroy(currWeapon.gameObject);
         }
     }
@@ -112,14 +113,14 @@ public class PlayerController : MonoBehaviour
                 _input.SwitchCurrentActionMap("Combat");
                 _rb.isKinematic = false;
                 if (e.TriggeredByRevert) break;
-                if (_equippedWeapon != null) 
+                if (EquippedWeapon != null) 
                 {
-                    _equippedWeapon.DropWeapon();
-                    PlayerState.AddToAmmo(_equippedWeapon.WeaponItem.AmmoType1, _equippedWeapon.AmmoAmount1);
-                    PlayerState.AddWeapon(_equippedWeapon.WeaponItem);
-                    Destroy(_equippedWeapon.gameObject);
-                    _equippedWeapon = null;
-                    PlayerState.CurrentWeapon = _equippedWeapon;
+                    EquippedWeapon.DropWeapon();
+                    PlayerState.AddToAmmo(EquippedWeapon.WeaponItem.AmmoType1, EquippedWeapon.AmmoAmount1);
+                    PlayerState.AddWeapon(EquippedWeapon.WeaponItem);
+                    Destroy(EquippedWeapon.gameObject);
+                    EquippedWeapon = null;
+                    PlayerState.CurrentWeapon = EquippedWeapon;
                 }
                 if (e.OldState != GameState.Combat)
                 {
@@ -210,8 +211,17 @@ public class PlayerController : MonoBehaviour
 
     public void Drop(CallbackContext context) {
         if (!context.started) return;
-        if (_equippedWeapon != null) {
-            _equippedWeapon.DropWeapon();
+        if (EquippedWeapon != null) {
+            EquippedWeapon.DropWeapon();
+            EquippedWeapon = null;
+            // PlayerState.CurrentWeapon = _equippedWeapon;
+        }
+    }
+    public void Throw(CallbackContext context) {
+        if (!context.started) return;
+        if (EquippedWeapon != null) {
+            EquippedWeapon.ThrowWeapon();
+            EquippedWeapon = null;
         }
     }
     private IEnumerator RollSequence() {
@@ -239,7 +249,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maxPickUpDistance;
     [SerializeField] private float _interactableRadius;
     [SerializeField] private LayerMask _interactableMask;
-    private Weapon _equippedWeapon; public Weapon EquippedWeapon {get => _equippedWeapon;}
+    private Weapon _equippedWeapon;
+    public Weapon EquippedWeapon {
+        private set {
+            _equippedWeapon = value;
+            PlayerState.CurrentWeapon = _equippedWeapon;
+        }
+        get => _equippedWeapon;}
 
     [Header("Attack Properties")]
     [SerializeField] private Transform _attackPoint;
@@ -252,34 +268,34 @@ public class PlayerController : MonoBehaviour
     public void Fire1(CallbackContext context)
     {
       
-        if (_equippedWeapon == null)  {
+        if (EquippedWeapon == null)  {
             Melee(context);
             return;
         }
         if (context.started) {
             Debug.Log("started");
-            _equippedWeapon.Fire1Start(true);
+            EquippedWeapon.Fire1Start(true);
         }
         else if (context.canceled)
         {
             Debug.Log("cancelled");
-            _equippedWeapon.Fire1Stop(true);
+            EquippedWeapon.Fire1Stop(true);
             
         } else if (context.performed) {
             Debug.Log("held");
-            _equippedWeapon.Fire1Held(true);
+            EquippedWeapon.Fire1Held(true);
         }
     }
     public void Fire2(CallbackContext context)
     {
-        if (_equippedWeapon == null) return;
+        if (EquippedWeapon == null) return;
         if (context.started)
         {
-            _equippedWeapon.Fire2(true);
+            EquippedWeapon.Fire2(true);
         }
         else if (context.canceled)
         {
-            _equippedWeapon.Fire2Stop(true);
+            EquippedWeapon.Fire2Stop(true);
         }
     }
 
@@ -297,7 +313,8 @@ public class PlayerController : MonoBehaviour
         if (!context.started) return;
         DamageInfo damageInfo = new DamageInfo() {
             damage = _damage,
-            attacker = gameObject
+            attacker = gameObject,
+            knockbackValue = 4f
         };
 
         Debug.Log("melee");
@@ -309,6 +326,10 @@ public class PlayerController : MonoBehaviour
             Debug.Log(hitHealth != null);
             if (hitHealth != null) {
                 hitHealth.Damage(damageInfo);
+                var enemy = collider.GetComponent<EnemyController>();
+                if (enemy != null && !hitHealth.IsInvincible) {
+                    enemy.Knockback(gameObject.transform.position, damageInfo.knockbackValue);
+                }
             }
         }
     }
@@ -354,6 +375,10 @@ public class PlayerController : MonoBehaviour
         PlayerState.AddToAmmo(type, amount);
     }
 
+    public void GiveWeapon(Weapon weapon) {
+        PlayerState.AddWeapon(weapon.WeaponItem);
+    }
+
     /// <summary>
     /// Spawns a weapon into the world
     /// </summary>
@@ -380,6 +405,7 @@ public class PlayerController : MonoBehaviour
                 GameObject Instance = Instantiate(item.gameObject);
                 _followWeapon = Instance.GetComponent<Weapon>();
                 _placedWeapons.Add(_followWeapon);
+                _followWeapon.OnWeaponDestroyed += OnWeaponDestroyed;
                 PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
                 _followWeapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
             } else {
@@ -404,11 +430,16 @@ public class PlayerController : MonoBehaviour
         foreach (Weapon weapon in wepsPointedAt) {
             if (_placedWeapons.Contains(weapon)) {
                 _placedWeapons.Remove(weapon);
+                weapon.OnWeaponDestroyed -= OnWeaponDestroyed;
                 PlayerState.AddToAmmo(weapon.WeaponItem.AmmoType1,
                 weapon.AmmoAmount1);
                 Destroy(weapon.gameObject);
             }
         }
+    }
+
+    private void OnWeaponDestroyed(object sender, EventArgs e) {
+        _placedWeapons.Remove((Weapon)sender);
     }
 
     /// <summary>
@@ -418,6 +449,7 @@ public class PlayerController : MonoBehaviour
     private void WeaponPlanRemove(Weapon weapon) {
         if (_placedWeapons.Contains(weapon)) {
             _placedWeapons.Remove(weapon);
+            weapon.OnWeaponDestroyed -= OnWeaponDestroyed;
         } else return;
         PlayerState.AddToAmmo(weapon.WeaponItem.AmmoType1, weapon.AmmoAmount1);
         PlayerState.AddWeapon(weapon.WeaponItem);
@@ -473,13 +505,14 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
-            if (_equippedWeapon != null)
+            if (EquippedWeapon != null)
             {
-                _equippedWeapon.DropWeapon();
+                EquippedWeapon.DropWeapon();
             }
             wep.PickUpWeapon(gameObject, _weaponPos);
-            _equippedWeapon = wep;
-            PlayerState.CurrentWeapon = wep;
+            
+            EquippedWeapon = wep;
+            // PlayerState.CurrentWeapon = wep;
             return;
         }
         

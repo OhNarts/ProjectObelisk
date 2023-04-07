@@ -84,12 +84,11 @@ public sealed class GameManager : MonoBehaviour
                 _instance = this;
                 transform.parent = null;
                 DontDestroyOnLoad(gameObject);
+                SceneManager.sceneLoaded += OnSceneLoaded;
+                PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
+                CurrentState = GameState.PostCombat;
             }
         }
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
-        CurrentState = GameState.PostCombat;
     }
 
     private void OnDisable()

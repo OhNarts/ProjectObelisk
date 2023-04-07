@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public enum EnemyState { Idle, Chase, Attack, Stunned }
 public class EnemyController : MonoBehaviour
@@ -12,13 +13,19 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     private AmmoDictionary ammo;
     private float stun;
-
     
+    [SerializeField] private HealthHandler healthHandler;
+    [SerializeField] private GameObject healthBar;
+    private Camera mainCamera;
+
     [SerializeField] private float distToAttack;
     [SerializeField] private Weapon weapon; public Weapon EquippedWeapon {get => weapon;}
     [SerializeField] private Transform equipPos;
 
     [SerializeField] private Transform _target;
+
+    //[SerializeField] private bool knockbacked;
+    [SerializeField] private float knockbackTime;
     public Transform Target
     {
         set
@@ -33,6 +40,8 @@ public class EnemyController : MonoBehaviour
         currState = EnemyState.Idle;
         agent = transform.GetComponent<NavMeshAgent>();
         weapon.PickUpWeapon(gameObject, equipPos);
+        CreateHealthBar();
+        mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -63,6 +72,10 @@ public class EnemyController : MonoBehaviour
                     currState = EnemyState.Idle;
                 }
                 break;
+        }
+        // Fix Health Bar Direction
+        if (healthBar.activeSelf) {
+            healthBar.transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward, mainCamera.transform.rotation * Vector3.up);
         }
     }
 
@@ -98,10 +111,52 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     public void Die()
     {
-        weapon.DropWeapon();
+        weapon = null;
+        //weapon.DropWeapon();
         onEnemyDeath?.Invoke(this);
 
         // Temp, can make ragdoll here instead of destroy
         Destroy(gameObject);
+    }
+
+    private void CreateHealthBar() {
+        if (healthBar == null) return;
+        /* if (healthBar.TryGetComponent<FaceCamera>(out FaceCamera faceCamera)) {
+            faceCamera = GameObject.FindWithTag("MainCamera");
+        } */
+        if (healthHandler != null && healthHandler.Health < healthHandler.MaxHealth) {
+            healthBar.SetActive(true);
+        } else {
+            healthBar.SetActive(false);
+        }
+        UpdateHealthBar();
+    }
+
+    public void UpdateHealthBar() {
+        if (healthHandler == null || healthBar == null) return;
+        if (healthHandler.Health < healthHandler.MaxHealth) healthBar.SetActive(true);
+        healthBar.GetComponentInChildren<Slider>(true).value = healthHandler.Health / healthHandler.MaxHealth;
+    }
+
+    public void Knockback(Vector3 bulletPos, float knockbackValue) {
+        //knockbacked = true;
+        StartCoroutine(PerformKnockback(bulletPos, knockbackValue));
+    }
+
+    private IEnumerator PerformKnockback(Vector3 bulletPos, float knockbackValue)
+    {
+        //agent.enabled = false;
+        //rb.isKinematic = false;
+
+        Vector3 dir = (transform.position - bulletPos).normalized;
+        agent.velocity = dir * knockbackValue;
+        // or rb.velocity = dir * knockbackVel; --> with rigidbody initialized
+
+        yield return new WaitForSeconds(knockbackTime);
+
+        //agent.enabled = true;
+        //rb.isKinematic = true;
+
+        //knockbacked = false;
     }
 }

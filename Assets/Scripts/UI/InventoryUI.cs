@@ -5,14 +5,10 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-    // Very hacky way of doing this
     [SerializeField] private GameObject[] _inventorySlots;
     private int _currSlot;
     void Start() {
-        foreach(GameObject slot in _inventorySlots) {
-            slot.SetActive(false);
-        }
-        _currSlot = 0;
+        InitializeSlots();
         PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
     }
 
@@ -36,10 +32,23 @@ public class InventoryUI : MonoBehaviour
 
     private void OnPlayerStateRevert(object sender, OnPlayerStateRevertArgs e) {
         if (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart) { 
-            while (_currSlot > 0) {
-                GameObject slot = _inventorySlots[--_currSlot];
-                slot.SetActive(false);
-            }
+            InitializeSlots();
+        }
+    }
+
+    // TODO: Probably a more efficient way to do this
+    private void InitializeSlots() {
+        // Deactivate all the slots
+        foreach(GameObject slot in _inventorySlots) {
+            slot.SetActive(false);
+        }
+        _currSlot = 0;
+
+        // Initialize the slots that shoudl be active
+        foreach (var weapon in PlayerState.Weapons) {
+            GameObject slot = _inventorySlots[_currSlot++];
+            slot.GetComponent<InventorySlot>().Weapon = weapon;
+            slot.SetActive(true);
         }
     }
 }

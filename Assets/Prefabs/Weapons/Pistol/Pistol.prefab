@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 237986280338035907}
   - component: {fileID: 3671296396401366915}
   - component: {fileID: 8178106363235856865}
+  - component: {fileID: 8724805662673088207}
   m_Layer: 10
   m_Name: Pistol
   m_TagString: Untagged
@@ -82,10 +83,18 @@ MonoBehaviour:
   _weaponItem: {fileID: 11400000, guid: 230c1ede6c9dd9c478b4ca0c98eb716a, type: 2}
   _colliders:
   - {fileID: 2740981652531127673}
+  soundWhenFired:
+    clip: {fileID: 8300000, guid: 9e2053350bf3ebc4bb83b656a6ddd968, type: 3}
+    volume: 0.75
+    pitch: 1
+    source: {fileID: 0}
   _damage: 10
   _weaponType: 0
+  _thrownDamage: 0
+  _thrownSpeed: 25
+  _thrownStunDuration: 5
+  knockbackVelocity: 1
   _ammoAmount1: 10
-  _ammoAmount2: 0
   coolDownTime: 0.3
   range: 1e+12
   bulletSpeed: 20
@@ -106,6 +115,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 16
   m_CollisionDetection: 0
+--- !u!65 &8724805662673088207
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237986280338035906}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.14, y: 1, z: 1.2}
+  m_Center: {x: -0.01, y: 0.05, z: 0}
 --- !u!1001 &4356753380029980405
 PrefabInstance:
   m_ObjectHideFlags: 0

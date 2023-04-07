@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #region Event Args
 public class OnPlayerWeaponsChangedArgs : EventArgs {
@@ -65,6 +66,7 @@ public class PlayerState : ScriptableObject
                     _instance = Resources.Load<PlayerState>("PlayerState");
                     _instance._levelStartInfo = new PlayerInfo (_instance._initialInfo);
                     _instance._currentInfo = _instance._levelStartInfo.CreateCopy();
+                    SceneManager.sceneLoaded += OnSceneLoaded;
                 }
             }
             return _instance;
@@ -91,7 +93,6 @@ public class PlayerState : ScriptableObject
     public static event EventHandler<OnPlayerStateRevertArgs> OnPlayerStateRevert;
 
     #endregion 
-    
     [SerializeField] private PlayerInfo _currentInfo; public static PlayerInfo CurrentInfo {get => _instance._currentInfo;}
     private PlayerInfo _lastRoomInfo; public static PlayerInfo LastRoomInfo {get => _instance._lastRoomInfo;}
     [SerializeField] private PlayerInfo _levelStartInfo; public static PlayerInfo LevelStartInfo {get => _instance._levelStartInfo;}
@@ -163,7 +164,7 @@ public class PlayerState : ScriptableObject
             Instance._currentInfo.Position = value;
         }
     }
-
+    
     public static void SaveAsLastRoom() {
         _instance._lastRoomInfo = _instance._currentInfo.CreateCopy();
     }
@@ -188,5 +189,10 @@ public class PlayerState : ScriptableObject
         OnPlayerStateRevert?.Invoke(Instance, new OnPlayerStateRevertArgs(
             OnPlayerStateRevertArgs.PlayerRevertType.LevelStart
         ));
+    }
+
+    private static void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        _instance._levelStartInfo = new PlayerInfo (_instance._initialInfo);
+        _instance._currentInfo = _instance._levelStartInfo.CreateCopy();
     }
 }

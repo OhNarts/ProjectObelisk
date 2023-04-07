@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public DamageInfo damageInfo;
+    public bool destroyOnContact = true;
 
     private void Start()
     {
@@ -15,13 +16,16 @@ public class Bullet : MonoBehaviour
     {
         if (collider.gameObject.layer == 9) return;
 
-        
-        Destroy(gameObject);
+        if (destroyOnContact) Destroy(gameObject);
         Transform hitTransform = collider.transform;
         HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();
         if (hitHealth != null)
         {
             hitHealth.Damage(damageInfo);
+            var enemy = collider.GetComponent<EnemyController>();
+            if (enemy != null && !hitHealth.IsInvincible) {
+                enemy.Knockback(damageInfo.attackerPosition, damageInfo.knockbackValue);
+            }
         }
     }
 }

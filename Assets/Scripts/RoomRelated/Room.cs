@@ -21,8 +21,9 @@ public class OnRoomEnterAttemptArgs : EventArgs
 [Serializable]
 public class Room : MonoBehaviour
 {
-    public delegate void OnRoomEnterAttemptHandler(object sender, EventArgs e);
-    public event OnRoomEnterAttemptHandler OnRoomEnterAttempt;
+   public event EventHandler<OnRoomEnterAttemptArgs> OnRoomEnterAttempt;
+   public event EventHandler OnRoomEnter;
+   public event EventHandler OnRoomExit;
 
 
     [Header("Edit in level creation")]
@@ -32,6 +33,8 @@ public class Room : MonoBehaviour
     // Change to increase the distance the camera can be from the room
     [SerializeField] private float _cameraSize;
     [SerializeField] private Transform _camHolderPosRot;
+
+    private new string name;
 
     /* TODO: disable colliders of all children in previous room when planning in current room
      * 
@@ -49,6 +52,9 @@ public class Room : MonoBehaviour
         set 
             {
                 _occupied = value;
+                if (_occupied) {
+                    OnRoomEnter?.Invoke(this, EventArgs.Empty);
+                }
             } 
     }
 
@@ -57,13 +63,14 @@ public class Room : MonoBehaviour
     // Add a private function that will subscribe to the gamemanager.onGameStateChanged and check for
     // If it's in planning stage and then setActive to false if in planning stage
     // Else set true
-    private void OnEnable()
+    void Awake()
     {
+        OnAwake();
         GameManager.OnGameStateChanged += OnGameStateChanged;
     }
 
-    void Awake()
-    {
+    protected virtual void OnAwake() {
+        name = gameObject.name;
         _occupied = false;
         _doorAttemptedEnter = null;
 
@@ -71,6 +78,7 @@ public class Room : MonoBehaviour
         {
             door.OnDoorInteract += OnDoorInteract;
         }
+        
     }
 
     private void OnDestroy()
@@ -79,6 +87,7 @@ public class Room : MonoBehaviour
         {
             door.OnDoorInteract -= OnDoorInteract;
         }
+        GameManager.OnGameStateChanged -= OnGameStateChanged;
     }
 
     private void OnDoorInteract( object sender, EventArgs e )
@@ -96,11 +105,13 @@ public class Room : MonoBehaviour
         _occupied = true;
         adjacentRooms[_doorAttemptedEnter].Exit();
         _doorAttemptedEnter.EnterDoor();
+        OnRoomEnter?.Invoke(this, EventArgs.Empty);
         //doorAttemptedEnter.CloseDoor();
     }
 
     public virtual void Exit() {
         _occupied = false;
+        OnRoomExit?.Invoke(this, EventArgs.Empty);
     }
 
     public void SetCameraPos(GameObject cameraHolder) {
