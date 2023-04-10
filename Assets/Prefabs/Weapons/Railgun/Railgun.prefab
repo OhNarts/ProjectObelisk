@@ -115,11 +115,22 @@ MonoBehaviour:
   _weaponItem: {fileID: 11400000, guid: 5d72bc0daf005db44acfd56b2e8a360b, type: 2}
   _colliders:
   - {fileID: 7704837942250172078}
+  soundWhenFired:
+    clip: {fileID: 0}
+    volume: 0.75
+    pitch: 1
+    source: {fileID: 0}
+  soundWhenFireStopped:
+    clip: {fileID: 8300000, guid: 87ae7b4e54936a546864e84feb441913, type: 3}
+    volume: 0.75
+    pitch: 1
+    source: {fileID: 0}
   _damage: 30
   _weaponType: 0
   _thrownDamage: 0
   _thrownSpeed: 25
   _thrownStunDuration: 5
+  knockbackVelocity: 5
   _ammoAmount1: 5
   coolDownTime: 0
   bulletSpeed: 50
@@ -152,8 +163,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.55, z: 1.5}
-  m_Center: {x: 0, y: 0.55, z: 0}
+  m_Size: {x: 0.35, y: 1.2, z: 3.2}
+  m_Center: {x: 0, y: 0.65, z: 0.2}
 --- !u!1001 &6461134801490173351
 PrefabInstance:
   m_ObjectHideFlags: 0
