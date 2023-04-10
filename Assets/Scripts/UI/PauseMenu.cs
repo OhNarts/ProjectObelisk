@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -18,6 +17,10 @@ public class PauseMenu : MonoBehaviour
         Debug.LogWarning("Level restart not yet fully implemented");
         PlayerState.RevertToLevelStart();
         GameManager.UnPause();
+    }
+
+    public void QuitMainMenu() {
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
     
     public void Quit() {
