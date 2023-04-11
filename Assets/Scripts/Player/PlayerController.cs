@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
     public void CombatStart(CallbackContext callback)
     {
         if (!callback.started) return;
-        _input.SwitchCurrentActionMap("Combat");
+        SwitchActionMap("Combat");
         GameManager.CurrentState = GameState.Combat;
     }
     
@@ -101,16 +101,17 @@ public class PlayerController : MonoBehaviour
     private void OnGameStateChange(object sender, OnGameStateChangedArgs e) {
         switch (e.NewState) {
             case GameState.Combat:
-                _input.SwitchCurrentActionMap("Combat");
+                SwitchActionMap("Combat");
                 _rb.isKinematic = false;
                 break;
             case GameState.Plan:
-                _input.SwitchCurrentActionMap("Planning");
+                SwitchActionMap("Planning");
                 _rb.velocity = Vector3.zero;
                 _rb.isKinematic = true;
                 break;
             case GameState.PostCombat:
-                _input.SwitchCurrentActionMap("Combat");
+                SwitchActionMap("Combat");
+                Debug.Log("Game Reverted");
                 _rb.isKinematic = false;
                 if (e.TriggeredByRevert) break;
                 if (EquippedWeapon != null) 
@@ -138,12 +139,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnGamePauseChange (object sender, OnGamePauseChangeArgs e) {
         if (GameManager.Paused) {
-            _currentActionMap = _input.currentActionMap.name;
+            // _currentActionMap = _input.currentActionMap.name;
+            // Don't switch action maps here so that pause is never recorded
             _input.SwitchCurrentActionMap("Pause");
         } else {
-            _input.SwitchCurrentActionMap(_currentActionMap);
+            SwitchActionMap(_currentActionMap);
         }
-
     }
 
     public void CancelPlanState(CallbackContext callback) {
@@ -152,6 +153,11 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.CurrentState = GameState.PostCombat;
         }
+    }
+
+    public void SwitchActionMap(String actionMap) {
+        _currentActionMap = actionMap;
+        _input.SwitchCurrentActionMap(actionMap);
     }
 
     #region Health

@@ -97,12 +97,13 @@ public sealed class GameManager : MonoBehaviour
 
     private void OnPlayerStateRevert(object sender, OnPlayerStateRevertArgs e) {
         _revertTriggered = true;
-        GameManager.CurrentState = GameState.PostCombat;
+        CurrentState = GameState.PostCombat;
     }
 
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        _revertTriggered = false;
         CurrentState = GameState.PostCombat;
     }
 }

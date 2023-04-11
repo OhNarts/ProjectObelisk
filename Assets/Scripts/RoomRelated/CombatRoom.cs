@@ -95,6 +95,7 @@ public class CombatRoom : Room
             }
         }
         _roomCompleted = false;
+        _rewardObject.gameObject.SetActive(false);
     }
 
     private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) {
