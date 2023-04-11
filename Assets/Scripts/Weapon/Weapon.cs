@@ -105,11 +105,13 @@ public abstract class Weapon : MonoBehaviour
     {
         _scale = transform.localScale;
         _holder = holder;
+        gameObject.layer = _holder.layer;
         transform.parent = equipPos;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(_holder.transform.forward);
         foreach (MeshCollider collider in _colliders) {
             collider.enabled = false;
+            collider.gameObject.layer = _holder.layer;
         }
         if (_isProjectile) {
             Debug.Log("Weapon was Projectile!!!");
@@ -126,32 +128,31 @@ public abstract class Weapon : MonoBehaviour
     /// </summary>
     public virtual void DropWeapon()
     {
-        _holder = null;
-        transform.parent = null;
-
-        foreach (MeshCollider collider in _colliders) {
-            collider.enabled = true;
-        }
-
-        transform.localScale = _scale;
-
-        //transform.GetComponent<BoxCollider>().enabled = true;
-        transform.GetComponent<Rigidbody>().isKinematic = false;
+        DetatchHolder();
         if (AmmoAmount1 == 0) {
             Destroy(gameObject);
         }
     }
     public virtual void ThrowWeapon() {
+        DetatchHolder();
+        _isProjectile = true;
+        GetComponent<Rigidbody>().velocity = _attackPoint.forward * _thrownSpeed;
+    }
+
+    private void DetatchHolder() {
         _holder = null;
         transform.parent = null;
 
+        gameObject.layer = LayerMask.NameToLayer("Weapon");
+
         foreach (MeshCollider collider in _colliders) {
             collider.enabled = true;
+            collider.gameObject.layer = LayerMask.NameToLayer("Weapon");
         }
+
+        transform.localScale = _scale;
+
         transform.GetComponent<Rigidbody>().isKinematic = false;
-        _isProjectile = true;
-        GetComponent<Collider>().enabled = true;
-        GetComponent<Rigidbody>().velocity = _attackPoint.forward * _thrownSpeed;
     }
 
     public void OnTriggerEnter(Collider collider) {
