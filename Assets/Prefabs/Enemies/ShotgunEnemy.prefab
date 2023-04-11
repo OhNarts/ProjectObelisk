@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6350351581767564703}
   - component: {fileID: 917801816468224987}
   - component: {fileID: 8353083670628491824}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 8211948614703789286}
   - component: {fileID: 6051893799686361633}
   - component: {fileID: 8078639478433420332}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 592528554877004107}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 9036414590476634023}
   - component: {fileID: 3274827533703415966}
   - component: {fileID: 4932256388245437275}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 6934517008993007052}
   - component: {fileID: 6934517008993007053}
   - component: {fileID: 6934517008993007054}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: ShotgunEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -475,7 +475,7 @@ GameObject:
   - component: {fileID: 6934517009173907877}
   - component: {fileID: 6934517009173907864}
   - component: {fileID: 6934517009173907879}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -558,7 +558,7 @@ GameObject:
   - component: {fileID: 6934517009425963558}
   - component: {fileID: 6934517009425963545}
   - component: {fileID: 6934517009425963544}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,7 +639,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6934517009527330665}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: FromPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,7 +670,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6934517009726515511}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: WeaponPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -701,7 +701,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6934517010316512081}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -735,7 +735,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1131685330377085675}
   - component: {fileID: 3819108319136161188}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: EnemyHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,6 +822,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6934517008993007049}
     m_Modifications:
+    - target: {fileID: 2408261613585002989, guid: f064335c4ae42d942b735974e840385c, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 6945854898439343745, guid: f064335c4ae42d942b735974e840385c, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -869,6 +873,18 @@ PrefabInstance:
     - target: {fileID: 6945854898439343772, guid: f064335c4ae42d942b735974e840385c, type: 3}
       propertyPath: m_Name
       value: Shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 6945854898439343772, guid: f064335c4ae42d942b735974e840385c, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6945854898702257161, guid: f064335c4ae42d942b735974e840385c, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6945854899553976442, guid: f064335c4ae42d942b735974e840385c, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f064335c4ae42d942b735974e840385c, type: 3}

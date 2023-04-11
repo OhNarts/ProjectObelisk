@@ -39,7 +39,8 @@ public class PlayerController : MonoBehaviour
         lookLayers = LayerMask.GetMask("Ground") |
         LayerMask.GetMask("Weapon") |
         LayerMask.GetMask("Shootable") |
-        LayerMask.GetMask("Interactable");
+        LayerMask.GetMask("Interactable") |
+        LayerMask.GetMask("Enemy");
 
         _healthHandler.MaxHealth = PlayerState.MaxHealth;
         _healthHandler.Health = PlayerState.Health;

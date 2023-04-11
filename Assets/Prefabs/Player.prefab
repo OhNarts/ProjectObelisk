@@ -304,7 +304,7 @@ MonoBehaviour:
   _attackRange: 0.5
   _attackMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 4352
   _damage: 5
 --- !u!114 &3309712311292657436
 MonoBehaviour:
