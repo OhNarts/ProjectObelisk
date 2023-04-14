@@ -201,8 +201,12 @@ public abstract class Weapon : MonoBehaviour
 
     private void PlaySound(Sound sound) {
         var isPlayer = _holder.GetComponent<PlayerController>();
-        if (isPlayer != null) 
-            sound.source.Play();
+        if (isPlayer != null) {
+            sound.position = transform.position;
+            AudioManager.Play(sound);
+            // sound.source.Play();
+        }
+            
     }
 }
 

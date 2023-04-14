@@ -140,7 +140,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnGamePauseChange (object sender, OnGamePauseChangeArgs e) {
         if (GameManager.Paused) {
-            // _currentActionMap = _input.currentActionMap.name;
             // Don't switch action maps here so that pause is never recorded
             _input.SwitchCurrentActionMap("Pause");
         } else {
