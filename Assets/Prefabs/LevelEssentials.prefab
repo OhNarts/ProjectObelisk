@@ -214,6 +214,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _cameraHolder: {fileID: 8054438384018747894}
+  _previousRoom: {fileID: 0}
+  _currentRoom: {fileID: 0}
   BaseWeapons:
     m_keys: []
     m_values: []
@@ -379,6 +381,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 8054438385063484985}
+    - target: {fileID: 5160405145700384145, guid: 3ad7fa26058333849803363502f4ad5c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160405145700384145, guid: 3ad7fa26058333849803363502f4ad5c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7859421333367237282, guid: 3ad7fa26058333849803363502f4ad5c, type: 3}
       propertyPath: m_Name
       value: UI
