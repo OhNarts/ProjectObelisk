@@ -56,6 +56,8 @@ public class HealthHandler : MonoBehaviour
     /// <param name="info"></param>
     public virtual void Damage(DamageInfo info)
     {
+        // no team damage
+        if (info.attacker.layer == gameObject.layer) return;
         onHit?.Invoke(info);
         if (_isInvincible) return;
         soundWhenDamaged.source.Play();
