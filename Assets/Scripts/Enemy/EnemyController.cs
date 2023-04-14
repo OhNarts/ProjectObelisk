@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public enum EnemyState { Idle, Chase, Attack, Stunned }
+public enum EnemyState { Idle, Chase, Attack, Stunned, Hide }
 public class EnemyController : MonoBehaviour
 {
     public UnityEventEnemy onEnemyDeath;
@@ -13,11 +13,13 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     private AmmoDictionary ammo;
     private float stun;
+    private float hideTimer;
     
     [SerializeField] private HealthHandler healthHandler;
     [SerializeField] private GameObject healthBar;
     private Camera mainCamera;
 
+    [SerializeField] private EnemySerializable.EnemyData enemyData;
     [SerializeField] private float distToAttack;
     [SerializeField] private Weapon weapon; public Weapon EquippedWeapon {get => weapon;}
     [SerializeField] private Transform equipPos;
