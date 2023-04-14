@@ -352,18 +352,28 @@ public class PlayerController : MonoBehaviour
         if (weaponsPointedAt.Count != 0) {
             if ((Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) {
                 InteractWithWeapons(weaponsPointedAt);
+                return;
             }
         }
 
         if (weaponsAround.Count != 0) {
             InteractWithWeapons(weaponsAround);
+            return;
         }
 
-        // returns if the position the mouse is over is too far to interact
-        if (!(Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) return;
 
-        // If no weapons found, then search for interactables
-        Collider[] colliders = Physics.OverlapSphere(_groundMousePt, _interactableRadius);
+        Interactable interactable = GetInteractableNearPoint(transform.position);
+
+        // returns if the position the mouse is over is too far to interact
+        if (interactable == null && (Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) {
+            interactable = GetInteractableNearPoint(_groundMousePt);
+        }
+
+        interactable?.Interact(this);
+    }
+
+    private Interactable GetInteractableNearPoint(Vector3 position) {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _interactableRadius);
         Interactable interactable = null;
         foreach(Collider collider in colliders)
         {
@@ -372,7 +382,7 @@ public class PlayerController : MonoBehaviour
                 interactable = collider.transform.GetComponent<Interactable>();
             }
         }
-        interactable?.Interact(this);
+        return interactable;
     }
     #endregion
 
