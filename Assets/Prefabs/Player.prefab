@@ -280,7 +280,7 @@ MonoBehaviour:
   _healthHandler: {fileID: 3309712311292657436}
   _rb: {fileID: 7840941772718891743}
   _camera: {fileID: 0}
-  _speed: 20
+  _speed: 15
   _layerMask:
     serializedVersion: 2
     m_Bits: 64

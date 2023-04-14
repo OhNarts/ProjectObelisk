@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-13434
+  m_Name: pb_Mesh-239564
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -297,6 +297,7 @@ GameObject:
   m_Component:
   - component: {fileID: 923926928}
   - component: {fileID: 923926927}
+  - component: {fileID: 923926929}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -381,13 +382,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &923926929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923926926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!43 &1333195815
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-13446
+  m_Name: pb_Mesh-239576
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -615,7 +636,7 @@ PrefabInstance:
       objectReference: {fileID: 368743230}
     - target: {fileID: 5329048563632891813, guid: 5fba7376c2d0c8c4788b4d241ee661dc, type: 3}
       propertyPath: m_VersionIndex
-      value: 70
+      value: 124
       objectReference: {fileID: 0}
     - target: {fileID: 5329048564618262950, guid: 5fba7376c2d0c8c4788b4d241ee661dc, type: 3}
       propertyPath: m_Mesh
@@ -623,7 +644,7 @@ PrefabInstance:
       objectReference: {fileID: 1333195815}
     - target: {fileID: 5329048564618262950, guid: 5fba7376c2d0c8c4788b4d241ee661dc, type: 3}
       propertyPath: m_VersionIndex
-      value: 73
+      value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 6612101008191047129, guid: 5fba7376c2d0c8c4788b4d241ee661dc, type: 3}
       propertyPath: m_Name
