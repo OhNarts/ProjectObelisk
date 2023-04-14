@@ -28,7 +28,6 @@ public class SMG : Weapon
         //fired = true;
 
         // Fire the weapon
-        base.Fire1Start();
         GameObject bulletInstance = Instantiate(bullet, _attackPoint.position, _holder.transform.rotation);
         Bullet b = bulletInstance.GetComponent<Bullet>();
         b.damageInfo = new DamageInfo()

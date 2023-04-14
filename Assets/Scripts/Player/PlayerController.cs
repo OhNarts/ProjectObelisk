@@ -313,8 +313,7 @@ public class PlayerController : MonoBehaviour
         if (!context.started) return;
         DamageInfo damageInfo = new DamageInfo() {
             damage = _damage,
-            attacker = gameObject,
-            knockbackValue = 4f
+            attacker = gameObject
         };
 
         Debug.Log("melee");
@@ -326,10 +325,6 @@ public class PlayerController : MonoBehaviour
             // Debug.Log(hitHealth != null);
             if (hitHealth != null) {
                 hitHealth.Damage(damageInfo);
-                var enemy = collider.GetComponent<EnemyController>();
-                if (enemy != null && !hitHealth.IsInvincible) {
-                    enemy.Knockback(gameObject.transform.position, damageInfo.knockbackValue);
-                }
             }
         }
     }

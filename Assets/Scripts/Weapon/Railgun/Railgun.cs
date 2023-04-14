@@ -45,7 +45,6 @@ public class Railgun : Weapon
         if (timePressed != -1 && timeReleased - timePressed > waitSeconds && useAmmo) {
             if (AmmoAmount1 == 0) return;
             AmmoAmount1--;
-            base.Fire1Stop();
             lastFired = Time.unscaledTime;
             FireBullet();
         }

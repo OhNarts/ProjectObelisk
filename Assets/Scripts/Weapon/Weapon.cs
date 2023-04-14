@@ -29,15 +29,11 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private WeaponItem _weaponItem; public WeaponItem WeaponItem { get => _weaponItem; }
     [SerializeField] private List<MeshCollider> _colliders; public List<MeshCollider> Colliders{get => _colliders;}
     // The damage an attack does
-
-    [SerializeField] protected Sound soundWhenFired;
-    [SerializeField] protected Sound soundWhenFireStopped;
     [SerializeField] protected float _damage;
     [SerializeField] protected WeaponType _weaponType;
     [SerializeField] protected float _thrownDamage;
     [SerializeField] private float _thrownSpeed;
     [SerializeField] private float _thrownStunDuration;
-    [SerializeField] private float knockbackVelocity;
 
     [Header("Ammo Costs/Types")]
     [SerializeField] protected int _ammoAmount1; public int AmmoAmount1 { 
@@ -59,19 +55,6 @@ public abstract class Weapon : MonoBehaviour
     set {
         _canPlace = value;
     }}
-
-    private void Start() {
-        soundWhenFired.source = gameObject.AddComponent<AudioSource>();
-        //Debug.Log("Audio source added");
-        soundWhenFired.source.clip = soundWhenFired.clip;
-        soundWhenFired.source.volume = soundWhenFired.volume;
-        soundWhenFired.source.pitch = soundWhenFired.pitch;
-
-        soundWhenFireStopped.source = gameObject.AddComponent<AudioSource>();
-        soundWhenFireStopped.source.clip = soundWhenFireStopped.clip;
-        soundWhenFireStopped.source.volume = soundWhenFireStopped.volume;
-        soundWhenFireStopped.source.pitch = soundWhenFireStopped.pitch;
-    }
 
     #region Events
     public EventHandler<OnWeaponAmmoChangedArgs> OnWeaponAmmoChanged;
@@ -115,7 +98,7 @@ public abstract class Weapon : MonoBehaviour
             Debug.Log("Weapon was Projectile!!!");
         }
         _isProjectile = false;
-        if (GetComponent<Collider>() != null) GetComponent<Collider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         //transform.GetComponent<BoxCollider>().enabled = false;
         transform.GetComponent<Rigidbody>().isKinematic = true;
         transform.localScale = _scale;
@@ -177,12 +160,8 @@ public abstract class Weapon : MonoBehaviour
 
     // Use ammo defaults to false because player is the only
     // case where ammo is going to be used
-    public virtual void Fire1Start(bool useAmmo = false) {
-        PlaySound(soundWhenFired);
-    }
-    public virtual void Fire1Stop(bool useAmmo = false) {
-        PlaySound(soundWhenFireStopped);
-    }
+    public virtual void Fire1Start(bool useAmmo = false) { }
+    public virtual void Fire1Stop(bool useAmmo = false) { }
     public virtual void Fire1Held(bool useAmmo = false) { }
 
     public virtual void Fire2(bool useAmmo = false) { }
@@ -192,16 +171,8 @@ public abstract class Weapon : MonoBehaviour
         return new DamageInfo {
             damage = _damage,
             attacker = _holder,
-            attackerPosition = new Vector3(_holder.transform.position.x, _holder.transform.position.y, _holder.transform.position.z),
-            ammoType = _weaponItem.AmmoType1,
-            knockbackValue = knockbackVelocity
+            ammoType = _weaponItem.AmmoType1
         };
-    }
-
-    private void PlaySound(Sound sound) {
-        var isPlayer = _holder.GetComponent<PlayerController>();
-        if (isPlayer != null) 
-            sound.source.Play();
     }
 }
 
