@@ -36,7 +36,7 @@ public class AudioManager : MonoBehaviour
     }
 
     public static void Play(Sound s) {
-        if (s == null)
+        if (s.clip == null)
             return;
         AudioSource.PlayClipAtPoint(s.clip, s.position, volume: s.volume);
         // s.source.Play();

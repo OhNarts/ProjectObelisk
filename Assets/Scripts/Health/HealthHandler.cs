@@ -44,10 +44,10 @@ public class HealthHandler : MonoBehaviour
     void Awake()
     {
         if (!healthInitialized) _health = _maxHealth;
-        soundWhenDamaged.source = gameObject.AddComponent<AudioSource>();
-        soundWhenDamaged.source.clip = soundWhenDamaged.clip;
-        soundWhenDamaged.source.volume = soundWhenDamaged.volume;
-        soundWhenDamaged.source.pitch = soundWhenDamaged.pitch;
+        // soundWhenDamaged.source = gameObject.AddComponent<AudioSource>();
+        // soundWhenDamaged.source.clip = soundWhenDamaged.clip;
+        // soundWhenDamaged.source.volume = soundWhenDamaged.volume;
+        // soundWhenDamaged.source.pitch = soundWhenDamaged.pitch;
     }
 
     /// <summary>

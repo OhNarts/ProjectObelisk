@@ -176,6 +176,9 @@ public abstract class Weapon : MonoBehaviour
         OnWeaponDestroyed?.Invoke(this, EventArgs.Empty);
     }
 
+    public virtual void OnDrag() {}
+    public virtual void OnDrop() {}
+
     // Use ammo defaults to false because player is the only
     // case where ammo is going to be used
     public virtual void Fire1Start(bool useAmmo = false) {
