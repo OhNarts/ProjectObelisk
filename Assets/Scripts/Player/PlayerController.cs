@@ -433,7 +433,8 @@ public class PlayerController : MonoBehaviour
                 }
             }
         } else if (context.canceled) {
-            if (_followWeapon != null && !_followWeapon.CanPlace) WeaponPlanRemove(_followWeapon);
+            if (_followWeapon == null) return;
+            if (!_followWeapon.CanPlace) WeaponPlanRemove(_followWeapon);
             else _followWeapon.OnDrop();
             _followWeapon = null;
         }
