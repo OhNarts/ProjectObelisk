@@ -44,10 +44,10 @@ public class HealthHandler : MonoBehaviour
     void Awake()
     {
         if (!healthInitialized) _health = _maxHealth;
-        soundWhenDamaged.source = gameObject.AddComponent<AudioSource>();
-        soundWhenDamaged.source.clip = soundWhenDamaged.clip;
-        soundWhenDamaged.source.volume = soundWhenDamaged.volume;
-        soundWhenDamaged.source.pitch = soundWhenDamaged.pitch;
+        // soundWhenDamaged.source = gameObject.AddComponent<AudioSource>();
+        // soundWhenDamaged.source.clip = soundWhenDamaged.clip;
+        // soundWhenDamaged.source.volume = soundWhenDamaged.volume;
+        // soundWhenDamaged.source.pitch = soundWhenDamaged.pitch;
     }
 
     /// <summary>
@@ -60,7 +60,9 @@ public class HealthHandler : MonoBehaviour
         if (info.attacker.layer == gameObject.layer) return;
         onHit?.Invoke(info);
         if (_isInvincible) return;
-        soundWhenDamaged.source.Play();
+        soundWhenDamaged.position = transform.position;
+        AudioManager.Play(soundWhenDamaged);
+        // soundWhenDamaged.source.Play();
         _health -= info.damage;
         onHealthChange?.Invoke();
         onDamage?.Invoke(info);

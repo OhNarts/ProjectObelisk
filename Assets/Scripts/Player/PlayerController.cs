@@ -140,7 +140,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnGamePauseChange (object sender, OnGamePauseChangeArgs e) {
         if (GameManager.Paused) {
-            // _currentActionMap = _input.currentActionMap.name;
             // Don't switch action maps here so that pause is never recorded
             _input.SwitchCurrentActionMap("Pause");
         } else {
@@ -427,14 +426,17 @@ public class PlayerController : MonoBehaviour
                 _followWeapon.OnWeaponDestroyed += OnWeaponDestroyed;
                 PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
                 _followWeapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
+                _followWeapon.OnDrag();
             } else {
                 List<Weapon> weaponsPointedAt = GetWeaponsPointedAt();
                 if (weaponsPointedAt.Count != 0) {
                     _followWeapon = weaponsPointedAt[0];
+                    _followWeapon.OnDrag();
                 }
             }
         } else if (context.canceled) {
             if (_followWeapon != null && !_followWeapon.CanPlace) WeaponPlanRemove(_followWeapon);
+            else _followWeapon.OnDrop();
             _followWeapon = null;
         }
     }

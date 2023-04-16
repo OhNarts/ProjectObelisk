@@ -180,6 +180,9 @@ public abstract class Weapon : MonoBehaviour
         OnWeaponDestroyed?.Invoke(this, EventArgs.Empty);
     }
 
+    public virtual void OnDrag() {}
+    public virtual void OnDrop() {}
+
     // Use ammo defaults to false because player is the only
     // case where ammo is going to be used
     public virtual void Fire1Start(bool useAmmo = false) {
@@ -219,8 +222,12 @@ public abstract class Weapon : MonoBehaviour
 
     private void PlaySound(Sound sound) {
         var isPlayer = _holder.GetComponent<PlayerController>();
-        if (isPlayer != null) 
-            sound.source.Play();
+        if (isPlayer != null) {
+            sound.position = transform.position;
+            AudioManager.Play(sound);
+            // sound.source.Play();
+        }
+            
     }
 }
 
