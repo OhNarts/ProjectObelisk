@@ -73,12 +73,21 @@ MonoBehaviour:
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
-  _damage: 10
+  soundWhenFireStopped:
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  _damage: 5
+  _buffDamage: 7.5
   _weaponType: 0
   _thrownDamage: 0
   _thrownSpeed: 25
   _thrownStunDuration: 5
   knockbackVelocity: 1
+  buffKnockbackVelocity: 1.5
+  isBuffed: 0
+  buffRegion: {fileID: 0}
   _ammoAmount1: 20
   coolDownTime: 0.175
   bullet: {fileID: 3667196397110752525, guid: ffa3f4db51b56144baf59f9e3b8e5687, type: 3}

@@ -33,11 +33,15 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected Sound soundWhenFired;
     [SerializeField] protected Sound soundWhenFireStopped;
     [SerializeField] protected float _damage;
+    [SerializeField] protected float _buffDamage;
     [SerializeField] protected WeaponType _weaponType;
     [SerializeField] protected float _thrownDamage;
     [SerializeField] private float _thrownSpeed;
     [SerializeField] private float _thrownStunDuration;
     [SerializeField] private float knockbackVelocity;
+    [SerializeField] private float buffKnockbackVelocity;
+    [HideInInspector] public bool isBuffed;
+    [HideInInspector] public BuffRegion buffRegion;
 
     [Header("Ammo Costs/Types")]
     [SerializeField] protected int _ammoAmount1; public int AmmoAmount1 { 
@@ -190,12 +194,26 @@ public abstract class Weapon : MonoBehaviour
     public virtual void Fire2Stop(bool useAmmo = false) { }
 
     protected DamageInfo CreateDamageInfo() {
+        float newDamage = _damage;
+        float newKnockback = knockbackVelocity;
+        if (isBuffed) {
+            switch(buffRegion.buffType) {
+                case BuffType.Damage:
+                    newDamage = _buffDamage;
+                    break;
+                case BuffType.Knockback:
+                    newKnockback = buffKnockbackVelocity;
+                    break;
+                default:
+                    break;
+            }
+        }
         return new DamageInfo {
-            damage = _damage,
+            damage = newDamage,
             attacker = _holder,
             attackerPosition = new Vector3(_holder.transform.position.x, _holder.transform.position.y, _holder.transform.position.z),
             ammoType = _weaponItem.AmmoType1,
-            knockbackValue = knockbackVelocity
+            knockbackValue = newKnockback
         };
     }
 
