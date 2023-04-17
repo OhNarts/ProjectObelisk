@@ -40,7 +40,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private float _thrownStunDuration;
     [SerializeField] private float knockbackVelocity;
     [SerializeField] private float buffKnockbackVelocity;
-    [HideInInspector] public bool isBuffed;
+    public bool isBuffed;
     [HideInInspector] public BuffRegion buffRegion;
 
     [Header("Ammo Costs/Types")]

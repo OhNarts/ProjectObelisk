@@ -9,6 +9,10 @@ public class BuffRegion : MonoBehaviour
     public bool restrictArea;
     public BuffType buffType;
 
+    private void Awake() {
+        PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
+    }
+
     private void OnCollisionStay(Collision other) {
         if (!restrictArea) {
             if (other.gameObject.layer == LayerMask.NameToLayer("Weapon")) {
@@ -31,5 +35,9 @@ public class BuffRegion : MonoBehaviour
                 wep.buffRegion = null;
             }
         }
+    }
+
+    private void OnPlayerStateRevert(object sender, OnPlayerStateRevertArgs e) {
+        restrictArea = false;
     }
 }
