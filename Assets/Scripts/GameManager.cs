@@ -73,7 +73,6 @@ public sealed class GameManager : MonoBehaviour
     }
 
     private bool _revertTriggered;
-    private Level currLevel;
 
     private void Awake()
     {
@@ -98,12 +97,13 @@ public sealed class GameManager : MonoBehaviour
 
     private void OnPlayerStateRevert(object sender, OnPlayerStateRevertArgs e) {
         _revertTriggered = true;
-        GameManager.CurrentState = GameState.PostCombat;
+        CurrentState = GameState.PostCombat;
     }
 
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        currLevel = GameObject.FindGameObjectsWithTag("Level")[0].GetComponent<Level>();
+        _revertTriggered = false;
+        CurrentState = GameState.PostCombat;
     }
 }

@@ -12,4 +12,5 @@ public class Sound {
     
     [HideInInspector]
     public AudioSource source;
+    public Vector3 position;
 }

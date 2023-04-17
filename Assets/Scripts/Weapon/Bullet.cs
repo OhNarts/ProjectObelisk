@@ -14,8 +14,7 @@ public class Bullet : MonoBehaviour
 
     public void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.layer == 9) return;
-
+        if (collider.gameObject.layer == LayerMask.NameToLayer("Bullet")) return;
         if (destroyOnContact) Destroy(gameObject);
         Transform hitTransform = collider.transform;
         HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();
