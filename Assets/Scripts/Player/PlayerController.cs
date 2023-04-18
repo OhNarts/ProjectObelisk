@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private UnityEvent _onPlayerDeath;
     [SerializeField] private PlayerInput _input;
+    [SerializeField] private Animator _animator;
     private LayerMask lookLayers;
 
     private Vector3 _velocity;
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        _animator.SetBool("NormalState", true);
+
         lookLayers = LayerMask.GetMask("Ground") |
         LayerMask.GetMask("Weapon") |
         LayerMask.GetMask("Shootable") |
@@ -322,6 +325,8 @@ public class PlayerController : MonoBehaviour
             attacker = gameObject,
             knockbackValue = 4f
         };
+
+        _animator.SetTrigger("Punch");
 
         Debug.Log("melee");
 
