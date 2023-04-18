@@ -554,11 +554,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private void AnimateEquippedWeapon() {
-        if (EquippedWeapon == null) {
-            if (_currentAnimationBool == null) return;
+        if (_currentAnimationBool != null) {
             _animator.SetBool(_currentAnimationBool, false);
             _currentAnimationBool = null;
         }
+        if (EquippedWeapon == null) return;
         _currentAnimationBool = EquippedWeapon.AnimationBoolName;
         _animator.SetBool(_currentAnimationBool, true);
     }
