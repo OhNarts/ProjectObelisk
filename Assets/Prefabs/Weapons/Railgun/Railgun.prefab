@@ -126,11 +126,15 @@ MonoBehaviour:
     pitch: 1
     source: {fileID: 0}
   _damage: 30
+  _buffDamage: 40
   _weaponType: 0
   _thrownDamage: 0
   _thrownSpeed: 25
   _thrownStunDuration: 5
   knockbackVelocity: 5
+  buffKnockbackVelocity: 6
+  isBuffed: 0
+  buffRegion: {fileID: 0}
   _ammoAmount1: 5
   coolDownTime: 0
   bulletSpeed: 50

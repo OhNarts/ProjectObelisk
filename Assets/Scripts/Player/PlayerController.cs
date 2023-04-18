@@ -71,8 +71,8 @@ public class PlayerController : MonoBehaviour
             if (!_rolling) _rb.velocity = _velocity;
         } 
         if (_followWeapon != null) {
-            var gotoPt = new Vector3(_lookPt.x, _lookPt.y + 5, _lookPt.z);
-            _followWeapon.transform.position = _lookPt;
+            var gotoPt = new Vector3(_lookPt.x, _lookPt.y + .5f, _lookPt.z);
+            _followWeapon.transform.position = gotoPt;
         }
     }
 
@@ -420,6 +420,8 @@ public class PlayerController : MonoBehaviour
 
                 GameObject Instance = Instantiate(item.gameObject);
                 _followWeapon = Instance.GetComponent<Weapon>();
+                Rigidbody rb = _followWeapon.GetComponent<Rigidbody>();
+                rb.freezeRotation = true;
                 _placedWeapons.Add(_followWeapon);
                 _followWeapon.OnWeaponDestroyed += OnWeaponDestroyed;
                 PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
@@ -453,6 +455,9 @@ public class PlayerController : MonoBehaviour
                 weapon.OnWeaponDestroyed -= OnWeaponDestroyed;
                 PlayerState.AddToAmmo(weapon.WeaponItem.AmmoType1,
                 weapon.AmmoAmount1);
+                if (weapon.isBuffed) {
+                    weapon.buffRegion.restrictArea = false;
+                }
                 Destroy(weapon.gameObject);
             }
         }
@@ -524,6 +529,8 @@ public class PlayerController : MonoBehaviour
                 Destroy(wep.gameObject);
                 return;
             }
+            Rigidbody rb = wep.GetComponent<Rigidbody>();
+            rb.freezeRotation = false;
 
             if (EquippedWeapon != null)
             {
