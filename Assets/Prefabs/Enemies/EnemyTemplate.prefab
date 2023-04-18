@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 171522302359161220}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 171522302949338082}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: WeaponPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 171522303148611004}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: FromPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 171522303249619187}
   - component: {fileID: 171522303249619148}
   - component: {fileID: 171522303249619149}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 171522303501929328}
   - component: {fileID: 171522303501929293}
   - component: {fileID: 171522303501929330}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 171522303682918169}
   - component: {fileID: 171522303682918168}
   - component: {fileID: 171522303682918171}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: EnemyTemplate
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ MonoBehaviour:
       m_Calls: []
   healthHandler: {fileID: 171522303682918169}
   healthBar: {fileID: 5939620324048102303}
-  distToAttack: 8
+  distToAttack: 12
   weapon: {fileID: 3499945893481665749}
   equipPos: {fileID: 171522302949338082}
   _target: {fileID: 0}
@@ -423,7 +423,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -444,7 +444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5761549890536558105}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -482,7 +482,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3927185252984169809}
   - component: {fileID: 5758052182817338163}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: EnemyHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 3202548901881723976}
   - component: {fileID: 5785109938320554760}
   - component: {fileID: 3285266399336230372}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -674,7 +674,7 @@ GameObject:
   - component: {fileID: 732371039510138702}
   - component: {fileID: 7207997013566768662}
   - component: {fileID: 6550792639046209630}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +750,7 @@ GameObject:
   - component: {fileID: 6176773163370531608}
   - component: {fileID: 6263477655867577763}
   - component: {fileID: 4019863096053396698}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,9 +822,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 171522303682918172}
     m_Modifications:
+    - target: {fileID: 237986279614897563, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 237986280338035906, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
       propertyPath: m_Name
       value: Pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 237986280338035906, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 237986280338035907, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
       propertyPath: m_RootOrder
@@ -882,9 +890,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1808764285315008190, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219413900825876546, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3510315994048783268, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 3671296396401366915, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
       propertyPath: _ammoAmount1
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736548144926274314, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8178106363235856865, guid: 08cd9cf3bd223f5479bfddac512896e6, type: 3}
       propertyPath: m_IsKinematic
