@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TurretController : MonoBehaviour
 {
 
-    public UnityEventEnemy onEnemyDeath;
+    //public UnityEventEnemy onEnemyDeath;
     private EnemyState currState;
     private float stun;
     [SerializeField] Transform _target;
