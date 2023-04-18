@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     // The object that should follow the mouse pointer
     private Weapon _followWeapon;
     private string _currentActionMap;
+    private string _currentAnimationBool;
 
     [Header("EXPOSED FOR DEBUG")]
     [SerializeField]private List<Weapon> _placedWeapons;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _animator.SetBool("NormalState", true);
+        _currentAnimationBool = null;
 
         lookLayers = LayerMask.GetMask("Ground") |
         LayerMask.GetMask("Weapon") |
@@ -91,8 +93,8 @@ public class PlayerController : MonoBehaviour
         _healthHandler.Health = PlayerState.Health;
         transform.position = PlayerState.Position;
         
-        _equippedWeapon?.DropWeapon();
-        _equippedWeapon = null;
+        EquippedWeapon?.DropWeapon();
+        EquippedWeapon = null;
 
         while (_placedWeapons.Count != 0) {
             Weapon currWeapon = _placedWeapons[0];
@@ -263,6 +265,7 @@ public class PlayerController : MonoBehaviour
         private set {
             _equippedWeapon = value;
             PlayerState.CurrentWeapon = _equippedWeapon;
+            AnimateEquippedWeapon();
         }
         get => _equippedWeapon;}
 
@@ -549,6 +552,18 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+
+    private void AnimateEquippedWeapon() {
+        if (EquippedWeapon == null) {
+            if (_currentAnimationBool == null) return;
+            _animator.SetBool(_currentAnimationBool, false);
+            _currentAnimationBool = null;
+        }
+        _currentAnimationBool = EquippedWeapon.AnimationBoolName;
+        _animator.SetBool(_currentAnimationBool, true);
+    }
+
+
     #endregion
 
     public void Pause(CallbackContext context) {

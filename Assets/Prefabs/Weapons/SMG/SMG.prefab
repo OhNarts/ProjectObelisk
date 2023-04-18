@@ -68,16 +68,19 @@ MonoBehaviour:
   _weaponItem: {fileID: 11400000, guid: c987ec85108fa614ca602e5c5ceb91dc, type: 2}
   _colliders:
   - {fileID: 7397744050278042452}
+  _animationBoolName: SmgHeld
   soundWhenFired:
     clip: {fileID: 8300000, guid: def2a9a94bd85d94e8efc64c2a94f692, type: 3}
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   soundWhenFireStopped:
     clip: {fileID: 0}
     volume: 0
     pitch: 0
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   _damage: 5
   _buffDamage: 7.5
   _weaponType: 0

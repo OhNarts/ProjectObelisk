@@ -118,6 +118,7 @@ MonoBehaviour:
   _colliders:
   - {fileID: 6705951156340071204}
   - {fileID: 7233522054617417602}
+  _animationBoolName: ShockTrapHeld
   soundWhenFired:
     clip: {fileID: 0}
     volume: 0
@@ -131,11 +132,15 @@ MonoBehaviour:
     source: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
   _damage: 0
+  _buffDamage: 0
   _weaponType: 0
   _thrownDamage: 0
   _thrownSpeed: 0
   _thrownStunDuration: 0
   knockbackVelocity: 0
+  buffKnockbackVelocity: 0
+  isBuffed: 0
+  buffRegion: {fileID: 0}
   _ammoAmount1: 10
   shockTime: 5
   shockRadius: 100

@@ -29,7 +29,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private WeaponItem _weaponItem; public WeaponItem WeaponItem { get => _weaponItem; }
     [SerializeField] private List<MeshCollider> _colliders; public List<MeshCollider> Colliders{get => _colliders;}
     // The damage an attack does
-
+    [SerializeField] private string _animationBoolName; public string AnimationBoolName{get => _animationBoolName;}
     [SerializeField] protected Sound soundWhenFired;
     [SerializeField] protected Sound soundWhenFireStopped;
     [SerializeField] protected float _damage;

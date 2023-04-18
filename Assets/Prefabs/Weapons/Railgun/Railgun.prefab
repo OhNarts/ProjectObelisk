@@ -115,16 +115,19 @@ MonoBehaviour:
   _weaponItem: {fileID: 11400000, guid: 5d72bc0daf005db44acfd56b2e8a360b, type: 2}
   _colliders:
   - {fileID: 7704837942250172078}
+  _animationBoolName: RailgunHeld
   soundWhenFired:
     clip: {fileID: 0}
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   soundWhenFireStopped:
     clip: {fileID: 8300000, guid: 87ae7b4e54936a546864e84feb441913, type: 3}
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   _damage: 30
   _buffDamage: 40
   _weaponType: 0

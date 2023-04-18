@@ -83,16 +83,19 @@ MonoBehaviour:
   _weaponItem: {fileID: 11400000, guid: 230c1ede6c9dd9c478b4ca0c98eb716a, type: 2}
   _colliders:
   - {fileID: 2740981652531127673}
+  _animationBoolName: PistolHeld
   soundWhenFired:
     clip: {fileID: 8300000, guid: 9e2053350bf3ebc4bb83b656a6ddd968, type: 3}
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   soundWhenFireStopped:
     clip: {fileID: 0}
     volume: 0
     pitch: 0
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   _damage: 10
   _buffDamage: 15
   _weaponType: 0
