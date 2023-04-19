@@ -110,7 +110,10 @@ public abstract class Weapon : MonoBehaviour
         _scale = transform.localScale;
         _holder = holder;
         gameObject.layer = _holder.layer;
-        transform.parent = equipPos;
+        Debug.Log("lossy = " + transform.lossyScale + "relative = " + transform.localScale);
+        transform.SetParent(equipPos, true);
+        Debug.Log("After: lossy = " + transform.lossyScale + "relative = " + transform.localScale);
+        // transform.parent = equipPos;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(_holder.transform.forward);
         foreach (MeshCollider collider in _colliders) {
@@ -145,7 +148,7 @@ public abstract class Weapon : MonoBehaviour
 
     private void DetatchHolder() {
         _holder = null;
-        transform.parent = null;
+        transform.SetParent(null, true);
 
         gameObject.layer = LayerMask.NameToLayer("Weapon");
 

@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour
                 SwitchActionMap("Planning");
                 _rb.velocity = Vector3.zero;
                 _rb.isKinematic = true;
+                _animator.SetInteger("WalkingDirection", (int) WalkDirection.NoDirection);
                 break;
             case GameState.PostCombat:
                 SwitchActionMap("Combat");
