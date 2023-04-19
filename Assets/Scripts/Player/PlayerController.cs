@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
 
+public enum WalkDirection {Forward = 1, Backward = 2, Right = 3, Left = 4, NoDirection = 0}
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private HealthHandler _healthHandler; public HealthHandler HealthHandler { get => _healthHandler; }
@@ -74,6 +76,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.LookAt(_lookPt);
             if (!_rolling) _rb.velocity = _velocity;
+            AnimateWalk();
         } 
         if (_followWeapon != null) {
             var gotoPt = new Vector3(_lookPt.x, _lookPt.y + .5f, _lookPt.z);
@@ -200,6 +203,26 @@ public class PlayerController : MonoBehaviour
         rotatedInput.Normalize();
         // Applies the velocity
         _velocity = (rotatedInput * _speed);
+        if (context.started) _animator.SetTrigger("JustStartWalking");
+    }
+
+    private void AnimateWalk () {
+        float dot = Vector3.Dot(_velocity.normalized, transform.forward.normalized);
+        Vector3 cross = Vector3.Cross(_velocity.normalized, transform.forward.normalized);
+        float crossMag = Vector3.Magnitude(cross);
+        if (dot == 0 && crossMag == 0) {
+            _animator.SetInteger("WalkingDirection", (int) WalkDirection.NoDirection);
+            return;
+        }
+        if (crossMag < 1) {
+            if (dot > 0) {
+                _animator.SetInteger("WalkingDirection", (int) WalkDirection.Forward);
+            } else {
+                _animator.SetInteger("WalkingDirection", (int) WalkDirection.Backward);
+            }
+        } else  {
+            Debug.Log(cross);
+        }
     }
 
     public void Look(CallbackContext context)
