@@ -56,6 +56,7 @@ public class HealthHandler : MonoBehaviour
     /// <param name="info"></param>
     public virtual void Damage(DamageInfo info)
     {
+        if (info.attacker == null) return;
         // no team damage
         if (info.attacker.layer == gameObject.layer) return;
         onHit?.Invoke(info);
