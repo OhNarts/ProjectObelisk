@@ -3353,8 +3353,12 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6079861811088615501, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
+      propertyPath: _ammoReward.m_values.Array.data[0].data.Array.data[0]
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079861811088615501, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: _ammoReward.m_values.Array.data[0].data.Array.data[1]
-      value: 30
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8784656682481423841, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: m_Mesh

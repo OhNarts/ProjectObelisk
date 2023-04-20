@@ -92,8 +92,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6859750589310084287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0.046138, z: 0}
+  m_LocalScale: {x: 1.2917, y: 1.9375501, z: 1.2917}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 331357946478038311}
@@ -146,6 +146,12 @@ MonoBehaviour:
   shockRadius: 100
   _closedModel: {fileID: 3558912275383447396}
   _openModel: {fileID: 3830041948838387461}
+  _shockSound:
+    clip: {fileID: 8300000, guid: ae591ccbf96437546a9c90b4846367f6, type: 3}
+    volume: 0.75
+    pitch: 0.11
+    source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
 --- !u!114 &5842820218524378183
 MonoBehaviour:
   m_ObjectHideFlags: 0
