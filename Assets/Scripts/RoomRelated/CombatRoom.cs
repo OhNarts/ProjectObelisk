@@ -21,6 +21,7 @@ public class CombatRoom : Room
     private NavMeshDataInstance _navMeshInstance;
     private bool _roomCompleted; public bool RoomCompleted {get => _roomCompleted;}
     private List<EnemyController> _aliveEnemies;
+    private List<TurretController> _turrets;
     private List<Weapon> _droppedWeapons;
     private PlayerController _player;
     private GameObject _cameraHolder;
@@ -32,6 +33,7 @@ public class CombatRoom : Room
         _navMesh.position = transform.position;
         _navMeshInstance = NavMesh.AddNavMeshData(_navMesh);
         _aliveEnemies = new List<EnemyController>();
+        _turrets = new List<TurretController>();
         _droppedWeapons = new List<Weapon>();
         _boundaryColliders.SetActive(false);
         _roomCompleted = false;
@@ -72,6 +74,11 @@ public class CombatRoom : Room
             foreach (EnemyController enemy in _aliveEnemies) {
                 enemy.Target = _player.transform;
             }
+
+            foreach(TurretController turret in _turrets)
+            {
+                turret.Target = _player.transform;
+            }
         }
 
         _player = null;
@@ -85,6 +92,12 @@ public class CombatRoom : Room
         while (_aliveEnemies.Count != 0) {
             var currentEnemy = _aliveEnemies[0];
             _aliveEnemies.RemoveAt(0);
+            Destroy(currentEnemy.gameObject);
+        }
+        while (_turrets.Count != 0)
+        {
+            var currentEnemy = _turrets[0];
+            _turrets.RemoveAt(0);
             Destroy(currentEnemy.gameObject);
         }
         while (_droppedWeapons.Count != 0) {
@@ -122,7 +135,13 @@ public class CombatRoom : Room
     {
         _aliveEnemies.Remove(enemy);
         if (enemy.EquippedWeapon != null) _droppedWeapons.Add(enemy.EquippedWeapon);
-        if (_aliveEnemies.Count == 0) RoomFinish();
+        if (_aliveEnemies.Count == 0 && _turrets.Count == 0) RoomFinish();
+    }
+
+    private void onTurretDeath(TurretController turret)
+    {
+        _turrets.Remove(turret);
+        if (_aliveEnemies.Count == 0 && _turrets.Count == 0) RoomFinish();
     }
 
     private void RoomFinish()
@@ -139,7 +158,7 @@ public class CombatRoom : Room
         {
             GameObject enemyInstance = Instantiate(_enemySpawnPoints[enemyTransform],
             enemyTransform.position, Quaternion.identity);
-            EnemyController enemyControllerInstance = enemyInstance.GetComponent<EnemyController>(); 
+            EnemyController enemyControllerInstance = enemyInstance.GetComponent<EnemyController>();
             enemyControllerInstance.onEnemyDeath.AddListener(OnEnemyDeath);
             _aliveEnemies.Add(enemyControllerInstance);
         }
