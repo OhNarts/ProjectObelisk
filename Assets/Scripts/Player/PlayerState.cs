@@ -184,11 +184,12 @@ public class PlayerState : ScriptableObject
 
     public static void RevertToLevelStart() {
         
-        _instance._currentInfo = _instance._levelStartInfo.CreateCopy();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+         _instance._currentInfo = _instance._levelStartInfo.CreateCopy();
 
-        OnPlayerStateRevert?.Invoke(Instance, new OnPlayerStateRevertArgs(
-            OnPlayerStateRevertArgs.PlayerRevertType.LevelStart
-        ));
+        // OnPlayerStateRevert?.Invoke(Instance, new OnPlayerStateRevertArgs(
+        //     OnPlayerStateRevertArgs.PlayerRevertType.LevelStart
+        // ));
     }
 
     private static void OnSceneLoaded(Scene scene, LoadSceneMode mode) {

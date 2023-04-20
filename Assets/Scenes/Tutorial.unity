@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-324616
+  m_Name: pb_Mesh-26236
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -687,6 +687,7 @@ GameObject:
   m_Component:
   - component: {fileID: 231672970}
   - component: {fileID: 231672969}
+  - component: {fileID: 231672971}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -771,6 +772,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &231672971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231672968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!4 &505786923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5836779529946551255, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
@@ -1551,7 +1572,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-324628
+  m_Name: pb_Mesh-26248
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1747,6 +1768,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 112314666}
     m_Modifications:
+    - target: {fileID: 1974719552290095404, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.14
+      objectReference: {fileID: 0}
     - target: {fileID: 4627356951988150135, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: adjacentRooms.m_keys.Array.size
       value: 2
@@ -1764,6 +1789,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 166812559}
     - target: {fileID: 4627356951988150135, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
+      propertyPath: _enemySpawnPoints.m_keys.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627356951988150135, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: adjacentRooms.m_values.Array.data[0]
       value: 
       objectReference: {fileID: 1632150424}
@@ -1771,6 +1800,10 @@ PrefabInstance:
       propertyPath: adjacentRooms.m_values.Array.data[1]
       value: 
       objectReference: {fileID: 897840824}
+    - target: {fileID: 4627356951988150135, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
+      propertyPath: _enemySpawnPoints.m_values.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4765236425176561511, guid: 4898fbbece80f124c9f8212ea802b99e, type: 3}
       propertyPath: m_Mesh
       value: 
