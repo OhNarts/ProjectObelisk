@@ -33,7 +33,7 @@ RectTransform:
   m_Children:
   - {fileID: 1131685330377085675}
   m_Father: {fileID: 6934517008993007049}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -320,14 +320,14 @@ Transform:
   m_GameObject: {fileID: 6934517008993007048}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.06, z: -8}
-  m_LocalScale: {x: 0.73, y: 0.75013804, z: 0.73}
+  m_LocalScale: {x: 0.73, y: 1.188771, z: 0.73}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6934517010316512081}
   - {fileID: 6934517009726515511}
   - {fileID: 6934517009527330665}
-  - {fileID: 1037578184577606058}
   - {fileID: 5840432547351427773}
+  - {fileID: 4918041218199332669}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -418,6 +418,7 @@ MonoBehaviour:
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   _health: 100
   _isInvincible: 0
 --- !u!114 &6934517008993007053
@@ -438,7 +439,7 @@ MonoBehaviour:
   healthHandler: {fileID: 6934517008993007052}
   healthBar: {fileID: 242493001770220494}
   distToAttack: 8
-  weapon: {fileID: 1037578184577606059}
+  weapon: {fileID: 4918041218199332668}
   equipPos: {fileID: 6934517009726515511}
   _target: {fileID: 0}
   knockbackTime: 0.5
@@ -815,32 +816,28 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!1001 &7927063110082572075
+--- !u!1001 &2604424552421419452
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 6934517008993007049}
     m_Modifications:
-    - target: {fileID: 2408261613585002989, guid: f064335c4ae42d942b735974e840385c, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 6945854898439343745, guid: f064335c4ae42d942b735974e840385c, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6945854898439343745, guid: f064335c4ae42d942b735974e840385c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.3143062
+      value: 8.26291
       objectReference: {fileID: 0}
     - target: {fileID: 6945854898439343745, guid: f064335c4ae42d942b735974e840385c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.16
+      value: 2.79
       objectReference: {fileID: 0}
     - target: {fileID: 6945854898439343745, guid: f064335c4ae42d942b735974e840385c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.687809
+      value: -1.19
       objectReference: {fileID: 0}
     - target: {fileID: 6945854898439343745, guid: f064335c4ae42d942b735974e840385c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -874,29 +871,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shotgun
       objectReference: {fileID: 0}
-    - target: {fileID: 6945854898439343772, guid: f064335c4ae42d942b735974e840385c, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6945854898702257161, guid: f064335c4ae42d942b735974e840385c, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6945854899553976442, guid: f064335c4ae42d942b735974e840385c, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f064335c4ae42d942b735974e840385c, type: 3}
---- !u!4 &1037578184577606058 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6945854898439343745, guid: f064335c4ae42d942b735974e840385c, type: 3}
-  m_PrefabInstance: {fileID: 7927063110082572075}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1037578184577606059 stripped
+--- !u!114 &4918041218199332668 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6945854898439343744, guid: f064335c4ae42d942b735974e840385c, type: 3}
-  m_PrefabInstance: {fileID: 7927063110082572075}
+  m_PrefabInstance: {fileID: 2604424552421419452}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -904,3 +884,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5bc7e2440d9634dab8da89d3d411af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &4918041218199332669 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6945854898439343745, guid: f064335c4ae42d942b735974e840385c, type: 3}
+  m_PrefabInstance: {fileID: 2604424552421419452}
+  m_PrefabAsset: {fileID: 0}

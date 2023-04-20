@@ -11,6 +11,7 @@ public class ShockTrap : Weapon
 
     [SerializeField] private GameObject _closedModel;
     [SerializeField] private GameObject _openModel;
+    [SerializeField] private Sound _shockSound;
 
     private void Awake() {
         CloseTrap();
@@ -29,6 +30,8 @@ public class ShockTrap : Weapon
     // }
 
     public void Shock() {
+        AudioManager.Play(_shockSound);
+
         Destroy(gameObject);
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, shockRadius);

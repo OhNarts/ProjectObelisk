@@ -8,12 +8,12 @@ public class AudioManager : MonoBehaviour
 
     #region Singleton Stuff
     private static readonly object key = new object();
-    private static GameManager _instance;
-    public static GameManager Instance
+    private static AudioManager _instance;
+    public static AudioManager Instance
     {
         get
         {
-            if (_instance == null) { Debug.LogError("Game Manager was null"); }
+            if (_instance == null) { Debug.LogError("Audio Manager was null"); }
             return _instance;
         }
     }
@@ -24,21 +24,21 @@ public class AudioManager : MonoBehaviour
 
 
     void Awake() {
-        transform.parent = null;
-        DontDestroyOnLoad(gameObject);
-
-        // foreach (Sound s in sounds) {
-        //     s.source = gameObject.AddComponent<AudioSource>();
-        //     s.source.clip = s.clip;
-        //     s.source.volume = s.volume;
-        //     s.source.pitch = s.pitch;
-        // }
+        lock (key)
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+                transform.parent = null;
+                DontDestroyOnLoad(gameObject);
+            }
+        }
     }
 
     public static void Play(Sound s) {
         if (s.clip == null)
             return;
-        AudioSource.PlayClipAtPoint(s.clip, s.position, volume: s.volume);
+        AudioSource.PlayClipAtPoint(s.clip, Camera.main.transform.position, volume: s.volume);
         // s.source.Play();
     }
 }
