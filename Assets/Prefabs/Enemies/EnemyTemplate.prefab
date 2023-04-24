@@ -409,6 +409,12 @@ MonoBehaviour:
       m_Calls: []
   healthHandler: {fileID: 171522303682918169}
   healthBar: {fileID: 5939620324048102303}
+  enemyData:
+    enemyType: 
+    needsCover: 1
+    distToAttack: 0
+    weapon: {fileID: 0}
+    equipPos: {fileID: 0}
   distToAttack: 12
   weapon: {fileID: 1226553608484577439}
   equipPos: {fileID: 171522302949338082}

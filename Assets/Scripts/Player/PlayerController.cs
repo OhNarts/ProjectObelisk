@@ -348,16 +348,16 @@ public class PlayerController : MonoBehaviour
             return;
         }
         if (context.started) {
-            Debug.Log("started");
+            // Debug.Log("started");
             EquippedWeapon.Fire1Start(true);
         }
         else if (context.canceled)
         {
-            Debug.Log("cancelled");
+            // Debug.Log("cancelled");
             EquippedWeapon.Fire1Stop(true);
             
         } else if (context.performed) {
-            Debug.Log("held");
+            // Debug.Log("held");
             EquippedWeapon.Fire1Held(true);
         }
     }
@@ -400,7 +400,7 @@ public class PlayerController : MonoBehaviour
         foreach(Collider collider in colliders) {
             Transform hitTransform = collider.transform.root;
             HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();
-            Debug.Log(hitHealth != null);
+            // Debug.Log(hitHealth != null);
             if (hitHealth != null) {
                 hitHealth.Damage(damageInfo);
                 var enemy = collider.GetComponent<EnemyController>();
