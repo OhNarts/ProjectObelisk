@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     // The object that should follow the mouse pointer
     private Weapon _followWeapon;
+    private LineRenderer laserSight;
     private string _currentActionMap;
     private string _currentAnimationBool;
 
@@ -56,11 +57,24 @@ public class PlayerController : MonoBehaviour
         _rolling = false;
         _lastRolled = -1;
         _placedWeapons = new List<Weapon>();
+        
+        laserSight = gameObject.AddComponent<LineRenderer>();
+        InitializeLaserSight(laserSight);
+        laserSight.enabled = false;
 
         PlayerState.Position = transform.position;
         PlayerState.OnPlayerStateRevert += RevertPlayer;
         GameManager.OnGameStateChanged += OnGameStateChange;
         GameManager.OnGamePauseChange += OnGamePauseChange;
+    }
+
+    private void InitializeLaserSight(LineRenderer laserSight) {
+        laserSight.positionCount = 2;
+        laserSight.startWidth = 0.025f;
+        laserSight.endWidth = 0.025f;
+        laserSight.startColor = Color.red;
+        laserSight.endColor = Color.red;
+        laserSight.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
     }
 
     private void OnDisable() {
@@ -81,6 +95,28 @@ public class PlayerController : MonoBehaviour
         if (_followWeapon != null) {
             var gotoPt = new Vector3(_lookPt.x, _lookPt.y + .5f, _lookPt.z);
             _followWeapon.transform.position = gotoPt;
+        }
+        if (EquippedWeapon != null) {
+            laserSight.enabled = true;
+            laserSight.SetPosition(0, EquippedWeapon.AttackPoint.position);
+
+            Vector3 endPos = new Vector3(_lookPt.x, EquippedWeapon.AttackPoint.position.y, _lookPt.z);
+            Vector3 dir = (endPos - EquippedWeapon.AttackPoint.position).normalized * 50;
+            dir += EquippedWeapon.AttackPoint.position;
+            laserSight.SetPosition(1, dir); // use endPos if you want line to end at mouse point. use dir for infinite length.
+
+            RaycastHit hit;
+            if (Physics.Raycast(EquippedWeapon.AttackPoint.position, transform.forward, out hit)) {
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+                    laserSight.startColor = Color.green;
+                    laserSight.endColor = Color.green;
+                } else {
+                    laserSight.startColor = Color.red;
+                    laserSight.endColor = Color.red;
+                }
+            }
+        } else {
+            laserSight.enabled = false;
         }
     }
 
@@ -112,17 +148,20 @@ public class PlayerController : MonoBehaviour
             case GameState.Combat:
                 SwitchActionMap("Combat");
                 _rb.isKinematic = false;
+                //Cursor.visible = false;
                 break;
             case GameState.Plan:
                 SwitchActionMap("Planning");
                 _rb.velocity = Vector3.zero;
                 _rb.isKinematic = true;
                 _animator.SetInteger("WalkingDirection", (int) WalkDirection.NoDirection);
+                //Cursor.visible = true;
                 break;
             case GameState.PostCombat:
                 SwitchActionMap("Combat");
                 Debug.Log("Game Reverted");
                 _rb.isKinematic = false;
+                //Cursor.visible = true;
                 if (e.TriggeredByRevert) break;
                 if (EquippedWeapon != null) 
                 {

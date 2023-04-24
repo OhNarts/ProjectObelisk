@@ -23,7 +23,7 @@ public abstract class Weapon : MonoBehaviour
 
     [Header("Attack Point")]
     // Where the attack comes from (i.e. where bullets come from or where melee hits) 
-    [SerializeField] protected Transform _attackPoint;
+    [SerializeField] protected Transform _attackPoint; public Transform AttackPoint { get => _attackPoint; }
 
     [Header("Weapon Info")]
     [SerializeField] private WeaponItem _weaponItem; public WeaponItem WeaponItem { get => _weaponItem; }
@@ -65,16 +65,8 @@ public abstract class Weapon : MonoBehaviour
     }}
 
     private void Start() {
-        soundWhenFired.source = gameObject.AddComponent<AudioSource>();
-        //Debug.Log("Audio source added");
-        soundWhenFired.source.clip = soundWhenFired.clip;
-        soundWhenFired.source.volume = soundWhenFired.volume;
-        soundWhenFired.source.pitch = soundWhenFired.pitch;
-
-        soundWhenFireStopped.source = gameObject.AddComponent<AudioSource>();
-        soundWhenFireStopped.source.clip = soundWhenFireStopped.clip;
-        soundWhenFireStopped.source.volume = soundWhenFireStopped.volume;
-        soundWhenFireStopped.source.pitch = soundWhenFireStopped.pitch;
+        InitializeSound(soundWhenFired);
+        InitializeSound(soundWhenFireStopped);
     }
 
     #region Events
@@ -230,7 +222,13 @@ public abstract class Weapon : MonoBehaviour
             AudioManager.Play(sound);
             // sound.source.Play();
         }
-            
     }
+
+    private void InitializeSound(Sound sound) {
+        sound.source = gameObject.AddComponent<AudioSource>();
+        sound.source.clip = sound.clip;
+        sound.source.volume = sound.volume;
+        sound.source.pitch = sound.pitch;
+    } 
 }
 
