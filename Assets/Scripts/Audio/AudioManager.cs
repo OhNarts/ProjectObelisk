@@ -6,21 +6,39 @@ public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
 
-    void Awake() {
-        transform.parent = null;
-        DontDestroyOnLoad(gameObject);
+    #region Singleton Stuff
+    private static readonly object key = new object();
+    private static AudioManager _instance;
+    public static AudioManager Instance
+    {
+        get
+        {
+            if (_instance == null) { Debug.LogError("Audio Manager was null"); }
+            return _instance;
+        }
+    }
+    #endregion
 
-        // foreach (Sound s in sounds) {
-        //     s.source = gameObject.AddComponent<AudioSource>();
-        //     s.source.clip = s.clip;
-        //     s.source.volume = s.volume;
-        //     s.source.pitch = s.pitch;
-        // }
+
+
+
+
+    void Awake() {
+        lock (key)
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+                transform.parent = null;
+                DontDestroyOnLoad(gameObject);
+            }
+        }
     }
 
-    // public void Play(Sound s) {
-    //     if (s == null)
-    //         return;
-    //     s.source.Play();
-    // }
+    public static void Play(Sound s) {
+        if (s.clip == null)
+            return;
+        AudioSource.PlayClipAtPoint(s.clip, Camera.main.transform.position, volume: s.volume);
+        // s.source.Play();
+    }
 }

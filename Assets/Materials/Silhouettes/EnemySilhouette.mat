@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Silhouette
+  m_Name: EnemySilhouette
   m_Shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -108,12 +108,12 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.3679245, g: 0.14633362, b: 0, a: 0.18431373}
-    - _Color: {r: 0.3679245, g: 0.14633362, b: 0, a: 0.18431373}
+    - _BaseColor: {r: 0.1981132, g: 0.019624421, b: 0.12425578, a: 1}
+    - _Color: {r: 0.1981132, g: 0.019624421, b: 0.12425578, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &7005378357177506382
+--- !u!114 &5751275396192829992
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

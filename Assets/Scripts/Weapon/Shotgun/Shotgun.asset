@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   WeaponName: ShotGun
-  AmmoCost1: 10
+  AmmoCost1: 5
   AmmoType1: 3
-  AmmoCost2: 10
+  AmmoCost2: 5
   AmmoType2: 4
   gameObject: {fileID: 6945854898439343772, guid: f064335c4ae42d942b735974e840385c, type: 3}
   Sprite: {fileID: 21300000, guid: 737c43978a7326b49af7fd12445face6, type: 3}

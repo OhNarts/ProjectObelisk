@@ -15,6 +15,7 @@ public class Railgun : Weapon
     [SerializeField] private float bulletSpeed;
     [SerializeField] private GameObject bullet;
     [SerializeField] private float waitSeconds; public float WaitSeconds{get => waitSeconds;}
+    [SerializeField] private Sound _chargeSound;
 
     private float lastFired;
     private float timePressed;
@@ -31,6 +32,7 @@ public class Railgun : Weapon
 
     public override void Fire1Start(bool useAmmo = false)
     {
+        AudioManager.Play(_chargeSound);
         timePressed = Time.unscaledTime;
         if (Time.unscaledTime - lastFired < coolDownTime || AmmoAmount1 == 0) {
             timePressed = -1; 

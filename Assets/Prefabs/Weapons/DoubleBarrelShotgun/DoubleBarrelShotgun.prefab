@@ -69,22 +69,29 @@ MonoBehaviour:
   - {fileID: 2535451565951687427}
   - {fileID: 1607064973261913091}
   - {fileID: 5303761032066431544}
+  _animationBoolName: DoubleBarrelHeld
   soundWhenFired:
     clip: {fileID: 8300000, guid: c0087417c63ebb142a34aab88a9b5b20, type: 3}
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   soundWhenFireStopped:
     clip: {fileID: 8300000, guid: f80060add406a3f4bbbd699ba1c3bf92, type: 3}
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   _damage: 35
+  _buffDamage: 40
   _weaponType: 0
   _thrownDamage: 0
   _thrownSpeed: 5
   _thrownStunDuration: 25
   knockbackVelocity: 1
+  buffKnockbackVelocity: 2
+  isBuffed: 0
+  buffRegion: {fileID: 0}
   _ammoAmount1: 2
   coolDownTime: 2
   bullet: {fileID: 3667196397110752525, guid: ffa3f4db51b56144baf59f9e3b8e5687, type: 3}

@@ -83,21 +83,33 @@ MonoBehaviour:
   _weaponItem: {fileID: 11400000, guid: 230c1ede6c9dd9c478b4ca0c98eb716a, type: 2}
   _colliders:
   - {fileID: 2740981652531127673}
+  _animationBoolName: PistolHeld
   soundWhenFired:
     clip: {fileID: 8300000, guid: 9e2053350bf3ebc4bb83b656a6ddd968, type: 3}
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
+  soundWhenFireStopped:
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   _damage: 10
+  _buffDamage: 15
   _weaponType: 0
   _thrownDamage: 0
   _thrownSpeed: 25
   _thrownStunDuration: 5
   knockbackVelocity: 1
+  buffKnockbackVelocity: 2
+  isBuffed: 0
+  buffRegion: {fileID: 0}
   _ammoAmount1: 10
   coolDownTime: 0.3
   range: 1e+12
-  bulletSpeed: 20
+  bulletSpeed: 35
   bullet: {fileID: 3667196397110752525, guid: ffa3f4db51b56144baf59f9e3b8e5687, type: 3}
 --- !u!54 &8178106363235856865
 Rigidbody:

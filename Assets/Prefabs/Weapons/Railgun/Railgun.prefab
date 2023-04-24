@@ -56,7 +56,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2200795777445211699}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.575, z: -0.1}
+  m_LocalPosition: {x: -0.428, y: 0.575, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -91,7 +91,7 @@ Transform:
   m_GameObject: {fileID: 5317201120755570408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.74367, y: 0.74367, z: 0.74367}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2955703402310940820}
@@ -115,27 +115,40 @@ MonoBehaviour:
   _weaponItem: {fileID: 11400000, guid: 5d72bc0daf005db44acfd56b2e8a360b, type: 2}
   _colliders:
   - {fileID: 7704837942250172078}
+  _animationBoolName: RailgunHeld
   soundWhenFired:
     clip: {fileID: 0}
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   soundWhenFireStopped:
-    clip: {fileID: 8300000, guid: 87ae7b4e54936a546864e84feb441913, type: 3}
+    clip: {fileID: 8300000, guid: eca295f2bee030a4fb65901f0c4b3c85, type: 3}
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   _damage: 30
+  _buffDamage: 40
   _weaponType: 0
   _thrownDamage: 0
   _thrownSpeed: 25
   _thrownStunDuration: 5
   knockbackVelocity: 5
+  buffKnockbackVelocity: 6
+  isBuffed: 0
+  buffRegion: {fileID: 0}
   _ammoAmount1: 5
   coolDownTime: 0
   bulletSpeed: 50
   bullet: {fileID: 3667196397110752525, guid: fea7c68f0169cef49814b2d4c5b863c3, type: 3}
-  waitSeconds: 1
+  waitSeconds: 1.5
+  _chargeSound:
+    clip: {fileID: 8300000, guid: c1576f9883622bb42bdc6dbfe66d26d9, type: 3}
+    volume: 0.75
+    pitch: 0
+    source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
 --- !u!54 &1003591532308817985
 Rigidbody:
   m_ObjectHideFlags: 0

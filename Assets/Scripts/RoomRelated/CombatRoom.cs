@@ -60,6 +60,7 @@ public class CombatRoom : Room
         _boundaryColliders.SetActive(true);
         _planning = true;
         GameManager.CurrentState = GameState.Plan;
+        player.transform.LookAt(transform);
         OnRoomPlanStart?.Invoke(this, EventArgs.Empty);
     }
 
@@ -95,6 +96,7 @@ public class CombatRoom : Room
             }
         }
         _roomCompleted = false;
+        _rewardObject.gameObject.SetActive(false);
     }
 
     private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) {
