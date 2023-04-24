@@ -72,9 +72,13 @@ public class PlayerController : MonoBehaviour
         laserSight.positionCount = 2;
         laserSight.startWidth = 0.025f;
         laserSight.endWidth = 0.025f;
-        laserSight.startColor = Color.red;
-        laserSight.endColor = Color.red;
+        setLaserColor(laserSight, Color.red);
         laserSight.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
+    }
+
+    private void setLaserColor(LineRenderer laserSight, Color color) {
+        laserSight.startColor = color;
+        laserSight.endColor = color;
     }
 
     private void OnDisable() {
@@ -98,38 +102,27 @@ public class PlayerController : MonoBehaviour
         }
         if (EquippedWeapon != null) {
 
-            //TODO: needs more pretty
+            //TODO: needs even more pretty? :/
             
             laserSight.enabled = true;
-            laserSight.SetPosition(0, EquippedWeapon.AttackPoint.position);
+            Vector3 startPos = EquippedWeapon.AttackPoint.position;
+            laserSight.SetPosition(0, startPos);
 
-            Vector3 endPos = new Vector3(_lookPt.x, EquippedWeapon.AttackPoint.position.y, _lookPt.z);
-            Vector3 dir = (endPos - EquippedWeapon.AttackPoint.position).normalized * 50;
-            dir += EquippedWeapon.AttackPoint.position;
-             // use endPos if you want line to end at mouse point. use dir for infinite length.
-
+            Vector3 endPos = new Vector3(_lookPt.x, startPos.y, _lookPt.z);
+            float scale = 50f;
+            
             RaycastHit hit;
-            if (Physics.Raycast(EquippedWeapon.AttackPoint.position, transform.forward, out hit)) {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground")
-                    || hit.collider.gameObject.layer == LayerMask.NameToLayer("Interactable")
-                    || hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
-                    Vector3 dir2 = (endPos - EquippedWeapon.AttackPoint.position).normalized * hit.distance;
-                    dir2 += EquippedWeapon.AttackPoint.position;
-                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
-                        laserSight.startColor = Color.green;
-                        laserSight.endColor = Color.green;
-                    } else {
-                        laserSight.startColor = Color.red;
-                        laserSight.endColor = Color.red;
-                    }
-                    dir = dir2;
-                } else {
-                    laserSight.startColor = Color.red;
-                    laserSight.endColor = Color.red;
-                }
+            if (Physics.Raycast(startPos, transform.forward, out hit)) {
+                var hitLayer = hit.collider.gameObject.layer;
+                scale = (hitLayer == LayerMask.NameToLayer("Ground") || hitLayer == LayerMask.NameToLayer("Interactable")
+                    || hitLayer == LayerMask.NameToLayer("Enemy")) ? hit.distance : 50f;
+                setLaserColor(laserSight, hitLayer == LayerMask.NameToLayer("Enemy") ? Color.green : Color.red);
             }
 
-            laserSight.SetPosition(1, dir);
+            // use endPos if you want line to end at mouse point. use dirEndPos for infinite length.
+            Vector3 dirEndPos = (endPos - startPos).normalized * scale;
+            dirEndPos += startPos; 
+            laserSight.SetPosition(1, dirEndPos);
         } else {
             laserSight.enabled = false;
         }
