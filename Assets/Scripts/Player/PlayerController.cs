@@ -97,24 +97,39 @@ public class PlayerController : MonoBehaviour
             _followWeapon.transform.position = gotoPt;
         }
         if (EquippedWeapon != null) {
+
+            //TODO: needs more pretty
+            
             laserSight.enabled = true;
             laserSight.SetPosition(0, EquippedWeapon.AttackPoint.position);
 
             Vector3 endPos = new Vector3(_lookPt.x, EquippedWeapon.AttackPoint.position.y, _lookPt.z);
             Vector3 dir = (endPos - EquippedWeapon.AttackPoint.position).normalized * 50;
             dir += EquippedWeapon.AttackPoint.position;
-            laserSight.SetPosition(1, dir); // use endPos if you want line to end at mouse point. use dir for infinite length.
+             // use endPos if you want line to end at mouse point. use dir for infinite length.
 
             RaycastHit hit;
             if (Physics.Raycast(EquippedWeapon.AttackPoint.position, transform.forward, out hit)) {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
-                    laserSight.startColor = Color.green;
-                    laserSight.endColor = Color.green;
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground")
+                    || hit.collider.gameObject.layer == LayerMask.NameToLayer("Interactable")
+                    || hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+                    Vector3 dir2 = (endPos - EquippedWeapon.AttackPoint.position).normalized * hit.distance;
+                    dir2 += EquippedWeapon.AttackPoint.position;
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+                        laserSight.startColor = Color.green;
+                        laserSight.endColor = Color.green;
+                    } else {
+                        laserSight.startColor = Color.red;
+                        laserSight.endColor = Color.red;
+                    }
+                    dir = dir2;
                 } else {
                     laserSight.startColor = Color.red;
                     laserSight.endColor = Color.red;
                 }
             }
+
+            laserSight.SetPosition(1, dir);
         } else {
             laserSight.enabled = false;
         }
