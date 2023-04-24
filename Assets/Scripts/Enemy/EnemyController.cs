@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private EnemySerializable.EnemyData enemyData;
     [SerializeField] private float distToAttack;
     [SerializeField] private Weapon weapon; public Weapon EquippedWeapon {get => weapon;}
+    [SerializeField] private GameObject weaponObject;
     [SerializeField] private Transform equipPos;
 
     [SerializeField] private Transform _target;
@@ -41,6 +42,10 @@ public class EnemyController : MonoBehaviour
     {
         currState = EnemyState.Idle;
         agent = transform.GetComponent<NavMeshAgent>();
+        if (weaponObject != null) {
+            GameObject weaponInstance = Instantiate(weaponObject, equipPos.position, transform.rotation);
+            weapon = weaponInstance.GetComponent<Weapon>();
+        }
         weapon.PickUpWeapon(gameObject, equipPos);
         CreateHealthBar();
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
