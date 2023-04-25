@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public enum EnemyState { Idle, Chase, Attack, Stunned }
+public enum EnemyState { Idle, Chase, Attack, Stunned, Hide }
 public class EnemyController : MonoBehaviour
 {
     public UnityEventEnemy onEnemyDeath;
@@ -13,13 +13,16 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     private AmmoDictionary ammo;
     private float stun;
+    private float hideTimer;
     
     [SerializeField] private HealthHandler healthHandler;
     [SerializeField] private GameObject healthBar;
     private Camera mainCamera;
 
+    [SerializeField] private EnemySerializable.EnemyData enemyData;
     [SerializeField] private float distToAttack;
     [SerializeField] private Weapon weapon; public Weapon EquippedWeapon {get => weapon;}
+    [SerializeField] private GameObject weaponObject;
     [SerializeField] private Transform equipPos;
 
     [SerializeField] private Transform _target;
@@ -39,6 +42,10 @@ public class EnemyController : MonoBehaviour
     {
         currState = EnemyState.Idle;
         agent = transform.GetComponent<NavMeshAgent>();
+        if (weaponObject != null) {
+            GameObject weaponInstance = Instantiate(weaponObject, equipPos.position, transform.rotation);
+            weapon = weaponInstance.GetComponent<Weapon>();
+        }
         weapon.PickUpWeapon(gameObject, equipPos);
         CreateHealthBar();
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
@@ -51,7 +58,25 @@ public class EnemyController : MonoBehaviour
         switch (currState)
         {
             case EnemyState.Idle:
-                if (_target != null) currState = EnemyState.Chase;
+                if (_target != null)
+                {
+                    if (enemyData.needsCover)
+                    {
+                        //Debug.Log("Enemy needs cover");
+                        Vector3 targetCoverNode = new Vector3(0.0f, 0.0f, 0.0f);
+                        bool foundCover = CoverFinder.Instance.FindCover(transform, _target, ref targetCoverNode);
+                        //bool foundCover = CoverFinder.Instance.FindCover(gameObject.transform, _target, targetCoverNode);
+                        //Debug.Log("found cover? " + foundCover);
+                        //Debug.Log("target cover node: " + targetCoverNode);
+                        if (foundCover)
+                        {
+                            MoveToCover(targetCoverNode);
+                            break;
+                        }
+                    }
+
+                    currState = EnemyState.Chase;
+                }
                 break;
 
             case EnemyState.Chase:
@@ -70,6 +95,17 @@ public class EnemyController : MonoBehaviour
                 stun -= Time.deltaTime;
                 if (stun <= 0.0f) {
                     currState = EnemyState.Idle;
+                }
+                break;
+            case EnemyState.Hide:
+                Hide();
+                hideTimer -= Time.deltaTime;
+                
+                // if AI was in cover and timer has run out, go back to chasing
+                if (hideTimer <= 0.0f) 
+                {
+                    // go back to chasing
+                    currState = EnemyState.Chase;
                 }
                 break;
         }
@@ -103,6 +139,35 @@ public class EnemyController : MonoBehaviour
             currState = EnemyState.Stunned;
         }
         agent.isStopped = true;
+    }
+
+    // navigates to cover node
+    public void MoveToCover(Vector3 targetCoverPos) 
+    {
+        // Debug.Log("Moving to cover");
+        if (agent.destination != targetCoverPos)
+        {
+            agent.SetDestination(targetCoverPos);
+        }
+        
+        agent.isStopped = false;
+        if (Vector3.Distance(targetCoverPos, transform.position) < 2.0f)
+        {
+            Hide();
+        }
+    }
+
+    // Currently just keeps track of time spent hiding at cover node
+    public void Hide()
+    {
+        if (currState != EnemyState.Hide)
+        {
+            // initialize hideTimer
+            hideTimer = 2.0f;
+            currState = EnemyState.Hide;
+        }
+        
+        // stretch goal: peek
     }
     #endregion
 

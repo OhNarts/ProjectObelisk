@@ -111,9 +111,9 @@ public class CombatRoom : Room
             gameObject.SetActive(false);
         } else if(!_planning && GameManager.CurrentState == GameState.PostCombat) // You should see other room disappear in plan state
         {
-            Debug.Log("planning?: " + _planning);
+            /*Debug.Log("planning?: " + _planning);
             Debug.Log("state: " + GameManager.CurrentState);
-            Debug.Log("room: " + gameObject.name);
+            Debug.Log("room: " + gameObject.name);*/
             gameObject.SetActive(true);
         }
     }
