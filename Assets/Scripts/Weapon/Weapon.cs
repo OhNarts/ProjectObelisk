@@ -28,7 +28,8 @@ public abstract class Weapon : MonoBehaviour
     [Header("Weapon Info")]
     [SerializeField] private WeaponItem _weaponItem; public WeaponItem WeaponItem { get => _weaponItem; }
     [SerializeField] private List<MeshCollider> _colliders; public List<MeshCollider> Colliders{get => _colliders;}
-    // The damage an attack does
+    [SerializeField] private ExclusionZone _exclusionZone;
+    private float _exclusionRadius = 2f;
     [SerializeField] private string _animationBoolName; public string AnimationBoolName{get => _animationBoolName;}
     [SerializeField] protected Sound soundWhenFired;
     [SerializeField] protected Sound soundWhenFireStopped;
@@ -67,6 +68,7 @@ public abstract class Weapon : MonoBehaviour
     private void Start() {
         InitializeSound(soundWhenFired);
         InitializeSound(soundWhenFireStopped);
+        GameManager.OnGameStateChanged += OnGameStateChanged;
     }
 
     #region Events
@@ -90,6 +92,9 @@ public abstract class Weapon : MonoBehaviour
         _scale = transform.localScale;   
         _ammoAmount1 = ammoAmount1;
         _isProjectile = false;
+        _exclusionZone.Radius = _exclusionRadius;
+        _exclusionZone.gameObject.SetActive(false);
+        _exclusionZone.ExclusionWeapon = this;
     }
 
     /// <summary>
@@ -172,11 +177,22 @@ public abstract class Weapon : MonoBehaviour
     }
 
     void OnDestroy() {
+        GameManager.OnGameStateChanged -= OnGameStateChanged;
         OnWeaponDestroyed?.Invoke(this, EventArgs.Empty);
     }
 
-    public virtual void OnDrag() {}
-    public virtual void OnDrop() {}
+    public virtual void OnPlanDrag() {
+        _exclusionZone.gameObject.SetActive(false);
+    }
+
+    public virtual void OnPlanDrop() {
+        _exclusionZone.gameObject.SetActive(true);
+    }
+
+    private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) {
+        if (e.NewState == GameState.Plan) return;
+        _exclusionZone.gameObject.SetActive(false);
+    }
 
     // Use ammo defaults to false because player is the only
     // case where ammo is going to be used

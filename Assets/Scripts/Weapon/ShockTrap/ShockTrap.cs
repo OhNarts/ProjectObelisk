@@ -17,11 +17,13 @@ public class ShockTrap : Weapon
         CloseTrap();
     }
 
-    public override void OnDrag() {
+    public override void OnPlanDrag() {
+        base.OnPlanDrag();
         CloseTrap();
     }
 
-    public override void OnDrop() {
+    public override void OnPlanDrop() {
+        base.OnPlanDrop();
         OpenTrap();
     }
 
