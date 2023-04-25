@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 171522302359161220}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 171522302949338082}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: WeaponPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 171522303148611004}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: FromPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 171522303249619187}
   - component: {fileID: 171522303249619148}
   - component: {fileID: 171522303249619149}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 171522303501929328}
   - component: {fileID: 171522303501929293}
   - component: {fileID: 171522303501929330}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 171522303682918169}
   - component: {fileID: 171522303682918168}
   - component: {fileID: 171522303682918171}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: MainTemplate
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ Transform:
   m_GameObject: {fileID: 171522303682918173}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.81, y: 1.06, z: 0}
-  m_LocalScale: {x: 0.73, y: 0.75013804, z: 0.73}
+  m_LocalScale: {x: 0.73, y: 1.188771, z: 0.73}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 171522302359161220}
@@ -388,6 +388,7 @@ MonoBehaviour:
     volume: 0.75
     pitch: 1
     source: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
   _health: 50
   _isInvincible: 0
 --- !u!114 &171522303682918168
@@ -407,6 +408,12 @@ MonoBehaviour:
       m_Calls: []
   healthHandler: {fileID: 171522303682918169}
   healthBar: {fileID: 5939620324048102303}
+  enemyData:
+    enemyType: 
+    needsCover: 0
+    distToAttack: 0
+    weapon: {fileID: 0}
+    equipPos: {fileID: 0}
   distToAttack: 8
   weapon: {fileID: 0}
   weaponObject: {fileID: 0}
@@ -444,7 +451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5761549890536558105}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -482,7 +489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3927185252984169809}
   - component: {fileID: 5758052182817338163}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: EnemyHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -574,7 +581,7 @@ GameObject:
   - component: {fileID: 3202548901881723976}
   - component: {fileID: 5785109938320554760}
   - component: {fileID: 3285266399336230372}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -674,7 +681,7 @@ GameObject:
   - component: {fileID: 732371039510138702}
   - component: {fileID: 7207997013566768662}
   - component: {fileID: 6550792639046209630}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +757,7 @@ GameObject:
   - component: {fileID: 6176773163370531608}
   - component: {fileID: 6263477655867577763}
   - component: {fileID: 4019863096053396698}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
