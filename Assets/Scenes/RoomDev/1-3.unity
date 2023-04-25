@@ -190,6 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1263853480}
   - component: {fileID: 1263853479}
+  - component: {fileID: 1263853481}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -274,13 +275,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1263853481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263853478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!43 &1414695722
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-375380
+  m_Name: pb_Mesh-201736
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -444,7 +465,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-375392
+  m_Name: pb_Mesh-201748
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -609,13 +630,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 955462895, guid: d76c5e515a3ebf042afb23cff1bd374e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 5126331308674297236, guid: d76c5e515a3ebf042afb23cff1bd374e, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1414695722}
     - target: {fileID: 5126331308674297236, guid: d76c5e515a3ebf042afb23cff1bd374e, type: 3}
       propertyPath: m_VersionIndex
-      value: 136
+      value: 151
       objectReference: {fileID: 0}
     - target: {fileID: 5126331309248623511, guid: d76c5e515a3ebf042afb23cff1bd374e, type: 3}
       propertyPath: m_Mesh
@@ -623,7 +648,11 @@ PrefabInstance:
       objectReference: {fileID: 1858511996}
     - target: {fileID: 5126331309248623511, guid: d76c5e515a3ebf042afb23cff1bd374e, type: 3}
       propertyPath: m_VersionIndex
-      value: 139
+      value: 154
+      objectReference: {fileID: 0}
+    - target: {fileID: 5287104952843687857, guid: d76c5e515a3ebf042afb23cff1bd374e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 6129980256290901992, guid: d76c5e515a3ebf042afb23cff1bd374e, type: 3}
       propertyPath: m_Name

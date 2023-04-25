@@ -88,7 +88,7 @@ MonoBehaviour:
   _thrownSpeed: 25
   _thrownStunDuration: 5
   knockbackVelocity: 2
-  buffKnockbackVelocity: 3
+  buffKnockbackVelocity: 4
   isBuffed: 0
   buffRegion: {fileID: 0}
   _ammoAmount1: 10

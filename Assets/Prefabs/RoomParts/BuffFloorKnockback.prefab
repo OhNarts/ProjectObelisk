@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 1649198438019687255}
   - component: {fileID: 1649198438019687254}
   - component: {fileID: 4139767296442262112}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BuffFloorKnockback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &1649198438019687249
 Transform:

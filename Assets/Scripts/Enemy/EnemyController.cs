@@ -46,7 +46,7 @@ public class EnemyController : MonoBehaviour
             GameObject weaponInstance = Instantiate(weaponObject, equipPos.position, transform.rotation);
             weapon = weaponInstance.GetComponent<Weapon>();
         }
-        weapon.PickUpWeapon(gameObject, equipPos);
+        if (weapon != null) weapon.PickUpWeapon(gameObject, equipPos);
         CreateHealthBar();
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
     }
@@ -128,8 +128,10 @@ public class EnemyController : MonoBehaviour
     {
         agent.isStopped = true;
         transform.LookAt(_target);
-        weapon.Fire1Start();
-        weapon.Fire1Stop();
+        if (weapon != null) {
+            weapon.Fire1Start();
+            weapon.Fire1Stop();
+        }
     }
 
     public void Stunned(float stunTime) 

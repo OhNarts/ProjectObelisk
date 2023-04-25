@@ -129,13 +129,13 @@ MonoBehaviour:
     source: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
   _damage: 30
-  _buffDamage: 40
+  _buffDamage: 50
   _weaponType: 0
   _thrownDamage: 0
   _thrownSpeed: 25
   _thrownStunDuration: 5
   knockbackVelocity: 5
-  buffKnockbackVelocity: 6
+  buffKnockbackVelocity: 7
   isBuffed: 0
   buffRegion: {fileID: 0}
   _ammoAmount1: 5
