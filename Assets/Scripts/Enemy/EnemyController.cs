@@ -94,6 +94,8 @@ public class EnemyController : MonoBehaviour
                 Attack();
                 if (Vector3.Distance(_target.position, transform.position) > distToAttack)
                     currState = EnemyState.Chase;
+                if (healthHandler.Health < 10) 
+                    currState = EnemyState.Idle;
                 break;
             case EnemyState.Stunned:
                 Stunned(stun);

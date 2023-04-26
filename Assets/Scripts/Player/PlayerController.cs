@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
             
             RaycastHit hit;
             if (Physics.Raycast(startPos, transform.forward, out hit)) {
-                var hitLayer = hit.collider.gameObject.layer;
+                var hitLayer = hit.collider.transform.root.gameObject.layer;
                 scale = (hitLayer == LayerMask.NameToLayer("Ground") || hitLayer == LayerMask.NameToLayer("Interactable")
                     || hitLayer == LayerMask.NameToLayer("Enemy")) ? hit.distance : 50f;
                 setLaserColor(laserSight, hitLayer == LayerMask.NameToLayer("Enemy") ? Color.green : Color.red);

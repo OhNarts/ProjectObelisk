@@ -145,7 +145,7 @@ MonoBehaviour:
   buffRegion: {fileID: 0}
   _ammoAmount1: 10
   shockTime: 5
-  shockRadius: 100
+  shockRadius: 5
   _closedModel: {fileID: 3558912275383447396}
   _openModel: {fileID: 3830041948838387461}
   _shockSound:
