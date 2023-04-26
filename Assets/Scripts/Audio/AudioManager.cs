@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
     public static void Play(Sound s) {
         if (s.clip == null)
             return;
-        AudioSource.PlayClipAtPoint(s.clip, Camera.main.transform.position, volume: s.volume);
+        AudioSource.PlayClipAtPoint(s.clip, s.position, volume: s.volume);
         // s.source.Play();
     }
 }

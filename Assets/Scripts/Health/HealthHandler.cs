@@ -61,7 +61,7 @@ public class HealthHandler : MonoBehaviour
         if (info.attacker.layer == gameObject.layer) return;
         onHit?.Invoke(info);
         if (_isInvincible) return;
-        soundWhenDamaged.position = transform.position;
+        soundWhenDamaged.position = Camera.main.transform.position;
         AudioManager.Play(soundWhenDamaged);
         // soundWhenDamaged.source.Play();
         _health -= info.damage;

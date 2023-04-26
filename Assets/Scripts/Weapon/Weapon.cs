@@ -232,12 +232,14 @@ public abstract class Weapon : MonoBehaviour
     }
 
     private void PlaySound(Sound sound) {
-        var isPlayer = _holder.GetComponent<PlayerController>();
-        if (isPlayer != null) {
-            sound.position = transform.position;
-            AudioManager.Play(sound);
+        var isEnemy = _holder.GetComponent<EnemyController>();
+        sound.position = Camera.main.transform.position;
+        if (isEnemy != null) 
+            sound.volume = 0.1f;
+        
+        AudioManager.Play(sound);
             // sound.source.Play();
-        }
+
     }
 
     private void InitializeSound(Sound sound) {

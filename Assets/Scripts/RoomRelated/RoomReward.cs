@@ -6,6 +6,7 @@ public class RoomReward : MonoBehaviour, Interactable
 {
     [SerializeField] private AmmoRewardDictionary _ammoReward; public AmmoRewardDictionary AmmoReward {get => _ammoReward;}
     [SerializeField] private Weapon[] _weaponRewards; public Weapon[] WeaponRewards {get => _weaponRewards;}
+    [SerializeField] private float _healthReward;
     private string _roomName; public string RoomName {get => _roomName;
     set  {
         _roomName = value;
@@ -26,6 +27,7 @@ public class RoomReward : MonoBehaviour, Interactable
         foreach (var weapon in _weaponRewards) {
             player.GiveWeapon(weapon);
         }
+        player.HealthHandler.Heal(_healthReward);
         gameObject.SetActive(false);
     }
     
