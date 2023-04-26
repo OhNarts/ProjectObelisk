@@ -505,18 +505,18 @@ public class PlayerController : MonoBehaviour
                 _followWeapon.OnWeaponDestroyed += OnWeaponDestroyed;
                 PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
                 _followWeapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
-                _followWeapon.OnDrag();
+                _followWeapon.OnPlanDrag();
             } else {
                 List<Weapon> weaponsPointedAt = GetWeaponsPointedAt();
                 if (weaponsPointedAt.Count != 0) {
                     _followWeapon = weaponsPointedAt[0];
-                    _followWeapon.OnDrag();
+                    _followWeapon.OnPlanDrag();
                 }
             }
         } else if (context.canceled) {
             if (_followWeapon == null) return;
             if (!_followWeapon.CanPlace) WeaponPlanRemove(_followWeapon);
-            else _followWeapon.OnDrop();
+            else _followWeapon.OnPlanDrop();
             _followWeapon = null;
         }
     }
