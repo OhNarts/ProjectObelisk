@@ -29,6 +29,9 @@ public class EnemyController : MonoBehaviour
 
     //[SerializeField] private bool knockbacked;
     [SerializeField] private float knockbackTime;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Rigidbody[] ragdollRigidBodies;
+    private bool isDead;
     public Transform Target
     {
         set
@@ -40,6 +43,7 @@ public class EnemyController : MonoBehaviour
 
     void Awake()
     {
+        DisableRagdoll();
         currState = EnemyState.Idle;
         agent = transform.GetComponent<NavMeshAgent>();
         if (weaponObject != null) {
@@ -55,6 +59,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         if (GameManager.Paused) return;
+        if(isDead) return;
         switch (currState)
         {
             case EnemyState.Idle:
@@ -122,6 +127,7 @@ public class EnemyController : MonoBehaviour
         agent.isStopped = false;
         transform.LookAt(_target);
         agent.SetDestination(_target.position);
+        animator.SetBool("IsWalking", true);
     }
 
     private void Attack()
@@ -132,6 +138,7 @@ public class EnemyController : MonoBehaviour
             weapon.Fire1Start();
             weapon.Fire1Stop();
         }
+        animator.SetBool("IsWalking", false);
     }
 
     public void Stunned(float stunTime) 
@@ -141,6 +148,7 @@ public class EnemyController : MonoBehaviour
             currState = EnemyState.Stunned;
         }
         agent.isStopped = true;
+        animator.SetBool("IsWalking", false);
     }
 
     // navigates to cover node
@@ -151,7 +159,7 @@ public class EnemyController : MonoBehaviour
         {
             agent.SetDestination(targetCoverPos);
         }
-        
+        animator.SetBool("IsWalking", true);
         agent.isStopped = false;
         if (Vector3.Distance(targetCoverPos, transform.position) < 2.0f)
         {
@@ -162,6 +170,7 @@ public class EnemyController : MonoBehaviour
     // Currently just keeps track of time spent hiding at cover node
     public void Hide()
     {
+        animator.SetBool("IsWalking", false);
         if (currState != EnemyState.Hide)
         {
             // initialize hideTimer
@@ -179,10 +188,25 @@ public class EnemyController : MonoBehaviour
     public void Die()
     {
         //weapon.DropWeapon();
-        weapon = null;
-        onEnemyDeath?.Invoke(this);
+        // Destroy(weapon.gameObject);
+        // // weapon = null;
+        // transform.GetComponent<Collider>().enabled = false;
+        // agent.isStopped = true;
 
-        // Temp, can make ragdoll here instead of destroy
+        // // Temp, can make ragdoll here instead of destroy
+        // isDead = true;
+        // currState = EnemyState.Stunned;
+        // healthBar.SetActive(false);
+
+        // EnableRagdoll();
+        // GameManager.OnGameStateChanged += OnGameStateChange;
+        
+        onEnemyDeath?.Invoke(this);
+        Destroy(gameObject);
+    }
+
+    private void OnGameStateChange(object sender, OnGameStateChangedArgs e) {
+        GameManager.OnGameStateChanged -= OnGameStateChange;
         Destroy(gameObject);
     }
 
@@ -225,5 +249,21 @@ public class EnemyController : MonoBehaviour
         //rb.isKinematic = true;
 
         //knockbacked = false;
+    }
+
+    private void EnableRagdoll() {
+        animator.enabled = false;
+        foreach(Rigidbody rb in ragdollRigidBodies) {
+            rb.useGravity = true;
+            rb.isKinematic = false;
+        }
+    }
+
+    private void DisableRagdoll(){
+        animator.enabled = true;
+        foreach(Rigidbody rb in ragdollRigidBodies) {
+            rb.useGravity = false;
+            rb.isKinematic = true;
+        }
     }
 }
