@@ -533,7 +533,7 @@ PrefabInstance:
       objectReference: {fileID: 884752242}
     - target: {fileID: 4673502508041050606, guid: 6ded318a950b3b14190ecc42becd25e1, type: 3}
       propertyPath: m_VersionIndex
-      value: 490
+      value: 499
       objectReference: {fileID: 0}
     - target: {fileID: 4673502509613680621, guid: 6ded318a950b3b14190ecc42becd25e1, type: 3}
       propertyPath: m_Mesh
@@ -541,7 +541,7 @@ PrefabInstance:
       objectReference: {fileID: 1574791518}
     - target: {fileID: 4673502509613680621, guid: 6ded318a950b3b14190ecc42becd25e1, type: 3}
       propertyPath: m_VersionIndex
-      value: 481
+      value: 490
       objectReference: {fileID: 0}
     - target: {fileID: 4813701680316658174, guid: 6ded318a950b3b14190ecc42becd25e1, type: 3}
       propertyPath: adjacentRooms.m_keys.Array.size
@@ -2010,7 +2010,7 @@ PrefabInstance:
       objectReference: {fileID: 1593237606759764884, guid: 3922f505c164a174dbb7e5a7779b03d2, type: 3}
     - target: {fileID: 3831443149089776720, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4765236425034619854, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
       propertyPath: m_Mesh
@@ -5181,17 +5181,39 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &2103144645 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8209040154983024750, guid: 421fa9a9146739b45a8dac9a389b474d, type: 3}
+  m_PrefabInstance: {fileID: 1417286526}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2103144647 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7047012827338529793, guid: 421fa9a9146739b45a8dac9a389b474d, type: 3}
   m_PrefabInstance: {fileID: 1417286526}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2103144645}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da58f4d15a2f5ac46a76d2e23e59a7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2103144648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103144645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac63f90cfaa1443458363cce6aa726fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _planMessage: The Railgun needs to be charged and can shoot through walls.
+  _combatMessage: 
+  _postCombatMessage: 
+  _tutorialUI: {fileID: 816316204}
+  _combatRoom: {fileID: 2103144647}
 --- !u!114 &2111929461 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5281309981233764980, guid: 398270f9ac4f2264495ac81fbb23b127, type: 3}
