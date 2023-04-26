@@ -120,7 +120,6 @@ MonoBehaviour:
   - {fileID: 6705951156340071204}
   - {fileID: 7233522054617417602}
   _exclusionZone: {fileID: 5668460884341315455}
-  _exclusionRadius: 1
   _animationBoolName: ShockTrapHeld
   soundWhenFired:
     clip: {fileID: 0}
@@ -150,8 +149,8 @@ MonoBehaviour:
   _closedModel: {fileID: 3558912275383447396}
   _openModel: {fileID: 3830041948838387461}
   _shockSound:
-    clip: {fileID: 8300000, guid: ae591ccbf96437546a9c90b4846367f6, type: 3}
-    volume: 0.75
+    clip: {fileID: 8300000, guid: 57e185557a540a34cb523b2bc82823aa, type: 3}
+    volume: 0.783
     pitch: 0.11
     source: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
