@@ -48,3 +48,18 @@ public class WeaponHashSet : SerializableHashSet<WeaponItem> {
 
 [Serializable]
 public class TransformWeaponDictionary : SerializableDictionary<Transform, Weapon> {}
+
+[Serializable]
+public class RoomListStorage : SerializableDictionary.Storage<List<Room>> {}
+
+[Serializable]
+public class DoorRoomListDictionary : SerializableDictionary<Door, List<Room>, RoomListStorage> {}
+
+[Serializable]
+public class DoorRoomTupleDictionary : SerializableDictionary<Door, RoomTuple> {}
+
+[Serializable]
+public class RoomTuple {
+    public Room Room1;
+    public Room Room2;
+}

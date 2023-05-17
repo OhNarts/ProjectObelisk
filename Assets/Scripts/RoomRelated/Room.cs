@@ -25,11 +25,6 @@ public class Room : MonoBehaviour
    public event EventHandler OnRoomEnter;
    public event EventHandler OnRoomExit;
 
-
-    [Header("Edit in level creation")]
-    [SerializeField] private DoorRoomDictionary adjacentRooms;
-
-    [Header("Edit in room creation")]
     // Change to increase the distance the camera can be from the room
     [SerializeField] private float _cameraSize;
     [SerializeField] private Transform _camHolderPosRot;
@@ -73,24 +68,15 @@ public class Room : MonoBehaviour
         name = gameObject.name;
         _occupied = false;
         _doorAttemptedEnter = null;
-
-        foreach (Door door in adjacentRooms.Keys)
-        {
-            door.OnDoorInteract += OnDoorInteract;
-        }
         
     }
 
     private void OnDestroy()
     {
-        foreach (Door door in adjacentRooms.Keys)
-        {
-            door.OnDoorInteract -= OnDoorInteract;
-        }
         GameManager.OnGameStateChanged -= OnGameStateChanged;
     }
 
-    private void OnDoorInteract( object sender, EventArgs e )
+    public void OnDoorInteract( object sender, EventArgs e )
     {
         if (_occupied || ((HandledEventArgs)e).Handled) return;
         Door door = (Door)sender;
@@ -103,7 +89,6 @@ public class Room : MonoBehaviour
     {
         SetCameraPos(cameraHolder);
         _occupied = true;
-        adjacentRooms[_doorAttemptedEnter].Exit();
         _doorAttemptedEnter.EnterDoor();
         OnRoomEnter?.Invoke(this, EventArgs.Empty);
         //doorAttemptedEnter.CloseDoor();
