@@ -12,4 +12,5 @@ public class WeaponItem : ScriptableObject
     public AmmoType AmmoType2;
     public GameObject gameObject;
     public Sprite Sprite;
+    public Color Color;
 }
