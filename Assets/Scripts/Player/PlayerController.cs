@@ -146,6 +146,8 @@ public class PlayerController : MonoBehaviour
         _healthHandler.MaxHealth = PlayerState.MaxHealth;
         _healthHandler.Health = PlayerState.Health;
         transform.position = PlayerState.Position;
+
+        UpdateHealthBar();
         
         EquippedWeapon?.DropWeapon();
         EquippedWeapon = null;
