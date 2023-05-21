@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class AmmoUI : MonoBehaviour
@@ -20,6 +21,16 @@ public class AmmoUI : MonoBehaviour
     private void AmmoChanged(object sender, EventArgs e) {
         OnPlayerAmmoChangedArgs args = (OnPlayerAmmoChangedArgs)e;
         _ammoSlots[args.AmmoTypeChanged].Text = args.CurrentAmount.ToString();
+        Color oldColor = new Color(0.1037736f, 0.1037736f, 0.1037736f, 0.3921569f);
+        Color newColor;
+        if (args.OldAmount - args.CurrentAmount > 1) {
+            newColor = new Color(1f, 0f, 0f, 0.3921569f);
+        } else if (args.OldAmount - args.CurrentAmount < 0) {
+            newColor = new Color(0f, 1f, 0f, 0.3921569f);
+        } else {
+            newColor = oldColor;
+        }
+        StartCoroutine(ChangeColor(args, oldColor, newColor));
     }
 
     private void OnPlayerStateRevert(object sender, OnPlayerStateRevertArgs e) {
@@ -31,5 +42,11 @@ public class AmmoUI : MonoBehaviour
                 } 
             }
         }
+    }
+
+    private IEnumerator ChangeColor(OnPlayerAmmoChangedArgs args, Color oldColor, Color newColor) {
+        _ammoSlots[args.AmmoTypeChanged].Color = newColor;
+        yield return new WaitForSeconds(0.4f);
+        _ammoSlots[args.AmmoTypeChanged].Color = oldColor;
     }
 }

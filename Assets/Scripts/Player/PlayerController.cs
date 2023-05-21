@@ -651,7 +651,7 @@ public class PlayerController : MonoBehaviour
         /* if (healthBar.TryGetComponent<FaceCamera>(out FaceCamera faceCamera)) {
             faceCamera = GameObject.FindWithTag("MainCamera");
         } */
-        if (_healthHandler != null && _healthHandler.Health < _healthHandler.MaxHealth) {
+        if (_healthHandler != null && _healthHandler.Health <= _healthHandler.MaxHealth) {
             healthBar.SetActive(true);
         } else {
             healthBar.SetActive(false);

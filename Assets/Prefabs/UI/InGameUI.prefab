@@ -790,6 +790,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 336703809226494406}
     m_Modifications:
     - target: {fileID: 1207111362451259190, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
+      propertyPath: image
+      value: 
+      objectReference: {fileID: 3527326131099116041}
+    - target: {fileID: 1207111362451259190, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
       propertyPath: glowImage
       value: 
       objectReference: {fileID: 0}
@@ -924,6 +928,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98635c340a890a945a9ce2c5b56bc296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3527326131099116041 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3773913382739871051, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
+  m_PrefabInstance: {fileID: 336703808770942786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &3527326131099116043 stripped
