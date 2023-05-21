@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Level
+  - CoverNode
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Shootable
   - Bullet
   - Weapon
-  - 
-  - 
+  - Player
+  - Enemy
   - 
   - 
   - 

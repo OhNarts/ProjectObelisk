@@ -30,6 +30,7 @@ public class Pistol : Weapon
         }
         lastFired = Time.unscaledTime;
         fired = true;
+        base.Fire1Start();
 
         // Fire the weapon
         GameObject bulletInstance = Instantiate(bullet, _attackPoint.position, _holder.transform.rotation);

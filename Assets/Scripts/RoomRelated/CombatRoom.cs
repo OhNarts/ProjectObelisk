@@ -60,6 +60,7 @@ public class CombatRoom : Room
         _boundaryColliders.SetActive(true);
         _planning = true;
         GameManager.CurrentState = GameState.Plan;
+        player.transform.LookAt(transform);
         OnRoomPlanStart?.Invoke(this, EventArgs.Empty);
     }
 
@@ -95,6 +96,7 @@ public class CombatRoom : Room
             }
         }
         _roomCompleted = false;
+        _rewardObject.gameObject.SetActive(false);
     }
 
     private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) {
@@ -109,9 +111,9 @@ public class CombatRoom : Room
             gameObject.SetActive(false);
         } else if(!_planning && GameManager.CurrentState == GameState.PostCombat) // You should see other room disappear in plan state
         {
-            Debug.Log("planning?: " + _planning);
+            /*Debug.Log("planning?: " + _planning);
             Debug.Log("state: " + GameManager.CurrentState);
-            Debug.Log("room: " + gameObject.name);
+            Debug.Log("room: " + gameObject.name);*/
             gameObject.SetActive(true);
         }
     }

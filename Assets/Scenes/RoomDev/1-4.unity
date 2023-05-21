@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 97488359}
   - component: {fileID: 97488358}
+  - component: {fileID: 97488360}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -217,6 +218,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &97488360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97488357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1001 &1114735593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -280,7 +301,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-343490
+  m_Name: pb_Mesh-152522
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -444,7 +465,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-343478
+  m_Name: pb_Mesh-152510
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -615,7 +636,7 @@ PrefabInstance:
       objectReference: {fileID: 1806713664}
     - target: {fileID: 4673502508041050606, guid: 6ded318a950b3b14190ecc42becd25e1, type: 3}
       propertyPath: m_VersionIndex
-      value: 67
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 4673502509613680621, guid: 6ded318a950b3b14190ecc42becd25e1, type: 3}
       propertyPath: m_Mesh
@@ -623,7 +644,7 @@ PrefabInstance:
       objectReference: {fileID: 2113947649}
     - target: {fileID: 4673502509613680621, guid: 6ded318a950b3b14190ecc42becd25e1, type: 3}
       propertyPath: m_VersionIndex
-      value: 64
+      value: 67
       objectReference: {fileID: 0}
     - target: {fileID: 5975694513718797713, guid: 6ded318a950b3b14190ecc42becd25e1, type: 3}
       propertyPath: m_Name

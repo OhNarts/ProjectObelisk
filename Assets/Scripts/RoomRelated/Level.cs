@@ -6,17 +6,31 @@ using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField] private Room[] _rooms; public Room[] Rooms { get => _rooms; }
+    [SerializeField] private DoorRoomTupleDictionary _roomDictionary;
     [SerializeField] private GameObject _cameraHolder;
+    [SerializeField] private Room _startRoom;
+    public TransformWeaponDictionary BaseWeapons;
 
+    [Header("Exposed for Debug")]
     [SerializeField] private Room _previousRoom;
     [SerializeField] private Room _currentRoom;
+    private HashSet<Room> _rooms;
     private CombatRoom _planningRoom;
     private List<Weapon> _baseWeapons;
-    public TransformWeaponDictionary BaseWeapons;
+    
 
     void Awake()
     {
+        _rooms = new HashSet<Room>();
+        // Initialize the rooms (There's probably a more efficient way to do this)
+        foreach (Door door in _roomDictionary.Keys) {
+            RoomTuple roomTuple = _roomDictionary[door];
+            _rooms.Add(roomTuple.Room1);
+            _rooms.Add(roomTuple.Room2);
+            door.OnDoorInteract += roomTuple.Room1.OnDoorInteract;
+            door.OnDoorInteract += roomTuple.Room2.OnDoorInteract;
+        }
+
         _previousRoom = null;
         foreach (Room room in _rooms)
         {
@@ -27,7 +41,7 @@ public class Level : MonoBehaviour
 
     void Start() {
         _planningRoom = null;
-        _currentRoom = _rooms[0];
+        _currentRoom = _startRoom;
         _currentRoom.SetCameraPos(_cameraHolder);
         _currentRoom.Occupied = true;
         PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
@@ -37,6 +51,12 @@ public class Level : MonoBehaviour
 
     private void OnDestroy()
     {
+        foreach (Door door in _roomDictionary.Keys) {
+            RoomTuple roomTuple = _roomDictionary[door];
+            door.OnDoorInteract -= roomTuple.Room1.OnDoorInteract;
+            door.OnDoorInteract -= roomTuple.Room2.OnDoorInteract;
+        }
+
         foreach (Room room in _rooms)
         {
             room.OnRoomEnterAttempt -= OnRoomEnterAttempt;
@@ -65,7 +85,7 @@ public class Level : MonoBehaviour
         _currentRoom.Occupied = false;
 
         if (e.RevertType == OnPlayerStateRevertArgs.PlayerRevertType.LevelStart) {
-            _currentRoom = _rooms[0];
+            _currentRoom = _startRoom;
             _previousRoom = null;
             DestroyWeapons();
             InitializeWeapons();
@@ -109,6 +129,7 @@ public class Level : MonoBehaviour
 
     private void UpdateToCurrentRoom(Room room) {
         _previousRoom = _currentRoom;
+        _previousRoom.Exit();
         _currentRoom = room;
     }
     

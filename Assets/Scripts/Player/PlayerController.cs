@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
 
+public enum WalkDirection {Forward = 1, Backward = 2, Right = 3, Left = 4, NoDirection = 0}
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private HealthHandler _healthHandler; public HealthHandler HealthHandler { get => _healthHandler; }
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private UnityEvent _onPlayerDeath;
     [SerializeField] private PlayerInput _input;
+    [SerializeField] private Animator _animator;
     private LayerMask lookLayers;
 
     private Vector3 _velocity;
@@ -29,17 +32,23 @@ public class PlayerController : MonoBehaviour
 
     // The object that should follow the mouse pointer
     private Weapon _followWeapon;
+    private LineRenderer laserSight;
     private string _currentActionMap;
+    private string _currentAnimationBool;
 
     [Header("EXPOSED FOR DEBUG")]
     [SerializeField]private List<Weapon> _placedWeapons;
 
     private void Start()
     {
+        _animator.SetBool("NormalState", true);
+        _currentAnimationBool = null;
+
         lookLayers = LayerMask.GetMask("Ground") |
         LayerMask.GetMask("Weapon") |
         LayerMask.GetMask("Shootable") |
-        LayerMask.GetMask("Interactable");
+        LayerMask.GetMask("Interactable") |
+        LayerMask.GetMask("Enemy");
 
         _healthHandler.MaxHealth = PlayerState.MaxHealth;
         _healthHandler.Health = PlayerState.Health;
@@ -48,11 +57,28 @@ public class PlayerController : MonoBehaviour
         _rolling = false;
         _lastRolled = -1;
         _placedWeapons = new List<Weapon>();
+        
+        laserSight = gameObject.AddComponent<LineRenderer>();
+        InitializeLaserSight(laserSight);
+        laserSight.enabled = false;
 
         PlayerState.Position = transform.position;
         PlayerState.OnPlayerStateRevert += RevertPlayer;
         GameManager.OnGameStateChanged += OnGameStateChange;
         GameManager.OnGamePauseChange += OnGamePauseChange;
+    }
+
+    private void InitializeLaserSight(LineRenderer laserSight) {
+        laserSight.positionCount = 2;
+        laserSight.startWidth = 0.025f;
+        laserSight.endWidth = 0.025f;
+        setLaserColor(laserSight, Color.red);
+        laserSight.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
+    }
+
+    private void setLaserColor(LineRenderer laserSight, Color color) {
+        laserSight.startColor = color;
+        laserSight.endColor = color;
     }
 
     private void OnDisable() {
@@ -68,17 +94,44 @@ public class PlayerController : MonoBehaviour
         {
             transform.LookAt(_lookPt);
             if (!_rolling) _rb.velocity = _velocity;
+            AnimateWalk();
         } 
         if (_followWeapon != null) {
-            var gotoPt = new Vector3(_lookPt.x, _lookPt.y + 5, _lookPt.z);
-            _followWeapon.transform.position = _lookPt;
+            var gotoPt = new Vector3(_lookPt.x, _lookPt.y + .5f, _lookPt.z);
+            _followWeapon.transform.position = gotoPt;
+        }
+        if (EquippedWeapon != null) {
+
+            //TODO: needs even more pretty? :/
+            
+            laserSight.enabled = true;
+            Vector3 startPos = EquippedWeapon.AttackPoint.position;
+            laserSight.SetPosition(0, startPos);
+
+            Vector3 endPos = new Vector3(_lookPt.x, startPos.y, _lookPt.z);
+            float scale = 50f;
+            
+            RaycastHit hit;
+            if (Physics.Raycast(startPos, transform.forward, out hit)) {
+                var hitLayer = hit.collider.transform.root.gameObject.layer;
+                scale = (hitLayer == LayerMask.NameToLayer("Ground") || hitLayer == LayerMask.NameToLayer("Interactable")
+                    || hitLayer == LayerMask.NameToLayer("Enemy")) ? hit.distance : 50f;
+                setLaserColor(laserSight, hitLayer == LayerMask.NameToLayer("Enemy") ? Color.green : Color.red);
+            }
+
+            // use endPos if you want line to end at mouse point. use dirEndPos for infinite length.
+            Vector3 dirEndPos = (endPos - startPos).normalized * scale;
+            dirEndPos += startPos; 
+            laserSight.SetPosition(1, dirEndPos);
+        } else {
+            laserSight.enabled = false;
         }
     }
 
     public void CombatStart(CallbackContext callback)
     {
         if (!callback.started) return;
-        _input.SwitchCurrentActionMap("Combat");
+        SwitchActionMap("Combat");
         GameManager.CurrentState = GameState.Combat;
     }
     
@@ -87,8 +140,8 @@ public class PlayerController : MonoBehaviour
         _healthHandler.Health = PlayerState.Health;
         transform.position = PlayerState.Position;
         
-        _equippedWeapon?.DropWeapon();
-        _equippedWeapon = null;
+        EquippedWeapon?.DropWeapon();
+        EquippedWeapon = null;
 
         while (_placedWeapons.Count != 0) {
             Weapon currWeapon = _placedWeapons[0];
@@ -101,17 +154,22 @@ public class PlayerController : MonoBehaviour
     private void OnGameStateChange(object sender, OnGameStateChangedArgs e) {
         switch (e.NewState) {
             case GameState.Combat:
-                _input.SwitchCurrentActionMap("Combat");
+                SwitchActionMap("Combat");
                 _rb.isKinematic = false;
+                //Cursor.visible = false;
                 break;
             case GameState.Plan:
-                _input.SwitchCurrentActionMap("Planning");
+                SwitchActionMap("Planning");
                 _rb.velocity = Vector3.zero;
                 _rb.isKinematic = true;
+                _animator.SetInteger("WalkingDirection", (int) WalkDirection.NoDirection);
+                //Cursor.visible = true;
                 break;
             case GameState.PostCombat:
-                _input.SwitchCurrentActionMap("Combat");
+                SwitchActionMap("Combat");
+                Debug.Log("Game Reverted");
                 _rb.isKinematic = false;
+                //Cursor.visible = true;
                 if (e.TriggeredByRevert) break;
                 if (EquippedWeapon != null) 
                 {
@@ -138,12 +196,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnGamePauseChange (object sender, OnGamePauseChangeArgs e) {
         if (GameManager.Paused) {
-            _currentActionMap = _input.currentActionMap.name;
+            // Don't switch action maps here so that pause is never recorded
             _input.SwitchCurrentActionMap("Pause");
         } else {
-            _input.SwitchCurrentActionMap(_currentActionMap);
+            SwitchActionMap(_currentActionMap);
         }
-
     }
 
     public void CancelPlanState(CallbackContext callback) {
@@ -152,6 +209,11 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.CurrentState = GameState.PostCombat;
         }
+    }
+
+    public void SwitchActionMap(String actionMap) {
+        _currentActionMap = actionMap;
+        _input.SwitchCurrentActionMap(actionMap);
     }
 
     #region Health
@@ -189,6 +251,26 @@ public class PlayerController : MonoBehaviour
         rotatedInput.Normalize();
         // Applies the velocity
         _velocity = (rotatedInput * _speed);
+        if (context.started) _animator.SetTrigger("JustStartWalking");
+    }
+
+    private void AnimateWalk () {
+        float dot = Vector3.Dot(_velocity.normalized, transform.forward.normalized);
+        Vector3 cross = Vector3.Cross(_velocity.normalized, transform.forward.normalized);
+        float crossMag = Vector3.Magnitude(cross);
+        if (dot == 0 && crossMag == 0) {
+            _animator.SetInteger("WalkingDirection", (int) WalkDirection.NoDirection);
+            return;
+        }
+        if (crossMag < 1) {
+            if (dot > 0) {
+                _animator.SetInteger("WalkingDirection", (int) WalkDirection.Forward);
+            } else {
+                _animator.SetInteger("WalkingDirection", (int) WalkDirection.Backward);
+            }
+        } else  {
+            Debug.Log(cross);
+        }
     }
 
     public void Look(CallbackContext context)
@@ -254,6 +336,7 @@ public class PlayerController : MonoBehaviour
         private set {
             _equippedWeapon = value;
             PlayerState.CurrentWeapon = _equippedWeapon;
+            AnimateEquippedWeapon();
         }
         get => _equippedWeapon;}
 
@@ -273,16 +356,16 @@ public class PlayerController : MonoBehaviour
             return;
         }
         if (context.started) {
-            Debug.Log("started");
+            // Debug.Log("started");
             EquippedWeapon.Fire1Start(true);
         }
         else if (context.canceled)
         {
-            Debug.Log("cancelled");
+            // Debug.Log("cancelled");
             EquippedWeapon.Fire1Stop(true);
             
         } else if (context.performed) {
-            Debug.Log("held");
+            // Debug.Log("held");
             EquippedWeapon.Fire1Held(true);
         }
     }
@@ -317,13 +400,15 @@ public class PlayerController : MonoBehaviour
             knockbackValue = 4f
         };
 
+        _animator.SetTrigger("Punch");
+
         Debug.Log("melee");
 
         Collider[] colliders = Physics.OverlapSphere(_attackPoint.position, _attackRange, _attackMask);
         foreach(Collider collider in colliders) {
             Transform hitTransform = collider.transform.root;
             HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();
-            Debug.Log(hitHealth != null);
+            // Debug.Log(hitHealth != null);
             if (hitHealth != null) {
                 hitHealth.Damage(damageInfo);
                 var enemy = collider.GetComponent<EnemyController>();
@@ -345,18 +430,28 @@ public class PlayerController : MonoBehaviour
         if (weaponsPointedAt.Count != 0) {
             if ((Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) {
                 InteractWithWeapons(weaponsPointedAt);
+                return;
             }
         }
 
         if (weaponsAround.Count != 0) {
             InteractWithWeapons(weaponsAround);
+            return;
         }
 
-        // returns if the position the mouse is over is too far to interact
-        if (!(Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) return;
 
-        // If no weapons found, then search for interactables
-        Collider[] colliders = Physics.OverlapSphere(_groundMousePt, _interactableRadius);
+        Interactable interactable = GetInteractableNearPoint(transform.position);
+
+        // returns if the position the mouse is over is too far to interact
+        if (interactable == null && (Vector3.Distance(_groundMousePt, transform.position) < _maxPickUpDistance)) {
+            interactable = GetInteractableNearPoint(_groundMousePt);
+        }
+
+        interactable?.Interact(this);
+    }
+
+    private Interactable GetInteractableNearPoint(Vector3 position) {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _interactableRadius);
         Interactable interactable = null;
         foreach(Collider collider in colliders)
         {
@@ -365,7 +460,7 @@ public class PlayerController : MonoBehaviour
                 interactable = collider.transform.GetComponent<Interactable>();
             }
         }
-        interactable?.Interact(this);
+        return interactable;
     }
     #endregion
 
@@ -404,18 +499,24 @@ public class PlayerController : MonoBehaviour
 
                 GameObject Instance = Instantiate(item.gameObject);
                 _followWeapon = Instance.GetComponent<Weapon>();
+                Rigidbody rb = _followWeapon.GetComponent<Rigidbody>();
+                rb.freezeRotation = true;
                 _placedWeapons.Add(_followWeapon);
                 _followWeapon.OnWeaponDestroyed += OnWeaponDestroyed;
                 PlayerState.AddToAmmo(item.AmmoType1, -item.AmmoCost1);
                 _followWeapon.InitializeWeapon(item.AmmoCost1, item.AmmoCost2);
+                _followWeapon.OnPlanDrag();
             } else {
                 List<Weapon> weaponsPointedAt = GetWeaponsPointedAt();
                 if (weaponsPointedAt.Count != 0) {
                     _followWeapon = weaponsPointedAt[0];
+                    _followWeapon.OnPlanDrag();
                 }
             }
         } else if (context.canceled) {
-            if (_followWeapon != null && !_followWeapon.CanPlace) WeaponPlanRemove(_followWeapon);
+            if (_followWeapon == null) return;
+            if (!_followWeapon.CanPlace) WeaponPlanRemove(_followWeapon);
+            else _followWeapon.OnPlanDrop();
             _followWeapon = null;
         }
     }
@@ -433,6 +534,9 @@ public class PlayerController : MonoBehaviour
                 weapon.OnWeaponDestroyed -= OnWeaponDestroyed;
                 PlayerState.AddToAmmo(weapon.WeaponItem.AmmoType1,
                 weapon.AmmoAmount1);
+                if (weapon.isBuffed) {
+                    weapon.buffRegion.restrictArea = false;
+                }
                 Destroy(weapon.gameObject);
             }
         }
@@ -504,6 +608,8 @@ public class PlayerController : MonoBehaviour
                 Destroy(wep.gameObject);
                 return;
             }
+            Rigidbody rb = wep.GetComponent<Rigidbody>();
+            rb.freezeRotation = false;
 
             if (EquippedWeapon != null)
             {
@@ -517,6 +623,18 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+
+    private void AnimateEquippedWeapon() {
+        if (_currentAnimationBool != null) {
+            _animator.SetBool(_currentAnimationBool, false);
+            _currentAnimationBool = null;
+        }
+        if (EquippedWeapon == null) return;
+        _currentAnimationBool = EquippedWeapon.AnimationBoolName;
+        _animator.SetBool(_currentAnimationBool, true);
+    }
+
+
     #endregion
 
     public void Pause(CallbackContext context) {

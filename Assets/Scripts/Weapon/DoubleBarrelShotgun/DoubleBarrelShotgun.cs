@@ -24,6 +24,8 @@ public class DoubleBarrelShotgun : Weapon
         if (useAmmo) {
             if (AmmoAmount1 == 0) return;
             AmmoAmount1--;
+            base.Fire1Start();
+            StartCoroutine(ReloadSound());
         }
         GameObject[] bullets = new GameObject[5];
         Vector3 currRotOffset = new Vector3(0, -bulletRotationDifference, 0);
@@ -51,5 +53,10 @@ public class DoubleBarrelShotgun : Weapon
     public override void Fire1Stop(bool useAmmo = false)
     {
         fired = false;
+    }
+
+    IEnumerator ReloadSound() {
+        yield return new WaitForSeconds(0.5f);
+        base.Fire1Stop();
     }
 }

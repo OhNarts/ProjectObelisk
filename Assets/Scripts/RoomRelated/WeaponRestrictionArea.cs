@@ -7,13 +7,14 @@ public class WeaponRestrictionArea : MonoBehaviour
     // TODO: Make this more efficient
     [SerializeField] private Collider _collider;
     [SerializeField] private List<AmmoType> _restrictedWeaponTypes;
+    [SerializeField] private BuffRegion buffRegion;
 
     void Start() {
         _collider.enabled = false;
         GameManager.OnGameStateChanged += AreaEnableSwitch;
     }
     
-    void OnDisable(){
+    void OnDestroy(){
         GameManager.OnGameStateChanged -= AreaEnableSwitch;
     }
 
@@ -21,17 +22,24 @@ public class WeaponRestrictionArea : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.layer != LayerMask.NameToLayer("Weapon")) return;
         Weapon weapon = other.transform.root.GetComponent<Weapon>();
-        if (_restrictedWeaponTypes.Contains(weapon.WeaponItem.AmmoType1)) {
+        if (buffRegion.restrictArea) {
             weapon.CanPlace = false;
+            Debug.Log("Cannot place more than one weapon here.");
         }
+        // if (_restrictedWeaponTypes.Contains(weapon.WeaponItem.AmmoType1)) {
+        //     weapon.CanPlace = false;
+        //     Debug.Log(weapon.WeaponItem.AmmoType1 + " type restricted in this area.");
+        // }
     }
 
     void OnTriggerExit(Collider other) {
+        Debug.Log("Collider exited.");
         if (other.gameObject.layer == LayerMask.NameToLayer("Weapon")) {
             Weapon weapon = other.transform.root.GetComponent<Weapon>();
-            if (_restrictedWeaponTypes.Contains(weapon.WeaponItem.AmmoType1) && !weapon.CanPlace) {
-                weapon.CanPlace = true;
-            }
+            weapon.CanPlace = true;
+            // if (_restrictedWeaponTypes.Contains(weapon.WeaponItem.AmmoType1) && !weapon.CanPlace) {
+            //     weapon.CanPlace = true;
+            // }
         }
     }
 
