@@ -19,3 +19,4 @@ MonoBehaviour:
   AmmoType2: 4
   gameObject: {fileID: 6859750589310084287, guid: fd86b19986b74e54dae0d77d92fe3150, type: 3}
   Sprite: {fileID: 21300000, guid: d56d55f2a5799594b9a97fa16298b942, type: 3}
+  Color: {r: 0, g: 0.9411765, b: 1, a: 1}

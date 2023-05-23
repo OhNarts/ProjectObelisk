@@ -14,6 +14,7 @@ public class InventorySlot : MonoBehaviour
         set {
             _weapon = value;
             _uiImage.sprite = _weapon.Sprite;
+            _uiImage.GetComponent<Image>().color = _weapon.Color;
             if (_weapon.WeaponName == "DoubleBarrelShotgun") {
                 _weaponName.text = "DoubleBarrel";
             } else {

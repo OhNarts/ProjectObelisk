@@ -228,3 +228,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMesh: {fileID: 2961038365397759728}
+  image: {fileID: 3773913382739871051}

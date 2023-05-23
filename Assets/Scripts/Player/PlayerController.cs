@@ -13,6 +13,7 @@ public enum WalkDirection {Forward = 1, Backward = 2, Right = 3, Left = 4, NoDir
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private HealthHandler _healthHandler; public HealthHandler HealthHandler { get => _healthHandler; }
+    [SerializeField] private GameObject healthBar;
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Camera _camera;
     [SerializeField] private float _speed;
@@ -57,6 +58,8 @@ public class PlayerController : MonoBehaviour
         _rolling = false;
         _lastRolled = -1;
         _placedWeapons = new List<Weapon>();
+
+        CreateHealthBar();
         
         laserSight = gameObject.AddComponent<LineRenderer>();
         InitializeLaserSight(laserSight);
@@ -126,6 +129,10 @@ public class PlayerController : MonoBehaviour
         } else {
             laserSight.enabled = false;
         }
+
+        if (healthBar.activeSelf) {
+            healthBar.transform.LookAt(transform.position + _camera.transform.rotation * Vector3.forward, _camera.transform.rotation * Vector3.up);
+        }
     }
 
     public void CombatStart(CallbackContext callback)
@@ -139,6 +146,8 @@ public class PlayerController : MonoBehaviour
         _healthHandler.MaxHealth = PlayerState.MaxHealth;
         _healthHandler.Health = PlayerState.Health;
         transform.position = PlayerState.Position;
+
+        UpdateHealthBar();
         
         EquippedWeapon?.DropWeapon();
         EquippedWeapon = null;
@@ -636,6 +645,25 @@ public class PlayerController : MonoBehaviour
 
 
     #endregion
+
+    private void CreateHealthBar() {
+        if (healthBar == null) return;
+        /* if (healthBar.TryGetComponent<FaceCamera>(out FaceCamera faceCamera)) {
+            faceCamera = GameObject.FindWithTag("MainCamera");
+        } */
+        if (_healthHandler != null && _healthHandler.Health <= _healthHandler.MaxHealth) {
+            healthBar.SetActive(true);
+        } else {
+            healthBar.SetActive(false);
+        }
+        UpdateHealthBar();
+    }
+
+    public void UpdateHealthBar() {
+        if (_healthHandler == null || healthBar == null) return;
+        if (_healthHandler.Health < _healthHandler.MaxHealth) healthBar.SetActive(true);
+        healthBar.GetComponentInChildren<Slider>(true).value = _healthHandler.Health / _healthHandler.MaxHealth;
+    }
 
     public void Pause(CallbackContext context) {
         //if (context.started) Application.Quit();
