@@ -102,7 +102,9 @@ public class PlayerState : ScriptableObject
     public static AmmoDictionary Ammo {get => Instance._currentInfo.Ammo;}
 
     public static void AddToAmmo(AmmoType ammoType, int addingAmount) {
-        if (addingAmount > 0) AudioManager.Play(PickUpSounds[ammoType]);
+        Sound sound = PickUpSounds[ammoType];
+        sound.position = Camera.main.transform.position;
+        if (addingAmount > 0) AudioManager.Play(sound);
         ChangeAmmo(ammoType, Ammo[ammoType] + addingAmount);
     }
     public static void ChangeAmmo(AmmoType ammoType, int newAmount) {

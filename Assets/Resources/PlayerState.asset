@@ -13,3 +13,21 @@ MonoBehaviour:
   m_Name: PlayerState
   m_EditorClassIdentifier: 
   _initialInfo: {fileID: 11400000, guid: f6cc4500e18ffac4db62f7b12cd8edf0, type: 2}
+  _pickUpSounds:
+    m_keys: 010000000200000003000000
+    m_values:
+    - clip: {fileID: 8300000, guid: 16f09c58de7b8ee478e2b07e66eaa8ff, type: 3}
+      volume: 0.5
+      pitch: 0
+      source: {fileID: 0}
+      position: {x: -17.38918, y: 16.574074, z: 45.504868}
+    - clip: {fileID: 8300000, guid: cc356c4d321363346a171ac96cffd639, type: 3}
+      volume: 0.5
+      pitch: 0
+      source: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}
+    - clip: {fileID: 8300000, guid: f80060add406a3f4bbbd699ba1c3bf92, type: 3}
+      volume: 0.5
+      pitch: 0
+      source: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}
