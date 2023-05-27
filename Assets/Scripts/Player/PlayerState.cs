@@ -97,10 +97,14 @@ public class PlayerState : ScriptableObject
     private PlayerInfo _lastRoomInfo; public static PlayerInfo LastRoomInfo {get => _instance._lastRoomInfo;}
     [SerializeField] private PlayerInfo _levelStartInfo; public static PlayerInfo LevelStartInfo {get => _instance._levelStartInfo;}
     [SerializeField] private PlayerInfoObject _initialInfo; public static PlayerInfoObject InitialInfo {get => _instance._initialInfo;}
+    [SerializeField] private AmmoTypeSoundDictionary _pickUpSounds; public static AmmoTypeSoundDictionary PickUpSounds {get => _instance._pickUpSounds;}
 
     public static AmmoDictionary Ammo {get => Instance._currentInfo.Ammo;}
 
     public static void AddToAmmo(AmmoType ammoType, int addingAmount) {
+        Sound sound = PickUpSounds[ammoType];
+        sound.position = Camera.main.transform.position;
+        if (addingAmount > 0) AudioManager.Play(sound);
         ChangeAmmo(ammoType, Ammo[ammoType] + addingAmount);
     }
     public static void ChangeAmmo(AmmoType ammoType, int newAmount) {

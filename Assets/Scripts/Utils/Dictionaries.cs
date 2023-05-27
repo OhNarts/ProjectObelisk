@@ -63,3 +63,6 @@ public class RoomTuple {
     public Room Room1;
     public Room Room2;
 }
+
+[Serializable]
+public class AmmoTypeSoundDictionary : SerializableDictionary<AmmoType, Sound> {}
