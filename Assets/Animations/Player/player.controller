@@ -123,7 +123,7 @@ AnimatorStateMachine:
     m_Position: {x: 670, y: 450, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2721771807701400119}
-    m_Position: {x: 1050, y: 450, z: 0}
+    m_Position: {x: 1050, y: 460, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7483652411194305645}
     m_Position: {x: 1090, y: -440, z: 0}
@@ -454,18 +454,6 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
-    m_Name: AimLayer
-    m_StateMachine: {fileID: -5196639515718483307}
-    m_Mask: {fileID: 0}
-    m_Motions: []
-    m_Behaviours: []
-    m_BlendingMode: 0
-    m_SyncedLayerIndex: -1
-    m_DefaultWeight: 0
-    m_IKPass: 0
-    m_SyncedLayerAffectsTiming: 0
-    m_Controller: {fileID: 9100000}
-  - serializedVersion: 5
     m_Name: WalkLayer
     m_StateMachine: {fileID: 3094654325034321159}
     m_Mask: {fileID: 0}
@@ -474,6 +462,18 @@ AnimatorController:
     m_BlendingMode: 0
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 1
+    m_IKPass: 0
+    m_SyncedLayerAffectsTiming: 0
+    m_Controller: {fileID: 9100000}
+  - serializedVersion: 5
+    m_Name: AimLayer
+    m_StateMachine: {fileID: -5196639515718483307}
+    m_Mask: {fileID: 31900000, guid: 6db6ba4271da5f540ae7831743c10b29, type: 2}
+    m_Motions: []
+    m_Behaviours: []
+    m_BlendingMode: 0
+    m_SyncedLayerIndex: -1
+    m_DefaultWeight: 0
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
