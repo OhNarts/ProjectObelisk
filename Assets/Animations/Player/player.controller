@@ -165,10 +165,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.030722285
+  m_TransitionDuration: 0.6117534
   m_TransitionOffset: 0
-  m_ExitTime: 0.0000000028981986
-  m_HasExitTime: 1
+  m_ExitTime: 0.000000011771746
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -260,7 +260,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BackwardWalk
-  m_Speed: -1.5
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 534436722501226868}
@@ -273,7 +273,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: cdd9586c59bf16247b616b1210416bc8, type: 2}
+  m_Motion: {fileID: -203655887218126122, guid: 7a8f15bb5aa3ac04d93c55d1d1628da8, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -468,7 +468,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: WalkLayer
     m_StateMachine: {fileID: 3094654325034321159}
-    m_Mask: {fileID: 31900000, guid: eec1e8851452c8945b90442cb95ba30f, type: 2}
+    m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -640,7 +640,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 7406136714117019322}
-    m_Position: {x: 490, y: 110, z: 0}
+    m_Position: {x: 500, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5169047983939069529}
     m_Position: {x: 270, y: 40, z: 0}
@@ -821,8 +821,8 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ForwardWalk
-  m_Speed: -1.5
-  m_CycleOffset: 1
+  m_Speed: 1
+  m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5157505303140833720}
   m_StateMachineBehaviours: []
@@ -834,12 +834,12 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: cdd9586c59bf16247b616b1210416bc8, type: 2}
+  m_Motion: {fileID: -203655887218126122, guid: 32a02394801376943b011605b91ea058, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_TimeParameter: WalkFBDir
 --- !u!1102 &7483652411194305645
 AnimatorState:
   serializedVersion: 6
