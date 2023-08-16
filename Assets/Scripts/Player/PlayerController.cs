@@ -165,6 +165,7 @@ public class PlayerController : MonoBehaviour
             case GameState.Combat:
                 SwitchActionMap("Combat");
                 _rb.isKinematic = false;
+                _animator.SetBool("Combat", true);
                 //Cursor.visible = false;
                 break;
             case GameState.Plan:
@@ -172,6 +173,7 @@ public class PlayerController : MonoBehaviour
                 _rb.velocity = Vector3.zero;
                 _rb.isKinematic = true;
                 _animator.SetInteger("WalkingDirection", (int) WalkDirection.NoDirection);
+                _animator.SetBool("Combat", false);
                 //Cursor.visible = true;
                 break;
             case GameState.PostCombat:
@@ -179,6 +181,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Game Reverted");
                 _rb.isKinematic = false;
                 //Cursor.visible = true;
+                _animator.SetBool("Combat", false);
                 if (e.TriggeredByRevert) break;
                 if (EquippedWeapon != null) 
                 {
