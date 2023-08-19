@@ -136,10 +136,13 @@ public class EnemyController : MonoBehaviour
     {
         agent.isStopped = true;
         transform.LookAt(_target);
+
         if (weapon != null) {
             weapon.Fire1Start();
             weapon.Fire1Stop();
         }
+
+
         animator.SetBool("IsWalking", false);
     }
 
