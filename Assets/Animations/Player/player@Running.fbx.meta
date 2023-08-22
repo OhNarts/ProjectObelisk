@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7e8c12f092c40554bba95db10b8d2173
+guid: 32a02394801376943b011605b91ea058
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -22,7 +22,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    importAnimatedCustomProperties: 0
+    importAnimatedCustomProperties: 1
     importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
@@ -31,7 +31,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Running
+      takeName: mixamo.com
+      internalID: -203655887218126122
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -353,28 +382,28 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: player(Clone)
+    - name: player@T-Pose(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Empty
-      parentName: player(Clone)
+      parentName: player@T-Pose(Clone)
       position: {x: -0.16862106, y: 1.76717, z: -1.0068109}
       rotation: {x: 0.000000099748014, y: -0.70710665, z: 0.000000099747986, w: 0.7071069}
       scale: {x: 100, y: 100, z: 100}
     - name: Empty.001
-      parentName: player(Clone)
+      parentName: player@T-Pose(Clone)
       position: {x: -0.16862106, y: 1.76717, z: -1.0068109}
       rotation: {x: 7.321539e-15, y: 1, z: -0.000000081460335, w: 0.0000000754979}
       scale: {x: 100, y: 100, z: 100}
     - name: Empty.002
-      parentName: player(Clone)
+      parentName: player@T-Pose(Clone)
       position: {x: -0.16862106, y: 1.76717, z: -1.0068109}
       rotation: {x: 0.000000099748014, y: 0.70710665, z: -0.000000099747986, w: 0.7071069}
       scale: {x: 100, y: 100, z: 100}
     - name: Armature
-      parentName: player(Clone)
+      parentName: player@T-Pose(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -654,7 +683,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Cylinder
-      parentName: player(Clone)
+      parentName: player@T-Pose(Clone)
       position: {x: 0.00000021934507, y: -0.0000011539457, z: -0.000000114440894}
       rotation: {x: -0.7071068, y: 0.0000000016858746, z: 4.214685e-10, w: 0.7071067}
       scale: {x: 99.99998, y: 99.999985, z: 99.999985}
@@ -670,11 +699,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 7e8c12f092c40554bba95db10b8d2173, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
