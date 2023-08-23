@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.Universal;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -104,7 +105,6 @@ public class PlayerController : MonoBehaviour
             _followWeapon.transform.position = gotoPt;
         }
         if (EquippedWeapon != null) {
-
             //TODO: needs even more pretty? :/
             
             laserSight.enabled = true;
@@ -112,6 +112,8 @@ public class PlayerController : MonoBehaviour
             laserSight.SetPosition(0, startPos);
 
             Vector3 endPos = new Vector3(_lookPt.x, startPos.y, _lookPt.z);
+
+            _weaponPos.transform.LookAt(endPos);
             float scale = 50f;
             
             RaycastHit hit;
