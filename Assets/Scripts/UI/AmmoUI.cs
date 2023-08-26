@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class AmmoUI : MonoBehaviour
 {
     [SerializeField] private AmmoUIDictionary _ammoSlots;
+    [SerializeField] private GameObject ammoUpdates;
 
     void OnEnable() {
         foreach (AmmoType ammoType in _ammoSlots.Keys) {
@@ -19,8 +21,21 @@ public class AmmoUI : MonoBehaviour
     }
 
     private void AmmoChanged(object sender, EventArgs e) {
+        int oldText, newText;
         OnPlayerAmmoChangedArgs args = (OnPlayerAmmoChangedArgs)e;
+
+        int.TryParse(_ammoSlots[args.AmmoTypeChanged].Text, out oldText);
         _ammoSlots[args.AmmoTypeChanged].Text = args.CurrentAmount.ToString();
+        int.TryParse(_ammoSlots[args.AmmoTypeChanged].Text, out newText);
+
+        Vector3 ammoPos = _ammoSlots[args.AmmoTypeChanged].transform.position;
+        ammoUpdates.transform.position =
+            new Vector3(ammoUpdates.transform.position.x, ammoPos.y, ammoUpdates.transform.position.z);
+        
+        TextMeshProUGUI updateText = ammoUpdates.GetComponentInChildren<TextMeshProUGUI>();
+        updateText.text = newText - oldText > 0 ? "+" + (newText - oldText).ToString() : (newText - oldText).ToString();
+        StartCoroutine(Blink(1f, ammoUpdates));
+
         Color oldColor = new Color(0.1037736f, 0.1037736f, 0.1037736f, 0.3921569f);
         StartCoroutine(ChangeColor(args, oldColor));
     }
@@ -64,5 +79,11 @@ public class AmmoUI : MonoBehaviour
         oldColor[component] = startColor;
         oldColor.a = startAlpha;
         _ammoSlots[args.AmmoTypeChanged].Color = oldColor;
+    }
+
+    private IEnumerator Blink(float seconds, GameObject obj) {
+        obj.SetActive(true);
+        yield return new WaitForSeconds(seconds);
+        obj.SetActive(false);
     }
 }
