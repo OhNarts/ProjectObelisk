@@ -16,6 +16,11 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI damage;
     [SerializeField] private Image wepSprite;
 
+    private Dictionary<string, int> dict = new Dictionary<string, int>() {
+        {"Pistol", 0}, {"ShotGun", 1}, {"SMG", 2},
+        {"ShockTrap", 3}, {"Railgun", 4}, {"DoubleBarrelShotgun", 5}
+    };
+
     void Start() {
         InitializeSlots();
         PlayerState.OnPlayerStateRevert += OnPlayerStateRevert;
@@ -45,8 +50,8 @@ public class InventoryUI : MonoBehaviour
         string[] valueArray = ChangeText(weapon.WeaponName);
 
         desc.text = valueArray[0]; desc.color = weapon.Color;
-        ammo.text = "AMMO: " + valueArray[1]; ammo.color = weapon.Color;
-        damage.text = "DAMAGE: " + valueArray[2]; damage.color = weapon.Color;
+        ammo.text = "AMMO: " + weapon.AmmoCost1; ammo.color = weapon.Color;
+        damage.text = "DAMAGE: " + valueArray[1]; damage.color = weapon.Color;
         wepSprite.sprite = weapon.Sprite; wepSprite.color = weapon.Color;
         
         wepNotif.SetActive(true);
@@ -80,15 +85,9 @@ public class InventoryUI : MonoBehaviour
             "Shoots one massive bullet that goes through walls. Mouse needs to be held for a while and released to fire.",
             "Shoots five bullets at a time."};
         string[] dmgs = {"Normal", "High", "Low", "None", "High", "High"};
-        string[] ammoNums = {"10", "5", "20", "5", "5", "2"};
-
-        var dict = new Dictionary<string, int>() {
-            {"Pistol", 0}, {"ShotGun", 1}, {"SMG", 2},
-            {"ShockTrap", 3}, {"Railgun", 4}, {"DoubleBarrelShotgun", 5}
-        };
 
         int i = dict[weaponName];
 
-        return new string[] {descriptions[i], ammoNums[i], dmgs[i]};
+        return new string[] {descriptions[i], dmgs[i]};
     }
 }

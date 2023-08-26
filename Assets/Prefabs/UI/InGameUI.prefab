@@ -314,7 +314,6 @@ MonoBehaviour:
   ammo: {fileID: 3376229933158574656}
   damage: {fileID: 7179412637816109249}
   wepSprite: {fileID: 8762689880767863047}
-  ammoTypeImg: {fileID: 4634970029456214481}
 --- !u!114 &6897725782146007762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3707,17 +3706,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4634970029456214481 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4579579926475582700, guid: 91ad3960669bd9a41a65de31f3beaf85, type: 3}
-  m_PrefabInstance: {fileID: 9214179031749485885}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6641217104149186393 stripped
