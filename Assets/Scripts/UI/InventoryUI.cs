@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
@@ -9,6 +10,11 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private GameObject[] _inventorySlots;
     private int _currSlot;
     [SerializeField] private GameObject wepNotif;
+    [SerializeField] private TextMeshProUGUI title;
+    [SerializeField] private TextMeshProUGUI desc;
+    [SerializeField] private TextMeshProUGUI ammo;
+    [SerializeField] private TextMeshProUGUI damage;
+    [SerializeField] private Image wepSprite;
 
     void Start() {
         InitializeSlots();
@@ -33,9 +39,16 @@ public class InventoryUI : MonoBehaviour
         slot.GetComponent<InventorySlot>().Weapon = weapon;
         slot.SetActive(true);
         
-        TextMeshProUGUI notifText = wepNotif.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        notifText.text = ChangeText(weapon.WeaponName);
-        notifText.color = weapon.Color;
+        title.text = "NEW ITEM - " + (weapon.WeaponName == "DoubleBarrelShotgun"
+            ? "Double Barrel Shotgun" : weapon.WeaponName) + "!";
+        title.color = weapon.Color;
+        string[] valueArray = ChangeText(weapon.WeaponName);
+
+        desc.text = valueArray[0]; desc.color = weapon.Color;
+        ammo.text = "AMMO: " + valueArray[1]; ammo.color = weapon.Color;
+        damage.text = "DAMAGE: " + valueArray[2]; damage.color = weapon.Color;
+        wepSprite.sprite = weapon.Sprite; wepSprite.color = weapon.Color;
+        
         wepNotif.SetActive(true);
     }
 
@@ -61,24 +74,21 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    private string ChangeText(string weaponName) {
-        string finalText;
-        switch(weaponName) {
-            case "Pistol": 
-                finalText = "NEW WEAPON - Pistol!\n\nShoots one bullet at a time.\nAMMO: 10 ammo\nDAMAGE: Normal"; break;
-            case "ShotGun": 
-                finalText = "NEW WEAPON - Shotgun!\n\nShoots three bullets at a time.\nAMMO: 5 ammo\nDAMAGE: High"; break;
-            case "SMG": 
-                finalText = "NEW WEAPON - SMG!\n\nShoots bullets when mouse held.\nAMMO: 20 ammo\nDAMAGE: Low"; break;
-            case "ShockTrap":
-                finalText = "NEW GADGET - Shock Trap!\n\nStuns a nearby area of enemies when shot at.\nAMMO: 5 ammo\nDAMAGE: None"; break;
-            case "Railgun": 
-                finalText = "NEW WEAPON - Railgun!\n\nShoots one massive bullet that goes through walls.\nAMMO: 5 ammo\nDAMAGE: High"; break;
-            case "DoubleBarrelShotgun": 
-                finalText = "NEW WEAPON - Double Barrel Shotgun!\n\nShoots five bullets at a time.\nAMMO: 2 ammo\nDAMAGE: High"; break;
-            default: finalText = "Pick Weapon"; break;
-        }
+    private string[] ChangeText(string weaponName) {
+        string[] descriptions = {"Shoots one bullet at a time.", "Shoots three bullets at a time.", "Shoots bullets when mouse held.",
+            "Stuns a nearby area of enemies when shot at.",
+            "Shoots one massive bullet that goes through walls. Mouse needs to be held for a while and released to fire.",
+            "Shoots five bullets at a time."};
+        string[] dmgs = {"Normal", "High", "Low", "None", "High", "High"};
+        string[] ammoNums = {"10", "5", "20", "5", "5", "2"};
 
-        return finalText;
+        var dict = new Dictionary<string, int>() {
+            {"Pistol", 0}, {"ShotGun", 1}, {"SMG", 2},
+            {"ShockTrap", 3}, {"Railgun", 4}, {"DoubleBarrelShotgun", 5}
+        };
+
+        int i = dict[weaponName];
+
+        return new string[] {descriptions[i], ammoNums[i], dmgs[i]};
     }
 }
