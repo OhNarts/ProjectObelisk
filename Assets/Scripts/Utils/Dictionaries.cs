@@ -33,6 +33,9 @@ public class AmmoDictionary : SerializableDictionary<AmmoType, int> {
 public class AmmoUIDictionary : SerializableDictionary<AmmoType, AmmoSlotUI> {}
 
 [Serializable]
+public class AmmoGameObjectDictionary : SerializableDictionary<AmmoType, GameObject> {}
+
+[Serializable]
 public class TransformGameObjectDictionary : SerializableDictionary<Transform, GameObject> {}
 
 [Serializable]

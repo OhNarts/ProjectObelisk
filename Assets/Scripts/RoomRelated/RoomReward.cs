@@ -18,11 +18,15 @@ public class RoomReward : MonoBehaviour, Interactable
         foreach (var ammoType in _ammoReward.Keys) {
             // Check for the upper bound
             if (player.Ammo.ContainsKey(ammoType) && player.Ammo[ammoType] > _ammoReward[ammoType][1]) continue;
-            player.RewardAmmo(ammoType, _ammoReward[ammoType][0]);
+            int rewardToGive = _ammoReward[ammoType][0];
+            // player.RewardAmmo(ammoType, _ammoReward[ammoType][0]);
             Debug.Log("Player ammo = "+ PlayerState.Ammo[ammoType]);
-            while (player.Ammo[ammoType] % _ammoReward[ammoType][0] != 0) {
-                player.RewardAmmo(ammoType, 1);
+            int counter = 0;
+            while ((player.Ammo[ammoType] + rewardToGive + counter) % rewardToGive != 0) {
+                counter++;
+                // player.RewardAmmo(ammoType, 1);
             }
+            player.RewardAmmo(ammoType, rewardToGive + counter);
         }
         foreach (var weapon in _weaponRewards) {
             player.GiveWeapon(weapon);
