@@ -29,7 +29,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private WeaponItem _weaponItem; public WeaponItem WeaponItem { get => _weaponItem; }
     [SerializeField] private List<MeshCollider> _colliders; public List<MeshCollider> Colliders{get => _colliders;}
     [SerializeField] private ExclusionZone _exclusionZone;
-    private float _exclusionRadius = 2f;
+    private float _exclusionRadius = 5f;
     [SerializeField] private string _animationBoolName; public string AnimationBoolName{get => _animationBoolName;}
     [SerializeField] protected Sound soundWhenFired;
     [SerializeField] protected Sound soundWhenFireStopped;
@@ -182,7 +182,7 @@ public abstract class Weapon : MonoBehaviour
     }
 
     public virtual void OnPlanDrag() {
-        _exclusionZone.gameObject.SetActive(false);
+        _exclusionZone.gameObject.SetActive(true);
     }
 
     public virtual void OnPlanDrop() {
