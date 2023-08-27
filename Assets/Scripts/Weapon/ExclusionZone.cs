@@ -10,7 +10,12 @@ public class ExclusionZone : MonoBehaviour
     [SerializeField] private SphereCollider exclusionCollider;
     
     private void OnEnable() {
-        exclusionCollider.radius = Radius;
+        // Sets the world scale of the exclusion zone
+        var parent = transform.parent;
+        transform.parent = null;
+        transform.localScale = new Vector3(Radius, Radius, Radius);
+        transform.parent = parent;
+        // exclusionCollider.radius = Radius;
         
         // Ensures that this is on the correct layer
         gameObject.layer = LayerMask.NameToLayer("Default");

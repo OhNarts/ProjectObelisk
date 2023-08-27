@@ -70,7 +70,6 @@ MonoBehaviour:
   _colliders:
   - {fileID: 7397744050278042452}
   _exclusionZone: {fileID: 5139811258335212740}
-  _exclusionRadius: 1
   _animationBoolName: SmgHeld
   soundWhenFired:
     clip: {fileID: 8300000, guid: def2a9a94bd85d94e8efc64c2a94f692, type: 3}
@@ -301,7 +300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5841703241962281881, guid: a61b4a7a577f905409dec0a2f6d904b1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.010497
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5841703241962281881, guid: a61b4a7a577f905409dec0a2f6d904b1, type: 3}
       propertyPath: m_LocalRotation.w

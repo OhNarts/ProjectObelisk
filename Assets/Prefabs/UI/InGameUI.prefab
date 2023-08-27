@@ -699,26 +699,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1191197129}
     m_Modifications:
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_text
-      value: Hello World
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSize
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3773913382739871049, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -851,30 +831,6 @@ PrefabInstance:
     - target: {fileID: 1207111362451259190, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
       propertyPath: glowImage
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_text
-      value: Hello World
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSize
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3773913382739871049, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
       propertyPath: m_Pivot.x
@@ -1923,26 +1879,6 @@ PrefabInstance:
       propertyPath: glowImage
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_text
-      value: Hello World
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSize
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3773913382739871049, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2426,26 +2362,6 @@ PrefabInstance:
       propertyPath: glowImage
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_text
-      value: Hello World
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSize
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3773913382739871049, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2804,38 +2720,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 336703810112717185}
     m_Modifications:
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_text
-      value: Hello World
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSize
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: d23de8f0910eb6d47a913ae49ab01c7c, type: 2}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -433442503473836538, guid: d23de8f0910eb6d47a913ae49ab01c7c, type: 2}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3773913382739871049, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2964,26 +2848,6 @@ PrefabInstance:
     - target: {fileID: 1207111362451259190, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
       propertyPath: glowImage
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_text
-      value: Hello World
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSize
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 2961038365397759728, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3773913382739871049, guid: 2644b1a7b0cf7b040b47bed9fd92195e, type: 3}
       propertyPath: m_Pivot.x
