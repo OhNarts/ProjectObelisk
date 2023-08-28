@@ -182,11 +182,13 @@ public abstract class Weapon : MonoBehaviour
     }
 
     public virtual void OnPlanDrag() {
-        _exclusionZone.gameObject.SetActive(true);
+        if (buffRegion == null) _exclusionZone.gameObject.SetActive(true);
+        else _exclusionZone.gameObject.SetActive(false);
     }
 
     public virtual void OnPlanDrop() {
-        _exclusionZone.gameObject.SetActive(true);
+        if (buffRegion == null) _exclusionZone.gameObject.SetActive(true);
+        else _exclusionZone.gameObject.SetActive(false);
     }
 
     private void OnGameStateChanged(object sender, OnGameStateChangedArgs e) {
@@ -236,6 +238,7 @@ public abstract class Weapon : MonoBehaviour
         sound.position = Camera.main.transform.position;
         if (isEnemy != null) 
             sound.volume = 0.1f;
+
         
         AudioManager.Play(sound);
             // sound.source.Play();

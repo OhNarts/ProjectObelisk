@@ -548,9 +548,6 @@ public class PlayerController : MonoBehaviour
                 weapon.OnWeaponDestroyed -= OnWeaponDestroyed;
                 PlayerState.AddToAmmo(weapon.WeaponItem.AmmoType1,
                 weapon.AmmoAmount1);
-                if (weapon.isBuffed) {
-                    weapon.buffRegion.restrictArea = false;
-                }
                 Destroy(weapon.gameObject);
             }
         }

@@ -70,7 +70,6 @@ MonoBehaviour:
   _colliders:
   - {fileID: 6363235648006660548}
   _exclusionZone: {fileID: 2390919954112304334}
-  _exclusionRadius: 1
   _animationBoolName: ShotgunHeld
   soundWhenFired:
     clip: {fileID: 8300000, guid: c0087417c63ebb142a34aab88a9b5b20, type: 3}
@@ -85,7 +84,7 @@ MonoBehaviour:
     source: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
   _damage: 20
-  _buffDamage: 25
+  _buffDamage: 40
   _weaponType: 0
   _thrownDamage: 0
   _thrownSpeed: 25
