@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-183490
+  m_Name: pb_Mesh48064
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -293,7 +293,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-183502
+  m_Name: pb_Mesh47344
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2142,6 +2142,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 171060914337287834, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 171060914337287834, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 891059864449566179, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2321,6 +2329,10 @@ PrefabInstance:
     - target: {fileID: 7539315591280306320, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
       propertyPath: m_Name
       value: LevelEssentials
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670550484420339047, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7991128315323452753, guid: 057f466322a5fa64fbd3f4382085ddc4, type: 3}
       propertyPath: m_AnchorMax.x

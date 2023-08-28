@@ -117,7 +117,6 @@ MonoBehaviour:
   _colliders:
   - {fileID: 7704837942250172078}
   _exclusionZone: {fileID: 6532448760932801508}
-  _exclusionRadius: 1
   _animationBoolName: RailgunHeld
   soundWhenFired:
     clip: {fileID: 0}
@@ -148,8 +147,8 @@ MonoBehaviour:
   waitSeconds: 1.5
   _chargeSound:
     clip: {fileID: 8300000, guid: c1576f9883622bb42bdc6dbfe66d26d9, type: 3}
-    volume: 0.75
-    pitch: 0
+    volume: 0.793
+    pitch: 1
     source: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
 --- !u!54 &1003591532308817985

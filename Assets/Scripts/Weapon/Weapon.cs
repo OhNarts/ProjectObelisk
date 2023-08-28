@@ -231,7 +231,7 @@ public abstract class Weapon : MonoBehaviour
         };
     }
 
-    private void PlaySound(Sound sound) {
+    protected void PlaySound(Sound sound) {
         var isEnemy = _holder.GetComponent<EnemyController>();
         sound.position = Camera.main.transform.position;
         if (isEnemy != null) 

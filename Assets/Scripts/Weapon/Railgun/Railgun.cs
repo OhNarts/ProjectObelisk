@@ -32,7 +32,7 @@ public class Railgun : Weapon
 
     public override void Fire1Start(bool useAmmo = false)
     {
-        AudioManager.Play(_chargeSound);
+        PlaySound(_chargeSound);
         timePressed = Time.unscaledTime;
         if (Time.unscaledTime - lastFired < coolDownTime || AmmoAmount1 == 0) {
             timePressed = -1; 
