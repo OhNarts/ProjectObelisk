@@ -6,6 +6,8 @@ public class ShockTrap : Weapon
 {
 
     [Header("ShockTrap Specific")]
+    [SerializeField] private GameObject _radiusIndicator;
+    [SerializeField] private ShockTrapAOE _areaOfEffect;
     [SerializeField] private float shockTime;
     [SerializeField] private float shockRadius;
 
@@ -15,6 +17,11 @@ public class ShockTrap : Weapon
 
     private void Awake() {
         CloseTrap();
+        var aoePar = _areaOfEffect.transform.parent;
+        _areaOfEffect.transform.parent = null;
+        _areaOfEffect.transform.localScale = new Vector3(shockRadius, shockRadius, shockRadius);
+        _areaOfEffect.transform.parent = aoePar;
+        _areaOfEffect.transform.localPosition = Vector3.zero;
     }
 
     public override void OnPlanDrag() {
@@ -34,14 +41,18 @@ public class ShockTrap : Weapon
     public void Shock() {
         AudioManager.Play(_shockSound);
 
+        foreach (var enemy in _areaOfEffect._enemiesInside) {
+            enemy.Stunned(shockTime);
+        }
+
         Destroy(gameObject);
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, shockRadius);
-        foreach (var hitCollider in hitColliders) {
-            if (hitCollider.CompareTag("Enemy")) {
-                hitCollider.transform.GetComponent<EnemyController>().Stunned(shockTime);
-            }
-        }
+        // Collider[] hitColliders = Physics.OverlapSphere(transform.position, shockRadius);
+        // foreach (var hitCollider in hitColliders) {
+        //     if (hitCollider.CompareTag("Enemy")) {
+        //         hitCollider.transform.GetComponent<EnemyController>().Stunned(shockTime);
+        //     }
+        // }
 
     }
 

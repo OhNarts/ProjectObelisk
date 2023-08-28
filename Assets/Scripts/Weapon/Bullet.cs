@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
     public void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.layer == LayerMask.NameToLayer("Bullet")) return;
+        if (collider.gameObject.layer == LayerMask.NameToLayer("TransparentFX")) return;
         if (destroyOnContact) Destroy(gameObject);
         Transform hitTransform = collider.transform;
         HealthHandler hitHealth = hitTransform.GetComponent<HealthHandler>();
